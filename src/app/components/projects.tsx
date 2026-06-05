@@ -36,7 +36,7 @@ export function Projects() {
       visual: (
         <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #1a1a1a' }}>
           <video
-            src="/images/voyexa_demo.webm"
+            src={`${import.meta.env.BASE_URL}images/voyexa_demo.webm`}
             autoPlay
             loop
             muted
@@ -57,7 +57,7 @@ export function Projects() {
       visual: (
         <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #1a1a1a' }}>
           <video
-            src="/images/edna_demo.webm"
+            src={`${import.meta.env.BASE_URL}images/edna_demo.webm`}
             autoPlay
             loop
             muted
@@ -78,7 +78,7 @@ export function Projects() {
       visual: (
         <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #1a1a1a' }}>
           <img
-            src="/images/cryptanalysis.png"
+            src={`${import.meta.env.BASE_URL}images/cryptanalysis.png`}
             alt="Neural network cryptanalysis visualization"
             className="w-full h-auto transition-transform duration-500 hover:scale-105"
             style={{ display: 'block' }}
