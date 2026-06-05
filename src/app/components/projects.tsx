@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParallax } from '../../hooks/useParallax';
 import { useStaggeredAnimation } from '../../hooks/useScrollAnimation';
+import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
 
 export function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const { ref: titleRef, offset: titleOffset } = useParallax(0.2);
   const { containerRef, getItemStyle } = useStaggeredAnimation(3, { threshold: 0.15 });
+  const { rating, solved } = useLeetCodeStats();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -33,6 +35,7 @@ export function Projects() {
       description: 'AI-powered travel companion using Gemini 1.5 Flash for intelligent itinerary generation. Full-stack app with React frontend, Spring Boot backend, and PostgreSQL for user data persistence.',
       metric: 'Gemini 1.5 integration · Live deployment',
       tags: ['React', 'Tailwind', 'Spring Boot', 'PostgreSQL', 'Gemini 1.5', 'Geoapify'],
+      liveUrl: 'https://voyexa.vercel.app',
       visual: (
         <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #1a1a1a' }}>
           <video
@@ -54,6 +57,7 @@ export function Projects() {
       description: 'Automated environmental DNA analysis pipeline using Variational Autoencoders for species clustering and biodiversity assessment. Flask-based web interface with interactive visualizations.',
       metric: 'VAE clustering · HDBSCAN · Real-time viz',
       tags: ['Flask', 'TensorFlow', 'VAE', 'HDBSCAN', 'Chart.js', 'Scikit-learn'],
+      liveUrl: null as string | null,
       visual: (
         <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #1a1a1a' }}>
           <video
@@ -75,6 +79,7 @@ export function Projects() {
       description: 'Novel approach to cipher classification using Energy-Based Transformers and side-channel analysis. Achieved 76% validation accuracy across multiple cipher families with deep learning architectures.',
       metric: '76% validation accuracy · 10K SCA traces',
       tags: ['PyTorch', 'Pycryptodome', 'CNN', 'Transformer', 'Side-Channel'],
+      liveUrl: null as string | null,
       visual: (
         <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #1a1a1a' }}>
           <img
@@ -132,15 +137,16 @@ export function Projects() {
               }}
             >
               <div
-                className="hidden lg:flex absolute inset-0 pointer-events-none transition-colors duration-300"
+                className="hidden lg:flex absolute pointer-events-none transition-colors duration-300"
                 style={{
                   fontFamily: 'Syne',
                   fontWeight: 800,
-                  fontSize: '120px',
-                  color: '#e0e8f4',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 0,
+                  fontSize: '140px',
+                  color: '#c8d6ec',
+                  lineHeight: 1,
+                  top: '24px',
+                  ...(index % 2 === 0 ? { right: '16px' } : { left: '16px' }),
+                  zIndex: 1,
                 }}
               >
                 {project.index}
@@ -188,6 +194,33 @@ export function Projects() {
                     </span>
                   ))}
                 </div>
+
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded transition-all duration-300 hover:gap-3"
+                    style={{
+                      fontFamily: 'JetBrains Mono',
+                      fontSize: '11px',
+                      fontWeight: 600,
+                      color: '#ffffff',
+                      backgroundColor: '#1a5fd4',
+                      textDecoration: 'none',
+                      width: 'fit-content',
+                    }}
+                  >
+                    <span className="live-dot" style={{
+                      width: '6px',
+                      height: '6px',
+                      borderRadius: '50%',
+                      backgroundColor: '#4ade80',
+                      display: 'inline-block',
+                    }} />
+                    View Live ↗
+                  </a>
+                )}
               </div>
 
               <div className={`relative z-10 flex items-center ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
@@ -199,8 +232,8 @@ export function Projects() {
 
         <div className="mt-16 overflow-hidden" style={{ borderTop: '1px solid #1a1a1a', borderBottom: '1px solid #1a1a1a' }}>
           <div className="marquee-content py-4" style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', color: '#666', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-            <span>250+ DSA PROBLEMS <span style={{ color: '#c6ff47' }}>◆</span> LEETCODE 1839 <span style={{ color: '#c6ff47' }}>◆</span> CODECHEF 3★ <span style={{ color: '#c6ff47' }}>◆</span> 6 OPEN SOURCE PRS <span style={{ color: '#c6ff47' }}>◆</span> 200+ WORKSHOP ATTENDEES <span style={{ color: '#c6ff47' }}>◆</span> 99.97 MHT-CET PERCENTILE <span style={{ color: '#c6ff47' }}>◆</span> </span>
-            <span>250+ DSA PROBLEMS <span style={{ color: '#c6ff47' }}>◆</span> LEETCODE 1839 <span style={{ color: '#c6ff47' }}>◆</span> CODECHEF 3★ <span style={{ color: '#c6ff47' }}>◆</span> 6 OPEN SOURCE PRS <span style={{ color: '#c6ff47' }}>◆</span> 200+ WORKSHOP ATTENDEES <span style={{ color: '#c6ff47' }}>◆</span> 99.97 MHT-CET PERCENTILE <span style={{ color: '#c6ff47' }}>◆</span> </span>
+            <span>{solved} DSA PROBLEMS <span style={{ color: '#c6ff47' }}>◆</span> LEETCODE {rating} <span style={{ color: '#c6ff47' }}>◆</span> CODECHEF 3★ <span style={{ color: '#c6ff47' }}>◆</span> 6 OPEN SOURCE PRS <span style={{ color: '#c6ff47' }}>◆</span> 200+ WORKSHOP ATTENDEES <span style={{ color: '#c6ff47' }}>◆</span> 99.97 MHT-CET PERCENTILE <span style={{ color: '#c6ff47' }}>◆</span> </span>
+            <span>{solved} DSA PROBLEMS <span style={{ color: '#c6ff47' }}>◆</span> LEETCODE {rating} <span style={{ color: '#c6ff47' }}>◆</span> CODECHEF 3★ <span style={{ color: '#c6ff47' }}>◆</span> 6 OPEN SOURCE PRS <span style={{ color: '#c6ff47' }}>◆</span> 200+ WORKSHOP ATTENDEES <span style={{ color: '#c6ff47' }}>◆</span> 99.97 MHT-CET PERCENTILE <span style={{ color: '#c6ff47' }}>◆</span> </span>
           </div>
         </div>
       </div>
@@ -220,6 +253,13 @@ export function Projects() {
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
+        }
+        .live-dot {
+          animation: pulse-dot 2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+          0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+          50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(74, 222, 128, 0); }
         }
       `}</style>
     </section>

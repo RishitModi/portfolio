@@ -135,6 +135,46 @@ export function About() {
             ))}
           </div>
         </div>
+
+        <div className="mt-16 pt-12" style={{ borderTop: '1px solid #d0dcf0' }}>
+          <div className="flex items-center gap-3 mb-6">
+            <div style={{
+              fontFamily: 'JetBrains Mono',
+              fontSize: '10px',
+              color: '#1a5fd4',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+            }}>
+              ► Competitive Programming
+            </div>
+          </div>
+
+          <div className="rounded-lg overflow-hidden" style={{ border: '1px solid #d0dcf0', backgroundColor: '#ffffff' }}>
+            <img
+              src="https://leetcard.jacoblin.cool/modeiji09?theme=light&font=JetBrains%20Mono&ext=heatmap"
+              alt="LeetCode Stats - modeiji09"
+              className="w-full h-auto"
+              style={{ display: 'block' }}
+            />
+          </div>
+
+          <a
+            href="https://leetcode.com/u/modeiji09/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded transition-all duration-300 hover:gap-3"
+            style={{
+              fontFamily: 'JetBrains Mono',
+              fontSize: '11px',
+              fontWeight: 600,
+              color: '#ffffff',
+              backgroundColor: '#1a5fd4',
+              textDecoration: 'none',
+            }}
+          >
+            View LeetCode Profile →
+          </a>
+        </div>
       </div>
     </section>
   );

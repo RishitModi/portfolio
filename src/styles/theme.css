@@ -130,8 +130,9 @@
   }
 
   a,
-  button {
-    cursor: none;
+  button,
+  [role="button"] {
+    cursor: pointer;
   }
 
   /**

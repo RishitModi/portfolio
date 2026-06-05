@@ -1,8 +1,10 @@
 import { useParallax } from '../../hooks/useParallax';
+import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
 
 export function Hero() {
   const { ref: gridRef, offset: gridOffset } = useParallax(0.3);
   const { ref: circleRef, offset: circleOffset } = useParallax(0.5);
+  const { rating, solved } = useLeetCodeStats();
 
   const scrollToProjects = () => {
     const element = document.getElementById('projects');
@@ -101,11 +103,11 @@ export function Hero() {
           </div>
 
           <div className="flex items-center gap-6" style={{ fontFamily: 'JetBrains Mono', fontSize: '12px', color: '#6080b0' }}>
-            <span>1839 · LeetCode</span>
+            <span>{rating} · LeetCode</span>
             <span style={{ color: '#d0dcf0' }}>|</span>
-            <span>250+ · DSA Solved</span>
+            <span>{solved} · DSA Solved</span>
             <span style={{ color: '#d0dcf0' }}>|</span>
-            <span>99.97%ile · MHT-CET</span>
+            <span>3★ · CodeChef</span>
           </div>
         </div>
 
@@ -138,28 +140,40 @@ export function Hero() {
               <div className="pl-12"><span style={{ color: '#1a5fd4' }}>"Full-Stack"</span>,</div>
               <div className="pl-12"><span style={{ color: '#1a5fd4' }}>"Cryptography"</span></div>
               <div className="pl-6">]</div>
-              <div className="pl-6"><span style={{ color: '#6080b0' }}>leetcode_rating</span> = <span style={{ color: '#0a8a5a' }}>1839</span></div>
+              <div className="pl-6"><span style={{ color: '#6080b0' }}>leetcode_rating</span> = <span style={{ color: '#0a8a5a' }}>{rating}</span></div>
               <div className="pl-6"><span style={{ color: '#6080b0' }}>open_to_work</span> = <span style={{ color: '#c0392b' }}>True</span></div>
               <div className="mt-4 pl-6"><span style={{ color: '#6c3fd4' }}>def</span> <span style={{ color: '#0a3a8a' }}>deploy</span>(<span style={{ color: '#6080b0' }}>self</span>):</div>
               <div className="pl-12"><span style={{ color: '#6c3fd4' }}>return</span> <span style={{ color: '#1a5fd4' }}>"let's build something real."</span></div>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4 mt-6">
             {[
-              { number: '99.97', label: 'MHT-CET %ile' },
-              { number: '250+', label: 'DSA Problems' },
-              { number: '1839', label: 'LeetCode' },
-            ].map((stat, i) => (
-              <div key={i} className="text-center p-4">
-                <div style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: '32px', color: '#1a5fd4' }}>
-                  {stat.number}
+              { number: '99.97', label: 'MHT-CET %ile', url: null as string | null },
+              { number: solved, label: 'DSA Problems', url: null as string | null },
+              { number: rating, label: 'LeetCode', url: 'https://leetcode.com/u/modeiji09/' },
+              { number: '3★', label: 'CodeChef', url: 'https://www.codechef.com/users/rishitmodeiji' }
+            ].map((stat, i) => {
+              const content = (
+                <>
+                  <div style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: '32px', color: '#1a5fd4' }}>
+                    {stat.number}
+                  </div>
+                  <div style={{ fontFamily: 'JetBrains Mono', fontSize: '10px', color: '#6080b0', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '4px', textDecoration: stat.url ? 'underline' : 'none' }}>
+                    {stat.label}
+                  </div>
+                </>
+              );
+              return stat.url ? (
+                <a key={i} href={stat.url} target="_blank" rel="noopener noreferrer" className="text-center p-4 rounded-lg transition-all duration-300 hover:shadow-md" style={{ backgroundColor: '#ffffff', border: '1px solid #d0dcf0', textDecoration: 'none' }}>
+                  {content}
+                </a>
+              ) : (
+                <div key={i} className="text-center p-4 rounded-lg" style={{ backgroundColor: '#ffffff', border: '1px solid #d0dcf0' }}>
+                  {content}
                 </div>
-                <div style={{ fontFamily: 'JetBrains Mono', fontSize: '10px', color: '#6080b0', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '4px' }}>
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
