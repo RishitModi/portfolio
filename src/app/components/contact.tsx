@@ -25,6 +25,7 @@ export function Contact() {
     { icon: '✉', label: 'modirishit6@gmail.com', href: 'mailto:modirishit6@gmail.com' },
     { icon: '↗', label: 'github.com/RishitModi', href: 'https://github.com/RishitModi' },
     { icon: '↗', label: 'linkedin.com/in/rishitmodii', href: 'https://linkedin.com/in/rishitmodii' },
+    { icon: '↓', label: 'Resume', href: 'https://drive.google.com/file/d/1vsR0iFkGEZHado6OIQFdK1XCR48UIiUg/view?usp=sharing' },
   ];
 
   return (

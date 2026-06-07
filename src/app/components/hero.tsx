@@ -83,7 +83,7 @@ export function Hero() {
             Building intelligent systems at the edge of cryptography, deep learning, and scalable product engineering. B.Tech CS @ VJTI — top 0.03% nationally.
           </p>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             <button
               onClick={scrollToProjects}
               className="px-6 py-3 rounded transition-all hover:scale-105"
@@ -92,13 +92,31 @@ export function Hero() {
               → View Projects
             </button>
             <a
+              href="https://drive.google.com/file/d/1vsR0iFkGEZHado6OIQFdK1XCR48UIiUg/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 rounded transition-all hover:border-[#1a5fd4]"
+              style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#1a5fd4', backgroundColor: '#e8eef8', textDecoration: 'none' }}
+            >
+              ↓ Resume
+            </a>
+            <a
               href="https://github.com/RishitModi"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 rounded transition-all hover:border-[#1a5fd4]"
-              style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#2a3a5a' }}
+              style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#2a3a5a', textDecoration: 'none' }}
             >
-              ↗ github.com/RishitModi
+              ↗ GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/rishitmodii"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 rounded transition-all hover:border-[#1a5fd4]"
+              style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#2a3a5a', textDecoration: 'none' }}
+            >
+              ↗ LinkedIn
             </a>
           </div>
 
