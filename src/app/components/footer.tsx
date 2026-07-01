@@ -9,7 +9,7 @@ export function Footer() {
       style={{
         borderTop: '1px solid #d0dcf0',
         backgroundColor: '#e8eef8',
-        fontFamily: 'JetBrains Mono',
+        fontFamily: 'Inter',
         fontSize: '11px',
         color: '#6080b0',
         padding: '32px 0',

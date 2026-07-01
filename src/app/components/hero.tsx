@@ -39,7 +39,7 @@ export function Hero() {
         <div
           className="absolute left-8 top-1/2"
           style={{
-            fontFamily: 'JetBrains Mono',
+            fontFamily: 'Inter',
             fontSize: '10px',
             color: '#a0b4cc',
             transform: 'rotate(-90deg) translateX(-50%)',
@@ -52,17 +52,17 @@ export function Hero() {
 
       <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12">
         <div className="flex flex-col justify-center gap-8 fade-up">
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', color: '#6080b0', letterSpacing: '0.1em' }}>
+          <div style={{ fontFamily: 'Inter', fontSize: '11px', color: '#6080b0', letterSpacing: '0.1em' }}>
             [ MUMBAI, IN · 2026 ]
           </div>
 
           <div>
-            <h1 style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: 'clamp(72px, 10vw, 128px)', lineHeight: 0.9, letterSpacing: '-5px', color: '#0f1828' }}>
+            <h1 style={{ fontFamily: 'Inter', fontWeight: 800, fontSize: 'clamp(72px, 10vw, 128px)', lineHeight: 0.9, letterSpacing: '-5px', color: '#0f1828' }}>
               RISHIT
             </h1>
             <h1
               style={{
-                fontFamily: 'Syne',
+                fontFamily: 'Inter',
                 fontWeight: 800,
                 fontSize: 'clamp(72px, 10vw, 128px)',
                 lineHeight: 0.9,
@@ -75,11 +75,11 @@ export function Hero() {
             </h1>
           </div>
 
-          <p style={{ fontFamily: 'JetBrains Mono', fontSize: '16px', color: '#2a3a5a' }}>
+          <p style={{ fontFamily: 'Inter', fontSize: '16px', color: '#2a3a5a' }}>
             AI/ML Engineer & Full-Stack Builder
           </p>
 
-          <p style={{ fontFamily: 'JetBrains Mono', fontSize: '13px', color: '#2a3a5a', lineHeight: 2, maxWidth: '540px' }}>
+          <p style={{ fontFamily: 'Inter', fontSize: '13px', color: '#2a3a5a', lineHeight: 2, maxWidth: '540px' }}>
             Building intelligent systems at the edge of cryptography, deep learning, and scalable product engineering. B.Tech CS @ VJTI — top 0.03% nationally.
           </p>
 
@@ -87,7 +87,7 @@ export function Hero() {
             <button
               onClick={scrollToProjects}
               className="px-6 py-3 rounded transition-all hover:scale-105"
-              style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', backgroundColor: '#1a5fd4', color: '#ffffff', fontWeight: 500 }}
+              style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', backgroundColor: '#1a5fd4', color: '#ffffff', fontWeight: 500 }}
             >
               → View Projects
             </button>
@@ -96,7 +96,7 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 rounded transition-all hover:border-[#1a5fd4]"
-              style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#1a5fd4', backgroundColor: '#e8eef8', textDecoration: 'none' }}
+              style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#1a5fd4', backgroundColor: '#e8eef8', textDecoration: 'none' }}
             >
               ↓ Resume
             </a>
@@ -105,7 +105,7 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 rounded transition-all hover:border-[#1a5fd4]"
-              style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#2a3a5a', textDecoration: 'none' }}
+              style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#2a3a5a', textDecoration: 'none' }}
             >
               ↗ GitHub
             </a>
@@ -114,13 +114,13 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 rounded transition-all hover:border-[#1a5fd4]"
-              style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#2a3a5a', textDecoration: 'none' }}
+              style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#2a3a5a', textDecoration: 'none' }}
             >
               ↗ LinkedIn
             </a>
           </div>
 
-          <div className="flex items-center gap-6" style={{ fontFamily: 'JetBrains Mono', fontSize: '12px', color: '#6080b0' }}>
+          <div className="flex items-center gap-6" style={{ fontFamily: 'Inter', fontSize: '12px', color: '#6080b0' }}>
             <span>{rating} · LeetCode</span>
             <span style={{ color: '#d0dcf0' }}>|</span>
             <span>{solved} · DSA Solved</span>
@@ -144,12 +144,12 @@ export function Hero() {
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#f39c12' }} />
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#27ae60' }} />
               </div>
-              <span style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', color: '#6080b0', marginLeft: '12px' }}>
+              <span style={{ fontFamily: 'Inter', fontSize: '11px', color: '#6080b0', marginLeft: '12px' }}>
                 ~/rishit/profile.py
               </span>
             </div>
 
-            <div className="p-6" style={{ fontFamily: 'JetBrains Mono', fontSize: '13px', lineHeight: 1.8 }}>
+            <div className="p-6" style={{ fontFamily: 'Inter', fontSize: '13px', lineHeight: 1.8 }}>
               <div><span style={{ color: '#6c3fd4' }}>class</span> <span style={{ color: '#0a3a8a' }}>RishitModi</span>:</div>
               <div className="pl-6"><span style={{ color: '#6080b0' }}>name</span> = <span style={{ color: '#1a5fd4' }}>"Rishit Modi"</span></div>
               <div className="pl-6"><span style={{ color: '#6080b0' }}>institute</span> = <span style={{ color: '#1a5fd4' }}>"VJTI Mumbai"</span></div>
@@ -174,10 +174,10 @@ export function Hero() {
             ].map((stat, i) => {
               const content = (
                 <>
-                  <div style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: '32px', color: '#1a5fd4' }}>
+                  <div style={{ fontFamily: 'Inter', fontWeight: 800, fontSize: '32px', color: '#1a5fd4' }}>
                     {stat.number}
                   </div>
-                  <div style={{ fontFamily: 'JetBrains Mono', fontSize: '10px', color: '#6080b0', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '4px', textDecoration: stat.url ? 'underline' : 'none' }}>
+                  <div style={{ fontFamily: 'Inter', fontSize: '10px', color: '#6080b0', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '4px', textDecoration: stat.url ? 'underline' : 'none' }}>
                     {stat.label}
                   </div>
                 </>

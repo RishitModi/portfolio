@@ -29,7 +29,7 @@ export function Navigation() {
       }}
     >
       <div className="h-full px-6 md:px-16 flex items-center justify-between max-w-[1920px] mx-auto">
-        <div className="flex items-center gap-1" style={{ fontFamily: 'Syne', fontWeight: 800, zIndex: 60 }}>
+        <div className="flex items-center gap-1" style={{ fontFamily: 'Inter', fontWeight: 800, zIndex: 60 }}>
           <span style={{ color: '#0f1828' }}>RM</span>
           <span className="cursor-blink" style={{ color: '#1a5fd4' }}>_</span>
         </div>
@@ -39,7 +39,7 @@ export function Navigation() {
           <button
             onClick={() => scrollToSection('about')}
             className="nav-link group relative"
-            style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
+            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
           >
             <span className="bullet" style={{ color: '#1a5fd4', opacity: 0, position: 'absolute', left: '-16px', transition: 'opacity 0.2s, transform 0.2s', transform: 'translateX(-4px)' }}>▪</span>
             <span className="group-hover:[&+.bullet]:opacity-100 group-hover:[&+.bullet]:translate-x-0">About</span>
@@ -47,21 +47,21 @@ export function Navigation() {
           <button
             onClick={() => scrollToSection('skills')}
             className="nav-link group relative"
-            style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
+            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
           >
             Skills
           </button>
           <button
             onClick={() => scrollToSection('projects')}
             className="nav-link group relative"
-            style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
+            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
           >
             Projects
           </button>
           <button
             onClick={() => scrollToSection('contact')}
             className="nav-link group relative"
-            style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
+            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
           >
             Contact
           </button>
@@ -73,14 +73,14 @@ export function Navigation() {
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link group relative"
-            style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a', textDecoration: 'none' }}
+            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a', textDecoration: 'none' }}
           >
             Resume ↗
           </a>
           <button
             onClick={() => scrollToSection('contact')}
             className="px-6 py-2.5 rounded transition-all hover:scale-105"
-            style={{ fontFamily: 'JetBrains Mono', fontSize: '11px', textTransform: 'uppercase', backgroundColor: '#1a5fd4', color: '#ffffff', fontWeight: 500 }}
+            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', backgroundColor: '#1a5fd4', color: '#ffffff', fontWeight: 500 }}
           >
             Get in touch →
           </button>
@@ -111,25 +111,25 @@ export function Navigation() {
         <div className="flex flex-col items-center gap-8 text-center w-full px-6">
           <button
             onClick={() => { scrollToSection('about'); setIsMobileMenuOpen(false); }}
-            style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
+            style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
           >
             About
           </button>
           <button
             onClick={() => { scrollToSection('skills'); setIsMobileMenuOpen(false); }}
-            style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
+            style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
           >
             Skills
           </button>
           <button
             onClick={() => { scrollToSection('projects'); setIsMobileMenuOpen(false); }}
-            style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
+            style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
           >
             Projects
           </button>
           <button
             onClick={() => { scrollToSection('contact'); setIsMobileMenuOpen(false); }}
-            style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
+            style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
           >
             Contact
           </button>
@@ -141,7 +141,7 @@ export function Navigation() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setIsMobileMenuOpen(false)}
-            style={{ fontFamily: 'JetBrains Mono', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#1a5fd4', textDecoration: 'none' }}
+            style={{ fontFamily: 'Inter', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#1a5fd4', textDecoration: 'none' }}
           >
             Download Resume ↗
           </a>

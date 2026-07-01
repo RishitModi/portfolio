@@ -42,7 +42,7 @@ export function Contact() {
       <div
         className="hidden lg:flex absolute inset-0 items-center justify-center pointer-events-none"
         style={{
-          fontFamily: 'Syne',
+          fontFamily: 'Inter',
           fontWeight: 800,
           fontSize: '400px',
           color: '#d0dcf0',
@@ -55,12 +55,12 @@ export function Contact() {
 
       <div className="relative z-10 text-center">
         <div className="mb-12">
-          <div style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: 'clamp(48px, 8vw, 96px)', letterSpacing: '-2px', color: '#0f1828', lineHeight: 1 }}>
+          <div style={{ fontFamily: 'Inter', fontWeight: 800, fontSize: 'clamp(48px, 8vw, 96px)', letterSpacing: '-2px', color: '#0f1828', lineHeight: 1 }}>
             Let's
           </div>
           <div
             style={{
-              fontFamily: 'Syne',
+              fontFamily: 'Inter',
               fontWeight: 800,
               fontSize: 'clamp(48px, 8vw, 96px)',
               letterSpacing: '-2px',
@@ -71,12 +71,12 @@ export function Contact() {
           >
             work
           </div>
-          <div style={{ fontFamily: 'Syne', fontWeight: 800, fontSize: 'clamp(48px, 8vw, 96px)', letterSpacing: '-2px', color: '#0f1828', lineHeight: 1 }}>
+          <div style={{ fontFamily: 'Inter', fontWeight: 800, fontSize: 'clamp(48px, 8vw, 96px)', letterSpacing: '-2px', color: '#0f1828', lineHeight: 1 }}>
             together.
           </div>
         </div>
 
-        <p style={{ fontFamily: 'JetBrains Mono', fontSize: '13px', color: '#2a3a5a', marginBottom: '48px' }}>
+        <p style={{ fontFamily: 'Inter', fontSize: '13px', color: '#2a3a5a', marginBottom: '48px' }}>
           Open to internships, research collabs, and interesting problems.
         </p>
 
@@ -89,7 +89,7 @@ export function Contact() {
               rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
               className="contact-link transition-all duration-200"
               style={{
-                fontFamily: 'JetBrains Mono',
+                fontFamily: 'Inter',
                 fontSize: '11px',
                 textTransform: 'uppercase',
                 padding: '14px 28px',

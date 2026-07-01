@@ -83,14 +83,14 @@ export function Skills() {
       }}
     >
       <div className="max-w-[1920px] mx-auto">
-        <div style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: '11px', color: '#1a5fd4', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '24px' }}>
+        <div style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '11px', color: '#1a5fd4', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '24px' }}>
           [ 02 — SKILLS ]
         </div>
 
         <h2
           ref={titleRef}
           style={{
-            fontFamily: 'Syne',
+            fontFamily: 'Inter',
             fontWeight: 800,
             fontSize: 'clamp(40px, 6vw, 64px)',
             letterSpacing: '-2px',
@@ -115,7 +115,7 @@ export function Skills() {
             >
               <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#1a5fd4] transition-all duration-300 h-0 group-hover:h-full" />
 
-              <div style={{ fontFamily: 'JetBrains Mono', fontSize: '10px', color: '#6080b0', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '24px' }}>
+              <div style={{ fontFamily: 'Inter', fontSize: '10px', color: '#6080b0', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '24px' }}>
                 {category.category}
               </div>
 
@@ -125,7 +125,7 @@ export function Skills() {
                     key={i}
                     className="skill-tag transition-all duration-200"
                     style={{
-                      fontFamily: 'JetBrains Mono',
+                      fontFamily: 'Inter',
                       fontSize: '12px',
                       padding: '4px 10px',
                       border: '1px solid #d0dcf0',
