@@ -47,6 +47,19 @@ export function Projects() {
         imageSrc: null as string | null,
         iframeSrc: 'https://anuushkay.github.io/Cryptanalysis_Documentation/',
       },
+      {
+        index: '04',
+        title: 'Enterprise E-Commerce API',
+        category: 'BACKEND ARCHITECTURE',
+        description:
+          'Production-ready backend system for a scalable e-commerce platform. Engineered with modern Java and Spring Boot, featuring secure JWT authentication with RBAC, automated Flyway migrations, and a complete order processing pipeline.',
+        metric: 'Scalable Architecture · JWT Security',
+        tags: ['Java 23', 'Spring Boot', 'Spring Security', 'MySQL', 'JWT'],
+        liveUrl: 'https://github.com/RishitModi/e-commerceBackend' as string | null,
+        videoSrc: null as string | null,
+        imageSrc: null as string | null,
+        iframeSrc: null as string | null,
+      },
     ],
     [],
   );
