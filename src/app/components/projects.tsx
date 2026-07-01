@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
-import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
+
 
 export function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const { rating, solved } = useLeetCodeStats();
+
 
   const projects = useMemo(
     () => [
@@ -128,41 +128,6 @@ export function Projects() {
     };
   };
 
-  /* ── marquee strip (shown on every project slide) ── */
-  const marquee = (
-    <div
-      className="absolute bottom-0 left-0 right-0 overflow-hidden"
-      style={{ borderTop: '1px solid #d0dcf0', zIndex: 20 }}
-    >
-      <div
-        className="marquee-content py-3"
-        style={{
-          fontFamily: 'Inter',
-          fontSize: '11px',
-          color: '#6080b0',
-          textTransform: 'uppercase',
-          letterSpacing: '0.1em',
-        }}
-      >
-        <span>
-          {solved} DSA PROBLEMS <span style={{ color: '#1a5fd4' }}>◆</span> LEETCODE {rating}{' '}
-          <span style={{ color: '#1a5fd4' }}>◆</span> CODECHEF 3★{' '}
-          <span style={{ color: '#1a5fd4' }}>◆</span> 6 OPEN SOURCE PRS{' '}
-          <span style={{ color: '#1a5fd4' }}>◆</span> 200+ WORKSHOP ATTENDEES{' '}
-          <span style={{ color: '#1a5fd4' }}>◆</span> 99.97 MHT-CET PERCENTILE{' '}
-          <span style={{ color: '#1a5fd4' }}>◆</span>{' '}
-        </span>
-        <span>
-          {solved} DSA PROBLEMS <span style={{ color: '#1a5fd4' }}>◆</span> LEETCODE {rating}{' '}
-          <span style={{ color: '#1a5fd4' }}>◆</span> CODECHEF 3★{' '}
-          <span style={{ color: '#1a5fd4' }}>◆</span> 6 OPEN SOURCE PRS{' '}
-          <span style={{ color: '#1a5fd4' }}>◆</span> 200+ WORKSHOP ATTENDEES{' '}
-          <span style={{ color: '#1a5fd4' }}>◆</span> 99.97 MHT-CET PERCENTILE{' '}
-          <span style={{ color: '#1a5fd4' }}>◆</span>{' '}
-        </span>
-      </div>
-    </div>
-  );
 
   return (
     <section
@@ -315,7 +280,7 @@ export function Projects() {
                       <div
                         style={{
                           fontFamily: 'Inter',
-                          fontSize: '10px',
+                          fontSize: '12px',
                           color: '#1a5fd4',
                           textTransform: 'uppercase',
                           letterSpacing: '0.15em',
@@ -331,7 +296,7 @@ export function Projects() {
                         style={{
                           fontFamily: 'Inter',
                           fontWeight: 800,
-                          fontSize: 'clamp(28px, 4vw, 48px)',
+                          fontSize: 'clamp(32px, 5vw, 56px)',
                           letterSpacing: '-1.5px',
                           color: '#0f1828',
                           lineHeight: 1.1,
@@ -346,7 +311,7 @@ export function Projects() {
                       <p
                         style={{
                           fontFamily: 'Inter',
-                          fontSize: '13px',
+                          fontSize: '15px',
                           color: '#2a3a5a',
                           lineHeight: 1.9,
                           marginBottom: '16px',
@@ -361,7 +326,7 @@ export function Projects() {
                       <div
                         style={{
                           fontFamily: 'Inter',
-                          fontSize: '12px',
+                          fontSize: '14px',
                           color: '#2a3a5a',
                           marginBottom: '24px',
                         }}
@@ -377,7 +342,7 @@ export function Projects() {
                             key={i}
                             style={{
                               fontFamily: 'Inter',
-                              fontSize: '10px',
+                              fontSize: '12px',
                               padding: '4px 10px',
                               border: '1px solid #d0dcf0',
                               borderRadius: '2px',
@@ -400,7 +365,7 @@ export function Projects() {
                           className="inline-flex items-center gap-2 px-4 py-2 rounded transition-all duration-300 hover:bg-gray-50"
                           style={{
                             fontFamily: 'Inter',
-                            fontSize: '12px',
+                            fontSize: '14px',
                             fontWeight: 500,
                             color: '#1a5fd4',
                             backgroundColor: '#ffffff',
@@ -435,7 +400,7 @@ export function Projects() {
                           className="inline-flex items-center gap-2 px-5 py-2.5 rounded transition-all duration-300 hover:gap-3"
                           style={{
                             fontFamily: 'Inter',
-                            fontSize: '11px',
+                            fontSize: '13px',
                             fontWeight: 600,
                             color: '#ffffff',
                             backgroundColor: '#1a5fd4',
@@ -463,7 +428,7 @@ export function Projects() {
                     className={`flex items-center justify-center ${!isEven ? 'lg:order-1' : ''}`}
                     style={{
                       ...contentDelay(slideIdx, 2),
-                      maxHeight: 'calc(100vh - 160px)',
+                      maxHeight: 'calc(100vh - 80px)',
                     }}
                   >
                     <div
@@ -471,7 +436,7 @@ export function Projects() {
                       style={{
                         border: '1px solid #d0dcf0',
                         boxShadow: '0 24px 64px -16px rgba(15, 24, 40, 0.12)',
-                        maxHeight: 'calc(100vh - 180px)',
+                        maxHeight: 'calc(100vh - 100px)',
                       }}
                     >
                       {project.videoSrc ? (
@@ -482,7 +447,7 @@ export function Projects() {
                           muted
                           playsInline
                           className="w-full"
-                          style={{ display: 'block', maxHeight: 'calc(100vh - 200px)', objectFit: 'contain' }}
+                          style={{ display: 'block', maxHeight: 'calc(100vh - 120px)', objectFit: 'contain' }}
                         />
                       ) : project.iframeSrc ? (
                         <div style={{ position: 'relative', width: '100%', paddingTop: '75%' }}>
@@ -504,15 +469,14 @@ export function Projects() {
                           src={project.imageSrc}
                           alt={`${project.title} preview`}
                           className="w-full"
-                          style={{ display: 'block', maxHeight: 'calc(100vh - 200px)', objectFit: 'contain' }}
+                          style={{ display: 'block', maxHeight: 'calc(100vh - 120px)', objectFit: 'contain' }}
                         />
                       ) : null}
                     </div>
                   </div>
                 </div>
 
-                {/* marquee at bottom of every project slide */}
-                {marquee}
+
               </div>
             </div>
           );
@@ -551,18 +515,7 @@ export function Projects() {
 
       {/* ── inline styles ── */}
       <style>{`
-        .marquee-content {
-          display: flex;
-          animation: marquee 30s linear infinite;
-        }
-        .marquee-content span {
-          white-space: nowrap;
-          padding-right: 4rem;
-        }
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
+
         .live-dot {
           animation: pulse-dot 2s ease-in-out infinite;
         }

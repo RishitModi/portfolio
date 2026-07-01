@@ -1,18 +1,24 @@
 import { useParallax } from '../../hooks/useParallax';
-import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
 
 export function Hero() {
   const { ref: gridRef, offset: gridOffset } = useParallax(0.3);
   const { ref: circleRef, offset: circleOffset } = useParallax(0.5);
-  const { rating, solved } = useLeetCodeStats();
 
   const scrollToProjects = () => {
     const element = document.getElementById('projects');
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const stats = [
+    { number: '99.97', label: 'MHT-CET %ILE', url: null as string | null },
+    { number: '494+', label: 'DSA PROBLEMS', url: null as string | null },
+    { number: '1970', label: 'LEETCODE', url: 'https://leetcode.com/u/modeiji09/' },
+    { number: '3★', label: 'CODECHEF', url: 'https://www.codechef.com/users/rishitmodeiji' },
+  ];
+
   return (
     <section className="relative min-h-screen flex items-center" style={{ paddingTop: '72px' }}>
+      {/* ── background decorations ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden hidden md:block">
         <div
           ref={gridRef}
@@ -50,7 +56,9 @@ export function Hero() {
         </div>
       </div>
 
+      {/* ── main content grid ── */}
       <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12">
+        {/* ── left column: typographic block ── */}
         <div className="flex flex-col justify-center gap-8 fade-up">
           <div style={{ fontFamily: 'Inter', fontSize: '11px', color: '#6080b0', letterSpacing: '0.1em' }}>
             [ MUMBAI, IN · 2026 ]
@@ -119,80 +127,99 @@ export function Hero() {
               ↗ LinkedIn
             </a>
           </div>
-
-          <div className="flex items-center gap-6" style={{ fontFamily: 'Inter', fontSize: '12px', color: '#6080b0' }}>
-            <span>{rating} · LeetCode</span>
-            <span style={{ color: '#d0dcf0' }}>|</span>
-            <span>{solved} · DSA Solved</span>
-            <span style={{ color: '#d0dcf0' }}>|</span>
-            <span>3★ · CodeChef</span>
-          </div>
         </div>
 
-        <div className="flex flex-col justify-center gap-6 fade-up-delayed">
+        {/* ── right column: stat cards with ambient backdrop ── */}
+        <div className="relative flex flex-col justify-center">
+          {/* ambient radial gradient blob behind stat grid for visual balance */}
           <div
-            className="rounded-lg overflow-hidden"
+            className="absolute inset-0 pointer-events-none hidden lg:block"
             style={{
-              backgroundColor: '#ffffff',
-              border: '1px solid #d0dcf0',
-              boxShadow: '0 20px 60px rgba(26, 95, 212, 0.06)',
+              background: 'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(26, 95, 212, 0.04) 0%, transparent 70%)',
             }}
-          >
-            <div className="flex items-center gap-2 px-4 py-3" style={{ borderBottom: '1px solid #d0dcf0', backgroundColor: '#e8eef8' }}>
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#e74c3c' }} />
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#f39c12' }} />
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#27ae60' }} />
-              </div>
-              <span style={{ fontFamily: 'Inter', fontSize: '11px', color: '#6080b0', marginLeft: '12px' }}>
-                ~/rishit/profile.py
-              </span>
-            </div>
+          />
 
-            <div className="p-6" style={{ fontFamily: 'Inter', fontSize: '13px', lineHeight: 1.8 }}>
-              <div><span style={{ color: '#6c3fd4' }}>class</span> <span style={{ color: '#0a3a8a' }}>RishitModi</span>:</div>
-              <div className="pl-6"><span style={{ color: '#6080b0' }}>name</span> = <span style={{ color: '#1a5fd4' }}>"Rishit Modi"</span></div>
-              <div className="pl-6"><span style={{ color: '#6080b0' }}>institute</span> = <span style={{ color: '#1a5fd4' }}>"VJTI Mumbai"</span></div>
-              <div className="pl-6"><span style={{ color: '#6080b0' }}>focus</span> = [</div>
-              <div className="pl-12"><span style={{ color: '#1a5fd4' }}>"AI/ML"</span>,</div>
-              <div className="pl-12"><span style={{ color: '#1a5fd4' }}>"Full-Stack"</span>,</div>
-              <div className="pl-12"><span style={{ color: '#1a5fd4' }}>"Cryptography"</span></div>
-              <div className="pl-6">]</div>
-              <div className="pl-6"><span style={{ color: '#6080b0' }}>leetcode_rating</span> = <span style={{ color: '#0a8a5a' }}>{rating}</span></div>
-              <div className="pl-6"><span style={{ color: '#6080b0' }}>open_to_work</span> = <span style={{ color: '#c0392b' }}>True</span></div>
-              <div className="mt-4 pl-6"><span style={{ color: '#6c3fd4' }}>def</span> <span style={{ color: '#0a3a8a' }}>deploy</span>(<span style={{ color: '#6080b0' }}>self</span>):</div>
-              <div className="pl-12"><span style={{ color: '#6c3fd4' }}>return</span> <span style={{ color: '#1a5fd4' }}>"let's build something real."</span></div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 mt-6">
-            {[
-              { number: '99.97', label: 'MHT-CET %ile', url: null as string | null },
-              { number: solved, label: 'DSA Problems', url: null as string | null },
-              { number: rating, label: 'LeetCode', url: 'https://leetcode.com/u/modeiji09/' },
-              { number: '3★', label: 'CodeChef', url: 'https://www.codechef.com/users/rishitmodeiji' }
-            ].map((stat, i) => {
+          <div className="relative grid grid-cols-2 gap-5">
+            {stats.map((stat, i) => {
               const content = (
                 <>
-                  <div style={{ fontFamily: 'Inter', fontWeight: 800, fontSize: '32px', color: '#1a5fd4' }}>
+                  <div style={{
+                    fontFamily: 'Inter',
+                    fontWeight: 800,
+                    fontSize: 'clamp(32px, 3vw, 40px)',
+                    color: '#1a5fd4',
+                    lineHeight: 1.1,
+                  }}>
                     {stat.number}
                   </div>
-                  <div style={{ fontFamily: 'Inter', fontSize: '10px', color: '#6080b0', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: '4px', textDecoration: stat.url ? 'underline' : 'none' }}>
+                  <div style={{
+                    fontFamily: 'Inter',
+                    fontSize: '10px',
+                    color: '#6080b0',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.12em',
+                    marginTop: '8px',
+                    fontWeight: 500,
+                  }}>
                     {stat.label}
                   </div>
                 </>
               );
+
+              const cardClass = `hero-stat-card hero-stat-card-${i} text-center rounded-lg transition-all duration-300`;
+
               return stat.url ? (
-                <a key={i} href={stat.url} target="_blank" rel="noopener noreferrer" className="text-center p-4 rounded-lg transition-all duration-300 hover:shadow-md" style={{ backgroundColor: '#ffffff', border: '1px solid #d0dcf0', textDecoration: 'none' }}>
+                <a
+                  key={i}
+                  href={stat.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${cardClass} hover:shadow-lg hover:border-[#1a5fd4] hover:-translate-y-0.5`}
+                  style={{
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #d0dcf0',
+                    textDecoration: 'none',
+                    padding: 'clamp(24px, 2.5vw, 36px) clamp(16px, 2vw, 24px)',
+                  }}
+                >
                   {content}
                 </a>
               ) : (
-                <div key={i} className="text-center p-4 rounded-lg" style={{ backgroundColor: '#ffffff', border: '1px solid #d0dcf0' }}>
+                <div
+                  key={i}
+                  className={cardClass}
+                  style={{
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #d0dcf0',
+                    padding: 'clamp(24px, 2.5vw, 36px) clamp(16px, 2vw, 24px)',
+                  }}
+                >
                   {content}
                 </div>
               );
             })}
           </div>
+        </div>
+      </div>
+
+      {/* ── scroll-down indicator ── */}
+      <div
+        className="absolute bottom-8 left-1/2 flex flex-col items-center hero-scroll-cue"
+        style={{ transform: 'translateX(-50%)', zIndex: 10 }}
+      >
+        <div className="hero-scroll-line" />
+        <div
+          style={{
+            fontFamily: 'Inter',
+            fontSize: '9px',
+            color: '#6080b0',
+            textTransform: 'uppercase',
+            letterSpacing: '0.2em',
+            marginTop: '10px',
+            fontWeight: 500,
+          }}
+        >
+          SCROLL
         </div>
       </div>
 
@@ -221,6 +248,32 @@ export function Hero() {
             opacity: 1;
             transform: translateY(0);
           }
+        }
+
+        /* staggered entrance for individual stat cards */
+        .hero-stat-card {
+          opacity: 0;
+          animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .hero-stat-card-0 { animation-delay: 0.35s; }
+        .hero-stat-card-1 { animation-delay: 0.45s; }
+        .hero-stat-card-2 { animation-delay: 0.55s; }
+        .hero-stat-card-3 { animation-delay: 0.65s; }
+
+        /* scroll-down indicator */
+        .hero-scroll-cue {
+          animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+          opacity: 0;
+        }
+        .hero-scroll-line {
+          width: 1px;
+          height: 40px;
+          background: linear-gradient(to bottom, transparent, #1a5fd4);
+          animation: scrollPulse 2.4s ease-in-out infinite;
+        }
+        @keyframes scrollPulse {
+          0%, 100% { opacity: 0.3; transform: scaleY(1); }
+          50% { opacity: 0.8; transform: scaleY(1.15); }
         }
       `}</style>
     </section>
