@@ -1,4 +1,4 @@
-# Rishit Modi — Portfolio
+# Rishit Modi - Portfolio
 
 Personal portfolio built with React, Vite, and Tailwind CSS.
 
