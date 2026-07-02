@@ -47,12 +47,11 @@ export function About() {
     <section
       id="about"
       ref={sectionRef}
-      className={`md:py-[120px] md:px-16 ${isVisible ? 'visible' : ''}`}
+      className={`py-16 px-6 md:py-[120px] md:px-16 ${isVisible ? 'visible' : ''}`}
       style={{
         backgroundColor: '#e8eef8',
         borderTop: '1px solid #d0dcf0',
         borderBottom: '1px solid #d0dcf0',
-        padding: '80px 24px',
       }}
     >
       <div className="max-w-[1920px] mx-auto">
@@ -92,19 +91,16 @@ export function About() {
             {infoBlocks.map((block, index) => (
               <div
                 key={index}
-                className="info-row group relative"
+                className="info-row group relative flex flex-col md:flex-row md:items-center md:justify-between items-start"
                 style={{
                   ...getItemStyle(index),
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
                   padding: '32px 0',
                   borderBottom: index < infoBlocks.length - 1 ? '1px solid #d0dcf0' : 'none',
                 }}
               >
                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#1a5fd4] transition-all duration-300 h-0 group-hover:h-full" />
 
-                <div className="flex-1" style={{ paddingLeft: '24px' }}>
+                <div className="flex-1 pl-4 md:pl-6 mb-4 md:mb-0">
                   <h3 style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '20px', color: '#0f1828', marginBottom: '8px' }}>
                     {block.category}
                   </h3>
@@ -113,7 +109,7 @@ export function About() {
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-2 justify-end" style={{ maxWidth: '300px' }}>
+                <div className="flex flex-wrap gap-2 justify-start md:justify-end pl-4 md:pl-0" style={{ maxWidth: '300px' }}>
                   {block.tags.map((tag, i) => (
                     <span
                       key={i}

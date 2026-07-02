@@ -174,7 +174,7 @@ export function Projects() {
                 style={{
                   fontFamily: 'Inter',
                   fontWeight: 800,
-                  fontSize: 'clamp(48px, 8vw, 96px)',
+                  fontSize: 'clamp(36px, 8vw, 96px)',
                   letterSpacing: '-3px',
                   color: '#0f1828',
                   lineHeight: 1.05,
@@ -233,7 +233,7 @@ export function Projects() {
           return (
             <div key={project.index} style={slideStyle(slideIdx)}>
               <div
-                className="relative flex flex-col h-full px-6 md:px-16 pt-16 md:pt-0"
+                className="relative flex flex-col h-full px-6 md:px-16 pt-[80px] lg:pt-0"
                 style={{ maxWidth: '1920px', margin: '0 auto', width: '100%' }}
               >
                 {/* watermark number */}
@@ -272,7 +272,7 @@ export function Projects() {
 
                 {/* two-column layout */}
                 <div
-                  className={`relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 flex-1 items-center pb-16`}
+                  className={`relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-16 flex-1 items-center pb-6 md:pb-16`}
                 >
                   {/* ── text column ── */}
                   <div className={`flex flex-col justify-center ${!isEven ? 'lg:order-2' : ''}`}>
@@ -297,7 +297,7 @@ export function Projects() {
                         style={{
                           fontFamily: 'Inter',
                           fontWeight: 800,
-                          fontSize: 'clamp(32px, 5vw, 56px)',
+                          fontSize: 'clamp(28px, 6vw, 56px)',
                           letterSpacing: '-1.5px',
                           color: '#0f1828',
                           lineHeight: 1.1,
@@ -312,7 +312,7 @@ export function Projects() {
                       <p
                         style={{
                           fontFamily: 'Inter',
-                          fontSize: '17px',
+                          fontSize: 'clamp(14px, 3.5vw, 17px)',
                           color: '#2a3a5a',
                           lineHeight: 1.8,
                           marginBottom: '16px',
@@ -428,10 +428,10 @@ export function Projects() {
 
                   {/* ── visual column ── */}
                   <div
-                    className={`flex items-center justify-center ${!isEven ? 'lg:order-1' : ''}`}
+                    className={`flex items-center justify-center mt-8 lg:mt-0 ${!isEven ? 'lg:order-1' : ''}`}
                     style={{
                       ...contentDelay(slideIdx, 2),
-                      maxHeight: 'calc(100vh - 80px)',
+                      maxHeight: 'clamp(300px, 45vh, calc(100vh - 80px))',
                     }}
                   >
                     <div
@@ -439,7 +439,7 @@ export function Projects() {
                       style={{
                         border: '1px solid #d0dcf0',
                         boxShadow: '0 24px 64px -16px rgba(15, 24, 40, 0.12)',
-                        maxHeight: 'calc(100vh - 100px)',
+                        maxHeight: 'clamp(250px, 40vh, calc(100vh - 100px))',
                       }}
                     >
                       {project.videoSrc ? (
@@ -450,7 +450,7 @@ export function Projects() {
                           muted
                           playsInline
                           className="w-full"
-                          style={{ display: 'block', maxHeight: 'calc(100vh - 120px)', objectFit: 'contain' }}
+                          style={{ display: 'block', maxHeight: 'clamp(250px, 40vh, calc(100vh - 120px))', objectFit: 'contain' }}
                         />
                       ) : project.iframeSrc ? (
                         <div style={{ position: 'relative', width: '100%', paddingTop: '75%' }}>
@@ -472,7 +472,7 @@ export function Projects() {
                           src={project.imageSrc}
                           alt={`${project.title} preview`}
                           className="w-full"
-                          style={{ display: 'block', maxHeight: 'calc(100vh - 120px)', objectFit: 'contain' }}
+                          style={{ display: 'block', maxHeight: 'clamp(250px, 40vh, calc(100vh - 120px))', objectFit: 'contain' }}
                         />
                       ) : null}
                     </div>

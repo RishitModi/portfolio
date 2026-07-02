@@ -65,14 +65,14 @@ export function Hero() {
           </div>
 
           <div>
-            <h1 style={{ fontFamily: 'Inter', fontWeight: 800, fontSize: 'clamp(72px, 10vw, 128px)', lineHeight: 0.9, letterSpacing: '-5px', color: '#0f1828' }}>
+            <h1 style={{ fontFamily: 'Inter', fontWeight: 800, fontSize: 'clamp(48px, 12vw, 128px)', lineHeight: 0.9, letterSpacing: '-5px', color: '#0f1828' }}>
               RISHIT
             </h1>
             <h1
               style={{
                 fontFamily: 'Inter',
                 fontWeight: 800,
-                fontSize: 'clamp(72px, 10vw, 128px)',
+                fontSize: 'clamp(48px, 12vw, 128px)',
                 lineHeight: 0.9,
                 letterSpacing: '-5px',
                 WebkitTextStroke: '2px #1a5fd4',
@@ -139,7 +139,7 @@ export function Hero() {
             }}
           />
 
-          <div className="relative grid grid-cols-2 gap-5">
+          <div className="relative grid grid-cols-2 gap-3 md:gap-5">
             {stats.map((stat, i) => {
               const content = (
                 <>
@@ -179,7 +179,7 @@ export function Hero() {
                     backgroundColor: '#ffffff',
                     border: '1px solid #d0dcf0',
                     textDecoration: 'none',
-                    padding: 'clamp(24px, 2.5vw, 36px) clamp(16px, 2vw, 24px)',
+                    padding: 'clamp(16px, 2.5vw, 36px) clamp(12px, 2vw, 24px)',
                   }}
                 >
                   {content}
@@ -191,7 +191,7 @@ export function Hero() {
                   style={{
                     backgroundColor: '#ffffff',
                     border: '1px solid #d0dcf0',
-                    padding: 'clamp(24px, 2.5vw, 36px) clamp(16px, 2vw, 24px)',
+                    padding: 'clamp(16px, 2.5vw, 36px) clamp(12px, 2vw, 24px)',
                   }}
                 >
                   {content}

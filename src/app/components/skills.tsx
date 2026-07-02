@@ -76,10 +76,9 @@ export function Skills() {
     <section
       id="skills"
       ref={sectionRef}
-      className={`md:py-[120px] md:px-16 ${isVisible ? 'visible' : ''}`}
+      className={`py-16 px-6 md:py-[120px] md:px-16 ${isVisible ? 'visible' : ''}`}
       style={{
         backgroundColor: '#f4f6fa',
-        padding: '80px 24px',
       }}
     >
       <div className="max-w-[1920px] mx-auto">
@@ -110,7 +109,7 @@ export function Skills() {
               style={{
                 ...getItemStyle(index),
                 backgroundColor: '#ffffff',
-                padding: '48px',
+                padding: 'clamp(24px, 5vw, 48px)',
               }}
             >
               <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#1a5fd4] transition-all duration-300 h-0 group-hover:h-full" />
