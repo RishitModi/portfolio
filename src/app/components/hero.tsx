@@ -60,7 +60,7 @@ export function Hero() {
       <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-16 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-12">
         {/* ── left column: typographic block ── */}
         <div className="flex flex-col justify-center gap-8 fade-up">
-          <div style={{ fontFamily: 'Inter', fontSize: '11px', color: '#6080b0', letterSpacing: '0.1em' }}>
+          <div style={{ fontFamily: 'Inter', fontSize: '14px', color: '#6080b0', letterSpacing: '0.1em', fontWeight: 600 }}>
             [ MUMBAI, IN · 2026 ]
           </div>
 
@@ -83,11 +83,11 @@ export function Hero() {
             </h1>
           </div>
 
-          <p style={{ fontFamily: 'Inter', fontSize: '16px', color: '#2a3a5a' }}>
+          <p style={{ fontFamily: 'Inter', fontSize: '20px', color: '#2a3a5a', fontWeight: 500 }}>
             AI/ML Engineer & Full-Stack Builder
           </p>
 
-          <p style={{ fontFamily: 'Inter', fontSize: '13px', color: '#2a3a5a', lineHeight: 2, maxWidth: '540px' }}>
+          <p style={{ fontFamily: 'Inter', fontSize: '17px', color: '#2a3a5a', lineHeight: 1.8, maxWidth: '580px' }}>
             Building intelligent systems at the edge of cryptography, deep learning, and scalable product engineering. B.Tech CS @ VJTI — top 0.03% nationally.
           </p>
 
@@ -95,7 +95,7 @@ export function Hero() {
             <button
               onClick={scrollToProjects}
               className="px-6 py-3 rounded transition-all hover:scale-105"
-              style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', backgroundColor: '#1a5fd4', color: '#ffffff', fontWeight: 500 }}
+              style={{ fontFamily: 'Inter', fontSize: '13px', textTransform: 'uppercase', backgroundColor: '#1a5fd4', color: '#ffffff', fontWeight: 600 }}
             >
               → View Projects
             </button>
@@ -104,7 +104,7 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 rounded transition-all hover:border-[#1a5fd4]"
-              style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#1a5fd4', backgroundColor: '#e8eef8', textDecoration: 'none' }}
+              style={{ fontFamily: 'Inter', fontSize: '13px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#1a5fd4', backgroundColor: '#e8eef8', textDecoration: 'none', fontWeight: 600 }}
             >
               ↓ Resume
             </a>
@@ -113,7 +113,7 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 rounded transition-all hover:border-[#1a5fd4]"
-              style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#2a3a5a', textDecoration: 'none' }}
+              style={{ fontFamily: 'Inter', fontSize: '13px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#2a3a5a', textDecoration: 'none', fontWeight: 600 }}
             >
               ↗ GitHub
             </a>
@@ -122,7 +122,7 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 rounded transition-all hover:border-[#1a5fd4]"
-              style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#2a3a5a', textDecoration: 'none' }}
+              style={{ fontFamily: 'Inter', fontSize: '13px', textTransform: 'uppercase', border: '1px solid #d0dcf0', color: '#2a3a5a', textDecoration: 'none', fontWeight: 600 }}
             >
               ↗ LinkedIn
             </a>
@@ -154,12 +154,12 @@ export function Hero() {
                   </div>
                   <div style={{
                     fontFamily: 'Inter',
-                    fontSize: '10px',
+                    fontSize: '12px',
                     color: '#6080b0',
                     textTransform: 'uppercase',
                     letterSpacing: '0.12em',
                     marginTop: '8px',
-                    fontWeight: 500,
+                    fontWeight: 600,
                   }}>
                     {stat.label}
                   </div>

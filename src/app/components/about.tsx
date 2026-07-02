@@ -56,7 +56,7 @@ export function About() {
       }}
     >
       <div className="max-w-[1920px] mx-auto">
-        <div style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '11px', color: '#1a5fd4', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '24px' }}>
+        <div style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '14px', color: '#1a5fd4', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '24px' }}>
           [ 01 — ABOUT ]
         </div>
 
@@ -76,7 +76,7 @@ export function About() {
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          <div className="flex flex-col gap-6" style={{ fontFamily: 'Inter', fontSize: '13px', color: '#2a3a5a', lineHeight: 2 }}>
+          <div className="flex flex-col gap-6" style={{ fontFamily: 'Inter', fontSize: '17px', color: '#2a3a5a', lineHeight: 1.8 }}>
             <p>
               Student at VJTI Mumbai, one of India's most competitive CS programs. Minor in Cybersecurity.
             </p>
@@ -105,10 +105,10 @@ export function About() {
                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#1a5fd4] transition-all duration-300 h-0 group-hover:h-full" />
 
                 <div className="flex-1" style={{ paddingLeft: '24px' }}>
-                  <h3 style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '18px', color: '#0f1828', marginBottom: '8px' }}>
+                  <h3 style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '20px', color: '#0f1828', marginBottom: '8px' }}>
                     {block.category}
                   </h3>
-                  <p style={{ fontFamily: 'Inter', fontSize: '12px', color: '#2a3a5a', lineHeight: 1.6 }}>
+                  <p style={{ fontFamily: 'Inter', fontSize: '16px', color: '#2a3a5a', lineHeight: 1.6 }}>
                     {block.description}
                   </p>
                 </div>
@@ -119,12 +119,13 @@ export function About() {
                       key={i}
                       style={{
                         fontFamily: 'Inter',
-                        fontSize: '10px',
-                        padding: '4px 10px',
+                        fontSize: '13px',
+                        padding: '6px 12px',
                         border: '1px solid #d0dcf0',
-                        borderRadius: '2px',
+                        borderRadius: '4px',
                         color: '#2a3a5a',
                         backgroundColor: '#f4f6fa',
+                        fontWeight: 500,
                       }}
                     >
                       {tag}
@@ -140,10 +141,11 @@ export function About() {
           <div className="flex items-center gap-3 mb-6">
             <div style={{
               fontFamily: 'Inter',
-              fontSize: '10px',
+              fontSize: '14px',
               color: '#1a5fd4',
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
+              fontWeight: 600,
             }}>
               ► Competitive Programming
             </div>
@@ -165,7 +167,7 @@ export function About() {
             className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded transition-all duration-300 hover:gap-3"
             style={{
               fontFamily: 'Inter',
-              fontSize: '11px',
+              fontSize: '15px',
               fontWeight: 600,
               color: '#ffffff',
               backgroundColor: '#1a5fd4',

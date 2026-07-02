@@ -191,7 +191,7 @@ export function Projects() {
               <p
                 style={{
                   fontFamily: 'Inter',
-                  fontSize: '13px',
+                  fontSize: '17px',
                   color: '#6080b0',
                   maxWidth: '420px',
                 }}
@@ -280,11 +280,12 @@ export function Projects() {
                       <div
                         style={{
                           fontFamily: 'Inter',
-                          fontSize: '12px',
+                          fontSize: '14px',
                           color: '#1a5fd4',
                           textTransform: 'uppercase',
                           letterSpacing: '0.15em',
                           marginBottom: '16px',
+                          fontWeight: 600,
                         }}
                       >
                         ► {project.category}
@@ -311,11 +312,11 @@ export function Projects() {
                       <p
                         style={{
                           fontFamily: 'Inter',
-                          fontSize: '15px',
+                          fontSize: '17px',
                           color: '#2a3a5a',
-                          lineHeight: 1.9,
+                          lineHeight: 1.8,
                           marginBottom: '16px',
-                          maxWidth: '520px',
+                          maxWidth: '560px',
                         }}
                       >
                         {project.description}
@@ -326,9 +327,10 @@ export function Projects() {
                       <div
                         style={{
                           fontFamily: 'Inter',
-                          fontSize: '14px',
+                          fontSize: '16px',
                           color: '#2a3a5a',
                           marginBottom: '24px',
+                          fontWeight: 500,
                         }}
                       >
                         <span style={{ color: '#1a5fd4' }}>◆</span> {project.metric}
@@ -342,12 +344,13 @@ export function Projects() {
                             key={i}
                             style={{
                               fontFamily: 'Inter',
-                              fontSize: '12px',
-                              padding: '4px 10px',
+                              fontSize: '13px',
+                              padding: '6px 12px',
                               border: '1px solid #d0dcf0',
-                              borderRadius: '2px',
+                              borderRadius: '4px',
                               color: '#2a3a5a',
                               backgroundColor: '#eef2f9',
+                              fontWeight: 500,
                             }}
                           >
                             {tag}
@@ -365,7 +368,7 @@ export function Projects() {
                           className="inline-flex items-center gap-2 px-4 py-2 rounded transition-all duration-300 hover:bg-gray-50"
                           style={{
                             fontFamily: 'Inter',
-                            fontSize: '14px',
+                            fontSize: '15px',
                             fontWeight: 500,
                             color: '#1a5fd4',
                             backgroundColor: '#ffffff',
@@ -400,7 +403,7 @@ export function Projects() {
                           className="inline-flex items-center gap-2 px-5 py-2.5 rounded transition-all duration-300 hover:gap-3"
                           style={{
                             fontFamily: 'Inter',
-                            fontSize: '13px',
+                            fontSize: '15px',
                             fontWeight: 600,
                             color: '#ffffff',
                             backgroundColor: '#1a5fd4',
