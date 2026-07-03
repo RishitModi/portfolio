@@ -10,8 +10,22 @@ export function Projects() {
     () => [
       {
         index: '01',
-        title: 'Voyexa',
+        title: 'Wealthio',
         category: 'ACTIVE PROJECT',
+        description:
+          'A comprehensive personal wealth management platform integrating real-time market data with machine learning to offer tailored financial insights, risk profiling, and predictive forecasting.',
+        metric: 'Microservices · AI Risk Profiling',
+        tags: ['React', 'Spring Boot', 'FastAPI', 'scikit-learn', 'Prophet', 'Recharts'],
+        liveUrl: 'https://wealthio-eight.vercel.app' as string | null,
+        githubUrl: 'https://github.com/RishitModi/Wealthio' as string | null,
+        videoSrc: null as string | null,
+        imageSrc: null as string | null,
+        iframeSrc: null as string | null,
+      },
+      {
+        index: '02',
+        title: 'Voyexa',
+        category: 'AI TRAVEL COMPANION',
         description:
           'AI-powered travel companion using Gemini 1.5 Flash for intelligent itinerary generation. Full-stack app with React frontend, Spring Boot backend, and PostgreSQL for user data persistence.',
         metric: 'Gemini 1.5 integration · Live deployment',
@@ -23,7 +37,7 @@ export function Projects() {
         iframeSrc: null as string | null,
       },
       {
-        index: '02',
+        index: '03',
         title: 'eDNA Analyser',
         category: 'BIODIVERSITY ML',
         description:
@@ -37,7 +51,7 @@ export function Projects() {
         iframeSrc: null as string | null,
       },
       {
-        index: '03',
+        index: '04',
         title: 'Energy-based & Neurosymbolic Cryptanalysis',
         category: 'ML RESEARCH',
         description:
@@ -51,7 +65,7 @@ export function Projects() {
         iframeSrc: 'https://anuushkay.github.io/Cryptanalysis_Documentation/',
       },
       {
-        index: '04',
+        index: '05',
         title: 'Enterprise E-Commerce API',
         category: 'BACKEND ARCHITECTURE',
         description:
