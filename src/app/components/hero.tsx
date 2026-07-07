@@ -1,8 +1,10 @@
 import { useParallax } from '../../hooks/useParallax';
+import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
 
 export function Hero() {
   const { ref: gridRef, offset: gridOffset } = useParallax(0.3);
   const { ref: circleRef, offset: circleOffset } = useParallax(0.5);
+  const lcStats = useLeetCodeStats();
 
   const scrollToProjects = () => {
     const element = document.getElementById('projects');
@@ -11,8 +13,8 @@ export function Hero() {
 
   const stats = [
     { number: '99.97', label: 'MHT-CET %ILE', url: null as string | null },
-    { number: '494+', label: 'DSA PROBLEMS', url: null as string | null },
-    { number: '1970', label: 'LEETCODE', url: 'https://leetcode.com/u/modeiji09/' },
+    { number: lcStats.solved, label: 'DSA PROBLEMS', url: null as string | null },
+    { number: lcStats.maxRating, label: 'LC RATING', url: 'https://leetcode.com/u/modeiji09/' },
     { number: '3★', label: 'CODECHEF', url: 'https://www.codechef.com/users/rishitmodeiji' },
   ];
 

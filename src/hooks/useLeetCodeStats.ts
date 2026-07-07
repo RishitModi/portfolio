@@ -1,30 +1,45 @@
 import { useState, useEffect } from 'react';
 
-export function useLeetCodeStats() {
-  const [stats, setStats] = useState({
-    rating: '1839',
-    solved: '250+'
-  });
+interface LeetCodeStats {
+  currentRating: string;
+  maxRating: string;
+  solved: string;
+}
+
+const FALLBACK: LeetCodeStats = {
+  currentRating: '1995',
+  maxRating: '1995',
+  solved: '600+',
+};
+
+export function useLeetCodeStats(): LeetCodeStats {
+  const [stats, setStats] = useState<LeetCodeStats>(FALLBACK);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [contestRes, solvedRes] = await Promise.all([
-          fetch('https://alfa-leetcode-api.onrender.com/modeiji09/contest'),
-          fetch('https://alfa-leetcode-api.onrender.com/modeiji09/solved')
-        ]);
-        
-        if (contestRes.ok && solvedRes.ok) {
-          const contestData = await contestRes.json();
-          const solvedData = await solvedRes.json();
-          
+        const res = await fetch(
+          'https://alfa-leetcode-api.onrender.com/modeiji09/contest'
+        );
+
+        if (res.ok) {
+          const data = await res.json();
+          const current = Math.round(data.contestRating);
+          const max = Math.round(
+            data.contestTopPercentage !== undefined
+              ? Math.max(current, ...((data.contestParticipation ?? []) as { rating: number }[]).map((c: { rating: number }) => c.rating))
+              : current
+          );
+
           setStats({
-            rating: Math.round(contestData.contestRating).toString() || '1839',
-            solved: solvedData.solvedProblem ? `${solvedData.solvedProblem}+` : '250+'
+            currentRating: current ? current.toString() : FALLBACK.currentRating,
+            maxRating: max ? max.toString() : FALLBACK.maxRating,
+            solved: FALLBACK.solved, // always static
           });
         }
       } catch (error) {
         console.error('Failed to fetch LeetCode stats:', error);
+        // fallback values already set via initial state
       }
     };
 
