@@ -7,8 +7,8 @@ interface LeetCodeStats {
 }
 
 const FALLBACK: LeetCodeStats = {
-  currentRating: '1995',
-  maxRating: '1995',
+  currentRating: '2055',
+  maxRating: '2055',
   solved: '600+',
 };
 
