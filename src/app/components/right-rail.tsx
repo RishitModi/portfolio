@@ -76,7 +76,7 @@ export function RightRail() {
               >
                 ◆
               </span>
-              <span>Leading AI/ML mentorship under Project X at VJTI</span>
+              <span>800+ DSA Problems Solved</span>
             </li>
             <li className="flex items-start gap-2">
               <span
@@ -89,7 +89,7 @@ export function RightRail() {
               >
                 ◆
               </span>
-              <span>Delivered Git & Python workshops to 200+ juniors</span>
+              <span>Knight at Leetcode, 3 Star at CodeChef</span>
             </li>
             <li className="flex items-start gap-2">
               <span
