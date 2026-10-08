@@ -5,14 +5,13 @@ export function Footer() {
 
   return (
     <footer
-      className="px-6 md:px-16"
+      className="py-8 px-6 md:px-16"
       style={{
         borderTop: '1px solid #d0dcf0',
         backgroundColor: '#e8eef8',
         fontFamily: 'Inter',
         fontSize: '11px',
         color: '#6080b0',
-        padding: '32px 0',
       }}
     >
       <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">

@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParallax } from '../../hooks/useParallax';
 import { useStaggeredAnimation } from '../../hooks/useScrollAnimation';
+import { SectionLabel } from './section-label';
 
 export function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const { ref: titleRef, offset: titleOffset } = useParallax(0.25);
   const { containerRef, getItemStyle } = useStaggeredAnimation(4, { threshold: 0.15 });
 
   useEffect(() => {
@@ -76,32 +75,33 @@ export function Skills() {
     <section
       id="skills"
       ref={sectionRef}
-      className={`py-16 px-6 md:py-[120px] md:px-16 ${isVisible ? 'visible' : ''}`}
+      className={`py-12 md:py-14 px-6 md:px-8 ${isVisible ? 'visible' : ''}`}
       style={{
         backgroundColor: '#f4f6fa',
       }}
     >
-      <div className="max-w-[1920px] mx-auto">
-        <div style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '11px', color: '#1a5fd4', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '24px' }}>
-          [ 02 — SKILLS ]
-        </div>
+      <div>
+        <SectionLabel>[ 02 — SKILLS ]</SectionLabel>
 
         <h2
-          ref={titleRef}
           style={{
-            fontFamily: 'Inter',
+            fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
             fontWeight: 800,
-            fontSize: 'clamp(40px, 6vw, 64px)',
-            letterSpacing: '-2px',
+            fontSize: 'clamp(26px, 4vw, 38px)',
+            letterSpacing: '-1px',
+            lineHeight: 1.1,
             color: '#0f1828',
-            marginBottom: '48px',
-            transform: `translateY(${titleOffset * 0.2}px)`,
+            marginBottom: '28px',
           }}
         >
           The stack.
         </h2>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-px" style={{ backgroundColor: '#d0dcf0' }} ref={containerRef}>
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 gap-px"
+          style={{ backgroundColor: '#d0dcf0' }}
+          ref={containerRef}
+        >
           {skillCategories.map((category, index) => (
             <div
               key={index}
@@ -109,31 +109,43 @@ export function Skills() {
               style={{
                 ...getItemStyle(index),
                 backgroundColor: '#ffffff',
-                padding: 'clamp(24px, 5vw, 48px)',
+                padding: '20px',
               }}
             >
               <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#1a5fd4] transition-all duration-300 h-0 group-hover:h-full" />
 
-              <div style={{ fontFamily: 'Inter', fontSize: '10px', color: '#6080b0', textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '24px' }}>
+              <div
+                style={{
+                  fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+                  fontSize: '11px',
+                  color: '#6080b0',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.2em',
+                  marginBottom: '16px',
+                  fontWeight: 600,
+                }}
+              >
                 {category.category}
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2">
                 {category.skills.map((skill, i) => (
                   <span
                     key={i}
                     className="skill-tag transition-all duration-200"
                     style={{
-                      fontFamily: 'Inter',
+                      fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                       fontSize: '12px',
                       padding: '4px 10px',
                       border: '1px solid #d0dcf0',
-                      borderRadius: '2px',
+                      borderRadius: '4px',
                       color: '#2a3a5a',
                       backgroundColor: '#f4f6fa',
                     }}
                   >
-                    {skill.isPrimary && <span style={{ color: '#1a5fd4', marginRight: '6px' }}>◆</span>}
+                    {skill.isPrimary && (
+                      <span style={{ color: '#1a5fd4', marginRight: '6px' }}>◆</span>
+                    )}
                     {skill.name}
                   </span>
                 ))}

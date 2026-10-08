@@ -1,70 +1,109 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+const NAV_ITEMS = [
+  { label: 'About', id: 'about' },
+  { label: 'Skills', id: 'skills' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Contact', id: 'contact' },
+] as const;
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
+  // ── scroll detection ──────────────────────────────────────────────────────
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 80);
     };
-
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // ── body scroll lock ──────────────────────────────────────────────────────
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
+  // ── Escape key ────────────────────────────────────────────────────────────
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isMobileMenuOpen]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const closeMenu = () => setIsMobileMenuOpen(false);
+
   return (
+    /*
+     * IMPORTANT: the <nav> must NOT have backdrop-filter, filter, or
+     * will-change on itself — those properties create a new containing block,
+     * which clips `fixed` children to the nav's 72 px height instead of the
+     * viewport. The frosted-glass effect lives on an absolutely-positioned
+     * child that sits behind the nav content.
+     */
     <nav
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{
-        height: '72px',
-        backgroundColor: isScrolled ? 'rgba(244, 246, 250, 0.92)' : 'transparent',
-        borderBottom: isScrolled ? '1px solid #d0dcf0' : 'none',
-        backdropFilter: isScrolled ? 'blur(24px)' : 'none',
-      }}
+      className="fixed top-0 left-0 right-0 z-50"
+      style={{ height: '72px' }}
     >
-      <div className="h-full px-6 md:px-16 flex items-center justify-between max-w-[1920px] mx-auto">
-        <div className="flex items-center gap-1" style={{ fontFamily: 'Inter', fontWeight: 800, zIndex: 60 }}>
+      {/* ── frosted-glass backdrop (behind nav content) ── */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 transition-all duration-300"
+        style={{
+          backgroundColor: isScrolled ? 'rgba(244, 246, 250, 0.92)' : 'transparent',
+          borderBottom: isScrolled ? '1px solid #d0dcf0' : 'none',
+          backdropFilter: isScrolled ? 'blur(24px)' : 'none',
+          WebkitBackdropFilter: isScrolled ? 'blur(24px)' : 'none',
+        }}
+      />
+
+      {/* ── nav content row ── */}
+      <div className="relative z-10 h-full px-6 md:px-16 flex items-center justify-between max-w-[1920px] mx-auto">
+        {/* Logo — always above overlay (z-10 on this row > z-[55] on overlay) */}
+        <div
+          className="flex items-center gap-1"
+          style={{ fontFamily: 'Inter Variable, Inter, system-ui, sans-serif', fontWeight: 800 }}
+        >
           <span style={{ color: '#0f1828' }}>RM</span>
           <span className="cursor-blink" style={{ color: '#1a5fd4' }}>_</span>
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          <button
-            onClick={() => scrollToSection('about')}
-            className="nav-link group relative"
-            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
-          >
-            <span className="bullet" style={{ color: '#1a5fd4', opacity: 0, position: 'absolute', left: '-16px', transition: 'opacity 0.2s, transform 0.2s', transform: 'translateX(-4px)' }}>▪</span>
-            <span className="group-hover:[&+.bullet]:opacity-100 group-hover:[&+.bullet]:translate-x-0">About</span>
-          </button>
-          <button
-            onClick={() => scrollToSection('skills')}
-            className="nav-link group relative"
-            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
-          >
-            Skills
-          </button>
-          <button
-            onClick={() => scrollToSection('projects')}
-            className="nav-link group relative"
-            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
-          >
-            Projects
-          </button>
-          <button
-            onClick={() => scrollToSection('contact')}
-            className="nav-link group relative"
-            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a' }}
-          >
-            Contact
-          </button>
+          {NAV_ITEMS.map(({ label, id }) => (
+            <button
+              key={id}
+              onClick={() => scrollToSection(id)}
+              className="nav-link"
+              style={{
+                fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+                fontSize: '11px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+                color: '#2a3a5a',
+              }}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
         <div className="hidden md:flex items-center gap-4">
@@ -72,76 +111,134 @@ export function Navigation() {
             href="https://drive.google.com/file/d/1vsR0iFkGEZHado6OIQFdK1XCR48UIiUg/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
-            className="nav-link group relative"
-            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#2a3a5a', textDecoration: 'none' }}
+            className="nav-link"
+            style={{
+              fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+              fontSize: '11px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              color: '#2a3a5a',
+              textDecoration: 'none',
+            }}
           >
             Resume ↗
           </a>
           <button
             onClick={() => scrollToSection('contact')}
             className="px-6 py-2.5 rounded transition-all hover:scale-105"
-            style={{ fontFamily: 'Inter', fontSize: '11px', textTransform: 'uppercase', backgroundColor: '#1a5fd4', color: '#ffffff', fontWeight: 500 }}
+            style={{
+              fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+              fontSize: '11px',
+              textTransform: 'uppercase',
+              backgroundColor: '#1a5fd4',
+              color: '#ffffff',
+              fontWeight: 500,
+            }}
           >
             Get in touch →
           </button>
         </div>
 
-        {/* Mobile Hamburger Toggle */}
+        {/* Mobile hamburger — always above overlay */}
         <button
-          className="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8 z-60 relative"
+          id="mobile-menu-toggle"
+          className="md:hidden flex flex-col justify-center gap-[5px] w-8 h-8 relative z-10"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-          style={{ zIndex: 60 }}
+          aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-menu"
         >
-          <span className="block w-6 h-[2px] bg-[#0f1828] transition-transform duration-300" style={{ transform: isMobileMenuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }}></span>
-          <span className="block w-6 h-[2px] bg-[#0f1828] transition-opacity duration-300" style={{ opacity: isMobileMenuOpen ? 0 : 1 }}></span>
-          <span className="block w-6 h-[2px] bg-[#0f1828] transition-transform duration-300" style={{ transform: isMobileMenuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }}></span>
+          <span
+            className="block w-6 h-[2px] bg-[#0f1828] transition-transform duration-300"
+            style={{ transform: isMobileMenuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }}
+          />
+          <span
+            className="block w-6 h-[2px] bg-[#0f1828] transition-opacity duration-300"
+            style={{ opacity: isMobileMenuOpen ? 0 : 1 }}
+          />
+          <span
+            className="block w-6 h-[2px] bg-[#0f1828] transition-transform duration-300"
+            style={{ transform: isMobileMenuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }}
+          />
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/*
+       * Mobile menu overlay.
+       *
+       * It is rendered as a sibling of the nav content row, NOT a child of
+       * the nav element, to avoid the containing-block problem — but because
+       * we cannot break out of <nav> in JSX, we use `position: fixed` with
+       * explicit viewport dimensions.
+       *
+       * Accessibility:
+       *  - `visibility` transitions from hidden→visible so the element is
+       *    removed from the accessibility tree and tab order when closed.
+       *  - `aria-hidden` mirrors the same state for AT that ignore visibility.
+       *  - `inert` (where supported) prevents any focus/interaction.
+       */}
       <div
-        className={`fixed inset-0 bg-[#f4f6fa] z-50 flex flex-col items-center justify-center transition-all duration-300 ease-in-out md:hidden`}
+        id="mobile-menu"
+        ref={overlayRef}
+        aria-hidden={!isMobileMenuOpen}
+        className="md:hidden"
         style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100dvh',
+          backgroundColor: '#f4f6fa',
+          zIndex: 55, // above frosted-glass backdrop (-z-10 relative to nav), below nav content (z-10)
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out, visibility 0.3s',
           opacity: isMobileMenuOpen ? 1 : 0,
-          pointerEvents: isMobileMenuOpen ? 'auto' : 'none',
           transform: isMobileMenuOpen ? 'translateY(0)' : 'translateY(-20px)',
+          visibility: isMobileMenuOpen ? 'visible' : 'hidden',
+          pointerEvents: isMobileMenuOpen ? 'auto' : 'none',
         }}
+        // `inert` attribute: prevents focus/interaction for browsers that support it
+        {...(!isMobileMenuOpen ? { inert: '' } : {})}
       >
         <div className="flex flex-col items-center gap-8 text-center w-full px-6">
-          <button
-            onClick={() => { scrollToSection('about'); setIsMobileMenuOpen(false); }}
-            style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
-          >
-            About
-          </button>
-          <button
-            onClick={() => { scrollToSection('skills'); setIsMobileMenuOpen(false); }}
-            style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
-          >
-            Skills
-          </button>
-          <button
-            onClick={() => { scrollToSection('projects'); setIsMobileMenuOpen(false); }}
-            style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
-          >
-            Projects
-          </button>
-          <button
-            onClick={() => { scrollToSection('contact'); setIsMobileMenuOpen(false); }}
-            style={{ fontFamily: 'Inter', fontWeight: 700, fontSize: '24px', color: '#0f1828', letterSpacing: '0.05em', textTransform: 'uppercase' }}
-          >
-            Contact
-          </button>
-          
-          <div className="w-12 h-px bg-[#d0dcf0] my-2"></div>
-          
+          {NAV_ITEMS.map(({ label, id }) => (
+            <button
+              key={id}
+              onClick={() => {
+                scrollToSection(id);
+                closeMenu();
+              }}
+              style={{
+                fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+                fontWeight: 700,
+                fontSize: '24px',
+                color: '#0f1828',
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase',
+              }}
+            >
+              {label}
+            </button>
+          ))}
+
+          <div className="w-12 h-px bg-[#d0dcf0] my-2" />
+
           <a
             href="https://drive.google.com/file/d/1vsR0iFkGEZHado6OIQFdK1XCR48UIiUg/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => setIsMobileMenuOpen(false)}
-            style={{ fontFamily: 'Inter', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#1a5fd4', textDecoration: 'none' }}
+            onClick={closeMenu}
+            style={{
+              fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+              fontSize: '14px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              color: '#1a5fd4',
+              textDecoration: 'none',
+            }}
           >
             Download Resume ↗
           </a>
@@ -156,16 +253,27 @@ export function Navigation() {
           0%, 50% { opacity: 1; }
           50.01%, 100% { opacity: 0; }
         }
-        .pulse-dot {
-          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+        /* Desktop nav-link hover: colour shift + animated underline */
+        .nav-link {
+          position: relative;
+          transition: color 0.2s ease;
         }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.5; }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 1px;
+          background-color: #1a5fd4;
+          transition: width 0.2s ease;
         }
-        .nav-link:hover .bullet {
-          opacity: 1 !important;
-          transform: translateX(0) !important;
+        .nav-link:hover {
+          color: #1a5fd4 !important;
+        }
+        .nav-link:hover::after {
+          width: 100%;
         }
       `}</style>
     </nav>
