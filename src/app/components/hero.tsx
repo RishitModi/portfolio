@@ -1,14 +1,9 @@
 import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
-import { scrollToId } from '../../lib/scroll';
 import { LINKS, PROFILE } from '../../lib/content';
 
 export function Hero() {
   const lcStats = useLeetCodeStats();
   const [firstName, lastName] = PROFILE.name.toUpperCase().split(' ');
-
-  const scrollToProjects = () => {
-    scrollToId('projects');
-  };
 
   const stats = [
     { number: '99.97', label: 'MHT-CET %ILE', url: null as string | null },
@@ -18,7 +13,7 @@ export function Hero() {
   ];
 
   return (
-    <section id="profile" className="pt-[96px] pb-10 lg:pt-12 px-6 md:px-8">
+    <section id="profile" className="pt-[96px] pb-10 lg:pt-14 px-6 md:px-8">
       <div className="flex flex-col gap-6 fade-up">
         {/* 1. Location label */}
         <div
@@ -84,90 +79,8 @@ export function Hero() {
           Building intelligent systems at the edge of cryptography, deep learning, and scalable product engineering. B.Tech CS @ VJTI — top 0.03% nationally.
         </p>
 
-        {/* 5. Buttons row */}
-        <div className="flex flex-wrap items-center gap-2">
-          <button
-            onClick={scrollToProjects}
-            className="transition-all hover:opacity-90"
-            style={{
-              fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-              fontSize: '12px',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              backgroundColor: '#1a5fd4',
-              color: '#ffffff',
-              padding: '8px 16px',
-              borderRadius: '4px',
-              border: 'none',
-              cursor: 'pointer',
-            }}
-          >
-            → View Projects
-          </button>
-          <a
-            href={LINKS.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-all hover:border-[#1a5fd4]"
-            style={{
-              fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-              fontSize: '12px',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              padding: '8px 16px',
-              border: '1px solid #d0dcf0',
-              color: '#1a5fd4',
-              backgroundColor: '#e8eef8',
-              textDecoration: 'none',
-              borderRadius: '4px',
-            }}
-          >
-            ↓ Resume
-          </a>
-          <a
-            href={LINKS.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-all hover:border-[#1a5fd4]"
-            style={{
-              fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-              fontSize: '12px',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              padding: '8px 16px',
-              border: '1px solid #d0dcf0',
-              color: '#2a3a5a',
-              backgroundColor: '#ffffff',
-              textDecoration: 'none',
-              borderRadius: '4px',
-            }}
-          >
-            ↗ GitHub
-          </a>
-          <a
-            href={LINKS.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-all hover:border-[#1a5fd4]"
-            style={{
-              fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-              fontSize: '12px',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              padding: '8px 16px',
-              border: '1px solid #d0dcf0',
-              color: '#2a3a5a',
-              backgroundColor: '#ffffff',
-              textDecoration: 'none',
-              borderRadius: '4px',
-            }}
-          >
-            ↗ LinkedIn
-          </a>
-        </div>
-
-        {/* 6. Stat cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+        {/* 5. Stat cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {stats.map((stat, i) => {
             const content = (
               <>
