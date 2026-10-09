@@ -1,4 +1,5 @@
 import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
+import { LINKS } from '../../lib/content';
 
 interface CardProps {
   title: string;
@@ -43,11 +44,11 @@ export function RightRail() {
   const { currentRating } = useLeetCodeStats();
 
   const elsewhereLinks = [
-    { label: 'GitHub', href: 'https://github.com/RishitModi', badge: null, isExternal: true },
-    { label: 'LinkedIn', href: 'https://linkedin.com/in/rishitmodii', badge: null, isExternal: true },
-    { label: 'LeetCode', href: 'https://leetcode.com/u/modeiji09/', badge: currentRating, isExternal: true },
-    { label: 'CodeChef', href: 'https://www.codechef.com/users/rishitmodeiji', badge: '3★', isExternal: true },
-    { label: 'Email', href: 'mailto:modirishit6@gmail.com', badge: null, isExternal: false },
+    { label: 'GitHub', href: LINKS.github, badge: null, isExternal: true },
+    { label: 'LinkedIn', href: LINKS.linkedin, badge: null, isExternal: true },
+    { label: 'LeetCode', href: LINKS.leetcode, badge: currentRating, isExternal: true },
+    { label: 'CodeChef', href: LINKS.codechef, badge: '3★', isExternal: true },
+    { label: 'Email', href: LINKS.email, badge: null, isExternal: false },
   ];
 
   return (

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { CustomCursor } from './components/custom-cursor';
 import { GrainOverlay } from './components/grain-overlay';
 import { DesktopSidebar, MobileTopBar } from './components/sidebar';
@@ -11,30 +10,8 @@ import { Contact } from './components/contact';
 import { Footer } from './components/footer';
 
 export default function App() {
-  useEffect(() => {
-    document.documentElement.style.scrollBehavior = 'smooth';
-
-    const handleReducedMotion = () => {
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (prefersReducedMotion) {
-        document.documentElement.style.scrollBehavior = 'auto';
-        const style = document.createElement('style');
-        style.innerHTML = `
-          *, *::before, *::after {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-          }
-        `;
-        document.head.appendChild(style);
-      }
-    };
-
-    handleReducedMotion();
-  }, []);
-
   return (
-    <div style={{ backgroundColor: '#f4f6fa', color: '#2a3a5a' }}>
+    <div className="bg-canvas text-body">
       {/* Global overlays — always on top */}
       <CustomCursor />
       <GrainOverlay />

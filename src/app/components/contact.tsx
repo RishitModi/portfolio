@@ -1,38 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { LINKS, PROFILE } from '../../lib/content';
 
 export function Contact() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.15 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   const contactLinks = [
-    { icon: '✉', label: 'modirishit6@gmail.com', href: 'mailto:modirishit6@gmail.com' },
-    { icon: '↗', label: 'github.com/RishitModi', href: 'https://github.com/RishitModi' },
-    { icon: '↗', label: 'linkedin.com/in/rishitmodii', href: 'https://linkedin.com/in/rishitmodii' },
-    { icon: '↓', label: 'Resume', href: 'https://drive.google.com/file/d/1vsR0iFkGEZHado6OIQFdK1XCR48UIiUg/view?usp=sharing' },
+    { icon: '✉', label: PROFILE.email, href: LINKS.email },
+    { icon: '↗', label: LINKS.github.replace('https://', ''), href: LINKS.github },
+    { icon: '↗', label: LINKS.linkedin.replace('https://', ''), href: LINKS.linkedin },
+    { icon: '↓', label: 'Resume', href: LINKS.resume },
   ];
 
   return (
     <section
       id="contact"
-      ref={sectionRef}
-      className={`relative overflow-hidden py-12 md:py-14 px-6 md:px-8 ${isVisible ? 'visible' : ''}`}
+      className="relative overflow-hidden py-12 md:py-14 px-6 md:px-8"
       style={{
         backgroundColor: '#f4f6fa',
       }}

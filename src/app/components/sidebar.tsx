@@ -1,18 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import { scrollToId, scrollToTop } from '../../lib/scroll';
+import { LINKS, NAV_ITEMS, type NavId } from '../../lib/content';
 
-// ─── shared constants ─────────────────────────────────────────────────────────
-export const RESUME_URL =
-  'https://drive.google.com/file/d/1dujS7VBswnAi-Rb2ICW0JK79Y9O_yfnF/view?usp=sharing';
-
-export const NAV_ITEMS = [
-  { label: 'Profile', id: 'profile' },
-  { label: 'About', id: 'about' },
-  { label: 'Skills', id: 'skills' },
-  { label: 'Projects', id: 'projects' },
-  { label: 'Contact', id: 'contact' },
-] as const;
-
-export type NavId = (typeof NAV_ITEMS)[number]['id'];
+export { NAV_ITEMS, type NavId };
 
 // ─── inline SVG icons (24-px viewBox, stroke currentColor) ───────────────────
 interface IconProps {
@@ -113,11 +103,7 @@ function useScrollSpy(ids: readonly string[]): string {
   return active;
 }
 
-// ─── smooth-scroll helper ─────────────────────────────────────────────────────
-function scrollToId(id: string) {
-  const el = document.getElementById(id);
-  el?.scrollIntoView({ behavior: 'smooth' });
-}
+
 
 // ─── DesktopSidebar ───────────────────────────────────────────────────────────
 export function DesktopSidebar() {
@@ -131,7 +117,7 @@ export function DesktopSidebar() {
       <div className="flex flex-col h-full px-4 py-6 gap-6">
         {/* Logo */}
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={scrollToTop}
           className="flex items-center gap-1 mb-2 self-start"
           aria-label="Scroll to top"
           style={{ fontFamily: 'Inter Variable, Inter, system-ui, sans-serif', fontWeight: 800, fontSize: '18px' }}
@@ -178,7 +164,7 @@ export function DesktopSidebar() {
 
         {/* Resume CTA */}
         <a
-          href={RESUME_URL}
+          href={LINKS.resume}
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full text-center py-2.5 rounded-lg transition-opacity hover:opacity-90"
@@ -198,7 +184,7 @@ export function DesktopSidebar() {
         {/* Social links */}
         <div className="flex items-center gap-4 justify-center pt-2" style={{ borderTop: '1px solid #d0dcf0' }}>
           <a
-            href="https://github.com/RishitModi"
+            href={LINKS.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
@@ -208,7 +194,7 @@ export function DesktopSidebar() {
             <IconGitHub size={18} />
           </a>
           <a
-            href="https://linkedin.com/in/rishitmodii"
+            href={LINKS.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
@@ -218,7 +204,7 @@ export function DesktopSidebar() {
             <IconLinkedIn size={18} />
           </a>
           <a
-            href="mailto:modirishit6@gmail.com"
+            href={LINKS.email}
             aria-label="Email"
             className="sidebar-social-link transition-colors duration-200"
             style={{ color: '#6080b0' }}
@@ -306,7 +292,7 @@ export function MobileTopBar() {
       <div className="relative z-10 h-full px-6 flex items-center justify-between">
         {/* Logo */}
         <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={scrollToTop}
           className="flex items-center gap-1"
           aria-label="Scroll to top"
           style={{ fontFamily: 'Inter Variable, Inter, system-ui, sans-serif', fontWeight: 800, fontSize: '18px' }}
@@ -396,7 +382,7 @@ export function MobileTopBar() {
 
         {/* Resume */}
         <a
-          href={RESUME_URL}
+          href={LINKS.resume}
           target="_blank"
           rel="noopener noreferrer"
           onClick={close}
@@ -414,13 +400,13 @@ export function MobileTopBar() {
 
         {/* Social icons */}
         <div className="flex items-center gap-6 mt-4" style={{ color: '#6080b0' }}>
-          <a href="https://github.com/RishitModi" target="_blank" rel="noopener noreferrer" aria-label="GitHub" style={{ color: 'inherit' }}>
+          <a href={LINKS.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" style={{ color: 'inherit' }}>
             <IconGitHub />
           </a>
-          <a href="https://linkedin.com/in/rishitmodii" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ color: 'inherit' }}>
+          <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ color: 'inherit' }}>
             <IconLinkedIn />
           </a>
-          <a href="mailto:modirishit6@gmail.com" aria-label="Email" style={{ color: 'inherit' }}>
+          <a href={LINKS.email} aria-label="Email" style={{ color: 'inherit' }}>
             <IconMail />
           </a>
         </div>

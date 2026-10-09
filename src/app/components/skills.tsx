@@ -1,81 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
 import { useStaggeredAnimation } from '../../hooks/useScrollAnimation';
 import { SectionLabel } from './section-label';
+import { SKILL_CATEGORIES } from '../../lib/content';
 
 export function Skills() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const { containerRef, getItemStyle } = useStaggeredAnimation(4, { threshold: 0.15 });
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.15 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const skillCategories = [
-    {
-      category: 'Languages',
-      skills: [
-        { name: 'Python', isPrimary: true },
-        { name: 'Java', isPrimary: false },
-        { name: 'C++', isPrimary: true },
-        { name: 'JavaScript', isPrimary: false },
-        { name: 'TypeScript', isPrimary: false },
-        { name: 'SQL', isPrimary: false },
-      ],
-    },
-    {
-      category: 'AI / ML',
-      skills: [
-        { name: 'PyTorch', isPrimary: true },
-        { name: 'TensorFlow', isPrimary: false },
-        { name: 'Scikit-learn', isPrimary: false },
-        { name: 'Transformers', isPrimary: false },
-        { name: 'CNN', isPrimary: false },
-        { name: 'VAE', isPrimary: false },
-        { name: 'HDBSCAN', isPrimary: false },
-      ],
-    },
-    {
-      category: 'Backend & Frameworks',
-      skills: [
-        { name: 'Spring Boot', isPrimary: true },
-        { name: 'React', isPrimary: true },
-        { name: 'Node.js', isPrimary: false },
-        { name: 'Flask', isPrimary: false },
-        { name: 'REST APIs', isPrimary: false },
-        { name: 'Tailwind', isPrimary: false },
-      ],
-    },
-    {
-      category: 'Databases & DevOps',
-      skills: [
-        { name: 'Docker', isPrimary: true },
-        { name: 'PostgreSQL', isPrimary: false },
-        { name: 'MongoDB', isPrimary: false },
-        { name: 'Git', isPrimary: false },
-        { name: 'Linux', isPrimary: false },
-      ],
-    },
-  ];
+  const { containerRef, getItemStyle } = useStaggeredAnimation(SKILL_CATEGORIES.length, { threshold: 0.15 });
 
   return (
     <section
       id="skills"
-      ref={sectionRef}
-      className={`py-12 md:py-14 px-6 md:px-8 ${isVisible ? 'visible' : ''}`}
+      className="py-12 md:py-14 px-6 md:px-8"
       style={{
         backgroundColor: '#f4f6fa',
       }}
@@ -102,7 +35,7 @@ export function Skills() {
           style={{ backgroundColor: '#d0dcf0' }}
           ref={containerRef}
         >
-          {skillCategories.map((category, index) => (
+          {SKILL_CATEGORIES.map((category, index) => (
             <div
               key={index}
               className="skill-cell group relative"

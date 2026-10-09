@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { LEETCODE_USERNAME } from '../lib/content';
 
 export interface LeetCodeStats {
   currentRating: string;
@@ -12,7 +13,7 @@ const FALLBACK: LeetCodeStats = {
   solved: '600+',
 };
 
-const API_URL = 'https://alfa-leetcode-api.onrender.com/modeiji09/contest';
+const API_URL = `https://alfa-leetcode-api.onrender.com/${LEETCODE_USERNAME}/contest`;
 const CACHE_KEY = 'lc-stats-v1';
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
 const TIMEOUT_MS = 6000; // 6 seconds

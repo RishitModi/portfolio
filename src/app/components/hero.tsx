@@ -1,18 +1,20 @@
 import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
+import { scrollToId } from '../../lib/scroll';
+import { LINKS, PROFILE } from '../../lib/content';
 
 export function Hero() {
   const lcStats = useLeetCodeStats();
+  const [firstName, lastName] = PROFILE.name.toUpperCase().split(' ');
 
   const scrollToProjects = () => {
-    const element = document.getElementById('projects');
-    element?.scrollIntoView({ behavior: 'smooth' });
+    scrollToId('projects');
   };
 
   const stats = [
     { number: '99.97', label: 'MHT-CET %ILE', url: null as string | null },
     { number: lcStats.solved, label: 'DSA PROBLEMS', url: null as string | null },
-    { number: lcStats.maxRating, label: 'LC MAX RATING', url: 'https://leetcode.com/u/modeiji09/' },
-    { number: '3★', label: 'CODECHEF', url: 'https://www.codechef.com/users/rishitmodeiji' },
+    { number: lcStats.maxRating, label: 'LC MAX RATING', url: LINKS.leetcode },
+    { number: '3★', label: 'CODECHEF', url: LINKS.codechef },
   ];
 
   return (
@@ -28,7 +30,7 @@ export function Hero() {
             fontWeight: 600,
           }}
         >
-          [ MUMBAI, IN · 2026 ]
+          [ {PROFILE.location.toUpperCase()} · {PROFILE.year} ]
         </div>
 
         {/* 2. Name */}
@@ -43,7 +45,7 @@ export function Hero() {
             }}
           >
             <span className="block" style={{ color: '#0f1828' }}>
-              RISHIT
+              {firstName}
             </span>
             <span
               className="block"
@@ -52,7 +54,7 @@ export function Hero() {
                 color: 'transparent',
               }}
             >
-              MODI
+              {lastName}
             </span>
           </h1>
         </div>
@@ -103,7 +105,7 @@ export function Hero() {
             → View Projects
           </button>
           <a
-            href="https://drive.google.com/file/d/1vsR0iFkGEZHado6OIQFdK1XCR48UIiUg/view?usp=sharing"
+            href={LINKS.resume}
             target="_blank"
             rel="noopener noreferrer"
             className="transition-all hover:border-[#1a5fd4]"
@@ -123,7 +125,7 @@ export function Hero() {
             ↓ Resume
           </a>
           <a
-            href="https://github.com/RishitModi"
+            href={LINKS.github}
             target="_blank"
             rel="noopener noreferrer"
             className="transition-all hover:border-[#1a5fd4]"
@@ -143,7 +145,7 @@ export function Hero() {
             ↗ GitHub
           </a>
           <a
-            href="https://linkedin.com/in/rishitmodii"
+            href={LINKS.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="transition-all hover:border-[#1a5fd4]"

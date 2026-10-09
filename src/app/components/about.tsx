@@ -1,52 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
 import { useStaggeredAnimation } from '../../hooks/useScrollAnimation';
 import { SectionLabel } from './section-label';
+import { ABOUT_BLOCKS, LEETCODE_USERNAME, LINKS } from '../../lib/content';
 
 export function About() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const { containerRef, getItemStyle } = useStaggeredAnimation(3, { threshold: 0.15 });
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.15 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const infoBlocks = [
-    {
-      category: 'AI & Deep Learning',
-      description: 'Building intelligent systems with state-of-the-art architectures',
-      tags: ['PyTorch', 'TensorFlow', 'VAE', 'CNN', 'Transformers'],
-    },
-    {
-      category: 'Full-Stack Engineering',
-      description: 'End-to-end product development from APIs to polished interfaces',
-      tags: ['React', 'Spring Boot', 'Node.js', 'PostgreSQL', 'REST'],
-    },
-    {
-      category: 'Cybersecurity',
-      description: 'Applied cryptography and security analysis',
-      tags: ['Cryptanalysis', 'AES/DES', 'Side-Channel', 'Pycryptodome'],
-    },
-  ];
+  const { containerRef, getItemStyle } = useStaggeredAnimation(ABOUT_BLOCKS.length, { threshold: 0.15 });
 
   return (
     <section
       id="about"
-      ref={sectionRef}
-      className={`py-12 md:py-14 px-6 md:px-8 ${isVisible ? 'visible' : ''}`}
+      className="py-12 md:py-14 px-6 md:px-8"
       style={{
         backgroundColor: '#e8eef8',
         borderTop: '1px solid #d0dcf0',
@@ -90,14 +52,14 @@ export function About() {
 
         {/* Three info blocks stacked */}
         <div className="flex flex-col" ref={containerRef}>
-          {infoBlocks.map((block, index) => (
+          {ABOUT_BLOCKS.map((block, index) => (
             <div
               key={index}
               className="info-row group relative"
               style={{
                 ...getItemStyle(index),
                 padding: '20px 0',
-                borderBottom: index < infoBlocks.length - 1 ? '1px solid #d0dcf0' : 'none',
+                borderBottom: index < ABOUT_BLOCKS.length - 1 ? '1px solid #d0dcf0' : 'none',
               }}
             >
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#1a5fd4] transition-all duration-300 h-0 group-hover:h-full" />
@@ -172,8 +134,8 @@ export function About() {
             style={{ border: '1px solid #d0dcf0', backgroundColor: '#ffffff' }}
           >
             <img
-              src="https://leetcard.jacoblin.cool/modeiji09?theme=light&font=JetBrains%20Mono&ext=heatmap"
-              alt="LeetCode Stats - modeiji09"
+              src={`https://leetcard.jacoblin.cool/${LEETCODE_USERNAME}?theme=light&font=JetBrains%20Mono&ext=heatmap`}
+              alt={`LeetCode Stats - ${LEETCODE_USERNAME}`}
               loading="lazy"
               className="w-full h-auto"
               style={{ display: 'block' }}
@@ -181,7 +143,7 @@ export function About() {
           </div>
 
           <a
-            href="https://leetcode.com/u/modeiji09/"
+            href={LINKS.leetcode}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 mt-4 rounded transition-all duration-300 hover:gap-3"

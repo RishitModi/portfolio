@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { scrollToId } from '../../lib/scroll';
+import { LINKS } from '../../lib/content';
 
 const NAV_ITEMS = [
   { label: 'About', id: 'about' },
@@ -45,8 +47,7 @@ export function Navigation() {
   }, [isMobileMenuOpen]);
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    scrollToId(id);
   };
 
   const closeMenu = () => setIsMobileMenuOpen(false);
@@ -108,7 +109,7 @@ export function Navigation() {
 
         <div className="hidden md:flex items-center gap-4">
           <a
-            href="https://drive.google.com/file/d/1vsR0iFkGEZHado6OIQFdK1XCR48UIiUg/view?usp=sharing"
+            href={LINKS.resume}
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link"
@@ -227,7 +228,7 @@ export function Navigation() {
           <div className="w-12 h-px bg-[#d0dcf0] my-2" />
 
           <a
-            href="https://drive.google.com/file/d/1vsR0iFkGEZHado6OIQFdK1XCR48UIiUg/view?usp=sharing"
+            href={LINKS.resume}
             target="_blank"
             rel="noopener noreferrer"
             onClick={closeMenu}

@@ -1,8 +1,7 @@
-export function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+import { LINKS, PROFILE } from '../../lib/content';
+import { scrollToTop } from '../../lib/scroll';
 
+export function Footer() {
   return (
     <footer
       className="py-8 px-6 md:px-16"
@@ -17,16 +16,16 @@ export function Footer() {
       <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <span style={{ color: '#0f1828', fontWeight: 600 }}>RM.</span>
-          <span>© 2026</span>
+          <span>© {PROFILE.year}</span>
           <span className="hidden md:inline" style={{ color: '#d0dcf0' }}>|</span>
-          <span className="hidden md:inline">Designed & developed by Rishit Modi</span>
+          <span className="hidden md:inline">Designed & developed by {PROFILE.name}</span>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-6">
-          <a href="mailto:modirishit6@gmail.com" className="footer-link">Email</a>
-          <a href="https://github.com/RishitModi" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
-          <a href="https://linkedin.com/in/rishitmodii" target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a>
-          <a href="https://drive.google.com/file/d/1vsR0iFkGEZHado6OIQFdK1XCR48UIiUg/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="footer-link">Resume</a>
+          <a href={LINKS.email} className="footer-link">Email</a>
+          <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
+          <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a>
+          <a href={LINKS.resume} target="_blank" rel="noopener noreferrer" className="footer-link">Resume</a>
         </div>
 
         <button 
