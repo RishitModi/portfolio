@@ -12,20 +12,64 @@ export const PROFILE: Profile = {
   year: 2026,
 } as const;
 
-export const LEETCODE_USERNAME = 'modeiji09';
+export const HANDLES = {
+  leetcode: 'modeiji09',
+  codechef: 'rishitmodeiji',
+  codeforces: 'rishitmodi',
+} as const;
+
+export const LEETCODE_USERNAME = HANDLES.leetcode;
 
 export const LINKS = {
   resume: 'https://drive.google.com/file/d/1dujS7VBswnAi-Rb2ICW0JK79Y9O_yfnF/view?usp=sharing',
   github: 'https://github.com/RishitModi',
   linkedin: 'https://linkedin.com/in/rishitmodii',
-  leetcode: 'https://leetcode.com/u/modeiji09/',
-  codechef: 'https://www.codechef.com/users/rishitmodeiji',
+  leetcode: `https://leetcode.com/u/${HANDLES.leetcode}/`,
+  codechef: `https://www.codechef.com/users/${HANDLES.codechef}`,
+  codeforces: `https://codeforces.com/profile/${HANDLES.codeforces}`,
   email: 'mailto:modirishit6@gmail.com',
 } as const;
+
+export interface CpFallbackData {
+  codechef: {
+    rating: number;
+    maxRating: number;
+    stars: number;
+    globalRank: number;
+    solved: number;
+    contests: number;
+  };
+  codeforces: {
+    rating: number;
+    maxRating: number;
+    rank: string;
+    solved: number | null;
+    contests: number;
+  };
+}
+
+export const CP_FALLBACK: CpFallbackData = {
+  codechef: {
+    rating: 1732,
+    maxRating: 1732,
+    stars: 3,
+    globalRank: 6153,
+    solved: 561,
+    contests: 22,
+  },
+  codeforces: {
+    rating: 1377,
+    maxRating: 1377,
+    rank: 'pupil',
+    solved: null,
+    contests: 5,
+  },
+};
 
 export const NAV_ITEMS = [
   { label: 'Profile', id: 'profile' },
   { label: 'About', id: 'about' },
+  { label: 'Competitive Programming', id: 'competitive' },
   { label: 'Skills', id: 'skills' },
   { label: 'Projects', id: 'projects' },
   { label: 'Contact', id: 'contact' },

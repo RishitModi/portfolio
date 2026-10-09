@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { scrollToId, scrollToTop } from '../../lib/scroll';
 import { LINKS, NAV_ITEMS, type NavId } from '../../lib/content';
+import { ThemeToggle } from './theme-toggle';
 
 export { NAV_ITEMS, type NavId };
 
@@ -66,9 +67,22 @@ function IconLinkedIn({ size = 18 }: IconProps) {
   );
 }
 
+function IconTrophy({ size = 20 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+      <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+      <path d="M4 22h16" />
+      <path d="M10 14.66V17c0 .55-.45 1-1 1H8c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h8c.55 0 1-.45 1-1v-1c0-.55-.45-1-1-1h-1c-.55 0-1-.45-1-1v-2.34" />
+      <path d="M18 4H6v7a6 6 0 0 0 12 0V4z" />
+    </svg>
+  );
+}
+
 const NAV_ICONS: Record<NavId, (props: IconProps) => JSX.Element> = {
   profile: IconHome,
   about: IconUser,
+  competitive: IconTrophy,
   skills: IconZap,
   projects: IconCode,
   contact: IconMail,
@@ -103,28 +117,29 @@ function useScrollSpy(ids: readonly string[]): string {
   return active;
 }
 
-
-
 // ─── DesktopSidebar ───────────────────────────────────────────────────────────
 export function DesktopSidebar() {
   const activeId = useScrollSpy(NAV_ITEMS.map((n) => n.id));
 
   return (
     <aside
-      className="hidden lg:flex flex-col sticky top-0 h-screen"
-      style={{ borderRight: '1px solid #d0dcf0' }}
+      className="hidden lg:flex flex-col h-full"
+      style={{ borderRight: '1px solid var(--line)' }}
     >
       <div className="flex flex-col h-full px-4 py-6 gap-6">
-        {/* Logo */}
-        <button
-          onClick={scrollToTop}
-          className="flex items-center gap-1 mb-2 self-start"
-          aria-label="Scroll to top"
-          style={{ fontFamily: 'Inter Variable, Inter, system-ui, sans-serif', fontWeight: 800, fontSize: '18px' }}
-        >
-          <span style={{ color: '#0f1828' }}>RM</span>
-          <span className="sidebar-blink" style={{ color: '#1a5fd4' }}>_</span>
-        </button>
+        {/* Logo and theme toggle row */}
+        <div className="flex items-center justify-between mb-2">
+          <button
+            onClick={scrollToTop}
+            className="flex items-center gap-1 self-start"
+            aria-label="Scroll to top"
+            style={{ fontFamily: 'Inter Variable, Inter, system-ui, sans-serif', fontWeight: 800, fontSize: '18px' }}
+          >
+            <span style={{ color: 'var(--ink)' }}>RM</span>
+            <span className="sidebar-blink" style={{ color: 'var(--accent)' }}>_</span>
+          </button>
+          <ThemeToggle />
+        </div>
 
         {/* Nav */}
         <nav aria-label="Primary" className="flex-1">
@@ -140,21 +155,22 @@ export function DesktopSidebar() {
                       e.preventDefault();
                       scrollToId(id);
                     }}
-                    className="sidebar-nav-link flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200"
+                    title={label}
+                    className="sidebar-nav-link flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 min-h-[40px] leading-tight"
                     style={{
-                      backgroundColor: isActive ? '#e8eef8' : 'transparent',
-                      color: isActive ? '#1a5fd4' : '#2a3a5a',
+                      backgroundColor: isActive ? 'var(--surface)' : 'transparent',
+                      color: isActive ? 'var(--accent)' : 'var(--body)',
                       fontWeight: isActive ? 700 : 500,
                       fontSize: '14px',
                       textDecoration: 'none',
                       fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                     }}
-                    aria-current={isActive ? 'page' : undefined}
+                    aria-current={isActive ? 'true' : undefined}
                   >
-                    <span style={{ color: isActive ? '#1a5fd4' : '#6080b0', flexShrink: 0 }}>
+                    <span style={{ color: isActive ? 'var(--accent)' : 'var(--muted)', flexShrink: 0 }}>
                       <Icon size={20} />
                     </span>
-                    {label}
+                    <span>{label}</span>
                   </a>
                 </li>
               );
@@ -169,7 +185,7 @@ export function DesktopSidebar() {
           rel="noopener noreferrer"
           className="block w-full text-center py-2.5 rounded-lg transition-opacity hover:opacity-90"
           style={{
-            backgroundColor: '#1a5fd4',
+            backgroundColor: 'var(--accent-solid)',
             color: '#ffffff',
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
             fontSize: '13px',
@@ -182,14 +198,14 @@ export function DesktopSidebar() {
         </a>
 
         {/* Social links */}
-        <div className="flex items-center gap-4 justify-center pt-2" style={{ borderTop: '1px solid #d0dcf0' }}>
+        <div className="flex items-center gap-4 justify-center pt-2" style={{ borderTop: '1px solid var(--line)' }}>
           <a
             href={LINKS.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
             className="sidebar-social-link transition-colors duration-200"
-            style={{ color: '#6080b0' }}
+            style={{ color: 'var(--muted)' }}
           >
             <IconGitHub size={18} />
           </a>
@@ -199,7 +215,7 @@ export function DesktopSidebar() {
             rel="noopener noreferrer"
             aria-label="LinkedIn"
             className="sidebar-social-link transition-colors duration-200"
-            style={{ color: '#6080b0' }}
+            style={{ color: 'var(--muted)' }}
           >
             <IconLinkedIn size={18} />
           </a>
@@ -207,7 +223,7 @@ export function DesktopSidebar() {
             href={LINKS.email}
             aria-label="Email"
             className="sidebar-social-link transition-colors duration-200"
-            style={{ color: '#6080b0' }}
+            style={{ color: 'var(--muted)' }}
           >
             <IconMail size={18} />
           </a>
@@ -223,14 +239,14 @@ export function DesktopSidebar() {
           50.01%, 100% { opacity: 0; }
         }
         .sidebar-nav-link:hover {
-          background-color: #e8eef8 !important;
-          color: #1a5fd4 !important;
+          background-color: var(--surface) !important;
+          color: var(--accent) !important;
         }
         .sidebar-nav-link:hover span {
-          color: #1a5fd4 !important;
+          color: var(--accent) !important;
         }
         .sidebar-social-link:hover {
-          color: #1a5fd4 !important;
+          color: var(--accent) !important;
         }
       `}</style>
     </aside>
@@ -281,8 +297,8 @@ export function MobileTopBar() {
         aria-hidden="true"
         className="absolute inset-0 -z-10 transition-all duration-300"
         style={{
-          backgroundColor: isScrolled ? 'rgba(244, 246, 250, 0.92)' : '#f4f6fa',
-          borderBottom: '1px solid #d0dcf0',
+          backgroundColor: isScrolled ? 'color-mix(in srgb, var(--canvas) 92%, transparent)' : 'var(--canvas)',
+          borderBottom: '1px solid var(--line)',
           backdropFilter: isScrolled ? 'blur(20px)' : 'none',
           WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
         }}
@@ -297,32 +313,36 @@ export function MobileTopBar() {
           aria-label="Scroll to top"
           style={{ fontFamily: 'Inter Variable, Inter, system-ui, sans-serif', fontWeight: 800, fontSize: '18px' }}
         >
-          <span style={{ color: '#0f1828' }}>RM</span>
-          <span className="sidebar-blink" style={{ color: '#1a5fd4' }}>_</span>
+          <span style={{ color: 'var(--ink)' }}>RM</span>
+          <span className="sidebar-blink" style={{ color: 'var(--accent)' }}>_</span>
         </button>
 
-        {/* Hamburger */}
-        <button
-          id="mobile-topbar-toggle"
-          className="flex flex-col justify-center gap-[5px] w-8 h-8 z-10 relative"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={isOpen}
-          aria-controls="mobile-drawer"
-        >
-          <span
-            className="block w-6 h-[2px] bg-[#0f1828] transition-transform duration-300"
-            style={{ transform: isOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }}
-          />
-          <span
-            className="block w-6 h-[2px] bg-[#0f1828] transition-opacity duration-300"
-            style={{ opacity: isOpen ? 0 : 1 }}
-          />
-          <span
-            className="block w-6 h-[2px] bg-[#0f1828] transition-transform duration-300"
-            style={{ transform: isOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }}
-          />
-        </button>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+
+          {/* Hamburger */}
+          <button
+            id="mobile-topbar-toggle"
+            className="flex flex-col justify-center gap-[5px] w-8 h-8 z-10 relative"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isOpen}
+            aria-controls="mobile-drawer"
+          >
+            <span
+              className="block w-6 h-[2px] bg-ink transition-transform duration-300"
+              style={{ transform: isOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }}
+            />
+            <span
+              className="block w-6 h-[2px] bg-ink transition-opacity duration-300"
+              style={{ opacity: isOpen ? 0 : 1 }}
+            />
+            <span
+              className="block w-6 h-[2px] bg-ink transition-transform duration-300"
+              style={{ transform: isOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }}
+            />
+          </button>
+        </div>
       </div>
 
       {/*
@@ -341,7 +361,7 @@ export function MobileTopBar() {
           left: 0,
           width: '100vw',
           height: '100dvh',
-          backgroundColor: '#f4f6fa',
+          backgroundColor: 'var(--canvas)',
           zIndex: 55,
           display: 'flex',
           flexDirection: 'column',
@@ -363,11 +383,12 @@ export function MobileTopBar() {
               key={id}
               href={`#${id}`}
               onClick={(e) => { e.preventDefault(); nav(id); }}
+              title={label}
               style={{
                 fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                 fontWeight: 700,
                 fontSize: '28px',
-                color: '#0f1828',
+                color: 'var(--ink)',
                 letterSpacing: '0.04em',
                 textTransform: 'uppercase',
                 textDecoration: 'none',
@@ -378,28 +399,31 @@ export function MobileTopBar() {
           ))}
         </nav>
 
-        <div className="w-12 h-px my-4" style={{ backgroundColor: '#d0dcf0' }} />
+        <div className="w-12 h-px my-4" style={{ backgroundColor: 'var(--line)' }} />
 
-        {/* Resume */}
-        <a
-          href={LINKS.resume}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={close}
-          style={{
-            fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-            fontSize: '14px',
-            textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            color: '#1a5fd4',
-            textDecoration: 'none',
-          }}
-        >
-          Download Resume ↗
-        </a>
+        {/* Resume & Theme toggle */}
+        <div className="flex items-center gap-4 my-2">
+          <a
+            href={LINKS.resume}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={close}
+            style={{
+              fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+              fontSize: '14px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              color: 'var(--accent)',
+              textDecoration: 'none',
+            }}
+          >
+            Download Resume ↗
+          </a>
+          <ThemeToggle />
+        </div>
 
         {/* Social icons */}
-        <div className="flex items-center gap-6 mt-4" style={{ color: '#6080b0' }}>
+        <div className="flex items-center gap-6 mt-4" style={{ color: 'var(--muted)' }}>
           <a href={LINKS.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" style={{ color: 'inherit' }}>
             <IconGitHub />
           </a>
@@ -424,3 +448,4 @@ export function MobileTopBar() {
     </header>
   );
 }
+

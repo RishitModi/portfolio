@@ -1,4 +1,5 @@
 import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
+import { useCodeforcesStats, useCodechefStats } from '../../hooks/useCpStats';
 import { LINKS } from '../../lib/content';
 
 interface CardProps {
@@ -11,8 +12,8 @@ function Card({ title, children }: CardProps) {
     <div
       className="w-full rounded-2xl p-3.5"
       style={{
-        backgroundColor: '#ffffff',
-        border: '1px solid #d0dcf0',
+        backgroundColor: 'var(--card)',
+        border: '1px solid var(--line)',
       }}
     >
       <div
@@ -20,7 +21,7 @@ function Card({ title, children }: CardProps) {
           fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
           fontSize: '14px',
           fontWeight: 700,
-          color: '#0f1828',
+          color: 'var(--ink)',
           marginBottom: '10px',
         }}
       >
@@ -31,7 +32,7 @@ function Card({ title, children }: CardProps) {
           fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
           fontSize: '13px',
           lineHeight: 1.6,
-          color: '#2a3a5a',
+          color: 'var(--body)',
         }}
       >
         {children}
@@ -42,19 +43,32 @@ function Card({ title, children }: CardProps) {
 
 export function RightRail() {
   const { currentRating } = useLeetCodeStats();
+  const { data: ccData } = useCodechefStats();
+  const { data: cfData } = useCodeforcesStats();
 
   const elsewhereLinks = [
     { label: 'GitHub', href: LINKS.github, badge: null, isExternal: true },
     { label: 'LinkedIn', href: LINKS.linkedin, badge: null, isExternal: true },
     { label: 'LeetCode', href: LINKS.leetcode, badge: currentRating, isExternal: true },
-    { label: 'CodeChef', href: LINKS.codechef, badge: '3★', isExternal: true },
+    {
+      label: 'CodeChef',
+      href: LINKS.codechef,
+      badge: ccData.stars ? `${ccData.stars}★` : null,
+      isExternal: true,
+    },
+    {
+      label: 'Codeforces',
+      href: LINKS.codeforces,
+      badge: cfData.rating ? `${cfData.rating}` : null,
+      isExternal: true,
+    },
     { label: 'Email', href: LINKS.email, badge: null, isExternal: false },
   ];
 
   return (
     <aside
       aria-label="Profile information"
-      className="w-full xl:sticky xl:top-0 xl:h-screen xl:overflow-y-auto px-4 py-6"
+      className="w-full px-4 py-6"
     >
       <div className="w-full flex flex-col gap-4">
         {/* Card 1 — About me */}
@@ -69,7 +83,7 @@ export function RightRail() {
             <li className="flex items-start gap-2">
               <span
                 style={{
-                  color: '#1a5fd4',
+                  color: 'var(--accent)',
                   fontSize: '10px',
                   lineHeight: '1.6',
                   flexShrink: 0,
@@ -82,7 +96,7 @@ export function RightRail() {
             <li className="flex items-start gap-2">
               <span
                 style={{
-                  color: '#1a5fd4',
+                  color: 'var(--accent)',
                   fontSize: '10px',
                   lineHeight: '1.6',
                   flexShrink: 0,
@@ -95,7 +109,7 @@ export function RightRail() {
             <li className="flex items-start gap-2">
               <span
                 style={{
-                  color: '#1a5fd4',
+                  color: 'var(--accent)',
                   fontSize: '10px',
                   lineHeight: '1.6',
                   flexShrink: 0,
@@ -118,7 +132,7 @@ export function RightRail() {
                 width: '8px',
                 height: '8px',
                 borderRadius: '50%',
-                backgroundColor: '#4ade80',
+                backgroundColor: 'var(--good)',
                 display: 'inline-block',
                 animation: 'rail-pulse 2s ease-in-out infinite',
               }}
@@ -138,13 +152,13 @@ export function RightRail() {
                 rel={link.isExternal ? 'noopener noreferrer' : undefined}
                 className="rail-link-row flex items-center justify-between w-full py-2 px-2 -mx-2 rounded transition-colors duration-150"
                 style={{
-                  borderBottom: idx < elsewhereLinks.length - 1 ? '1px solid #d0dcf0' : 'none',
+                  borderBottom: idx < elsewhereLinks.length - 1 ? '1px solid var(--line)' : 'none',
                 }}
               >
                 <span>{link.label}</span>
-                <span className="flex items-center gap-1.5" style={{ color: '#6080b0' }}>
+                <span className="flex items-center gap-1.5" style={{ color: 'var(--muted)' }}>
                   {link.badge && (
-                    <span style={{ fontSize: '11px', color: '#6080b0' }}>
+                    <span style={{ fontSize: '11px', color: 'var(--muted)' }}>
                       {link.badge}
                     </span>
                   )}
@@ -158,21 +172,21 @@ export function RightRail() {
 
       <style>{`
         @keyframes rail-pulse {
-          0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
-          50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(74, 222, 128, 0); }
+          0%, 100% { opacity: 1; box-shadow: 0 0 0 0 color-mix(in srgb, var(--good) 40%, transparent); }
+          50% { opacity: 0.7; box-shadow: 0 0 0 4px transparent; }
         }
         .rail-link-row {
-          color: #2a3a5a;
+          color: var(--body);
           text-decoration: none;
           font-size: 13px;
           line-height: 1.6;
         }
         .rail-link-row:hover {
-          color: #1a5fd4;
-          background-color: #f4f6fa;
+          color: var(--accent);
+          background-color: var(--surface);
         }
         .rail-link-row:hover span {
-          color: #1a5fd4;
+          color: var(--accent);
         }
       `}</style>
     </aside>

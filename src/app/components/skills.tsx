@@ -8,13 +8,14 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="py-12 md:py-14 px-6 md:px-8"
+      className="-mt-px py-12 md:py-14 px-6 md:px-8"
       style={{
-        backgroundColor: '#f4f6fa',
+        backgroundColor: 'var(--canvas)',
+        borderTop: '1px solid var(--line)',
       }}
     >
       <div>
-        <SectionLabel>[ 02 — SKILLS ]</SectionLabel>
+        <SectionLabel>[ 03 — SKILLS ]</SectionLabel>
 
         <h2
           style={{
@@ -23,7 +24,7 @@ export function Skills() {
             fontSize: 'clamp(26px, 4vw, 38px)',
             letterSpacing: '-1px',
             lineHeight: 1.1,
-            color: '#0f1828',
+            color: 'var(--ink)',
             marginBottom: '28px',
           }}
         >
@@ -32,7 +33,7 @@ export function Skills() {
 
         <div
           className="grid grid-cols-1 md:grid-cols-2 gap-px"
-          style={{ backgroundColor: '#d0dcf0' }}
+          style={{ backgroundColor: 'var(--line)' }}
           ref={containerRef}
         >
           {SKILL_CATEGORIES.map((category, index) => (
@@ -41,17 +42,17 @@ export function Skills() {
               className="skill-cell group relative"
               style={{
                 ...getItemStyle(index),
-                backgroundColor: '#ffffff',
+                backgroundColor: 'var(--card)',
                 padding: '20px',
               }}
             >
-              <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#1a5fd4] transition-all duration-300 h-0 group-hover:h-full" />
+              <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-accent transition-all duration-300 h-0 group-hover:h-full" />
 
               <div
                 style={{
                   fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                   fontSize: '11px',
-                  color: '#6080b0',
+                  color: 'var(--muted)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.2em',
                   marginBottom: '16px',
@@ -70,14 +71,14 @@ export function Skills() {
                       fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                       fontSize: '12px',
                       padding: '4px 10px',
-                      border: '1px solid #d0dcf0',
+                      border: '1px solid var(--line)',
                       borderRadius: '4px',
-                      color: '#2a3a5a',
-                      backgroundColor: '#f4f6fa',
+                      color: 'var(--body)',
+                      backgroundColor: 'var(--chip)',
                     }}
                   >
                     {skill.isPrimary && (
-                      <span style={{ color: '#1a5fd4', marginRight: '6px' }}>◆</span>
+                      <span style={{ color: 'var(--accent)', marginRight: '6px' }}>◆</span>
                     )}
                     {skill.name}
                   </span>
@@ -90,9 +91,9 @@ export function Skills() {
 
       <style>{`
         .skill-tag:hover {
-          color: #1a5fd4;
-          border-color: #1a5fd4;
-          background-color: #dce8fa;
+          color: var(--accent);
+          border-color: var(--accent);
+          background-color: var(--accent-soft);
         }
       `}</style>
     </section>

@@ -20,7 +20,7 @@ export function Hero() {
           style={{
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
             fontSize: '12px',
-            color: '#6080b0',
+            color: 'var(--muted)',
             letterSpacing: '0.1em',
             fontWeight: 600,
           }}
@@ -39,13 +39,13 @@ export function Hero() {
               letterSpacing: '-2px',
             }}
           >
-            <span className="block" style={{ color: '#0f1828' }}>
+            <span className="block" style={{ color: 'var(--ink)' }}>
               {firstName}
             </span>
             <span
               className="block"
               style={{
-                WebkitTextStroke: '1.5px #1a5fd4',
+                WebkitTextStroke: '1.5px var(--accent)',
                 color: 'transparent',
               }}
             >
@@ -59,7 +59,7 @@ export function Hero() {
           style={{
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
             fontSize: '16px',
-            color: '#2a3a5a',
+            color: 'var(--body)',
             fontWeight: 500,
           }}
         >
@@ -71,7 +71,7 @@ export function Hero() {
           style={{
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
             fontSize: '15px',
-            color: '#2a3a5a',
+            color: 'var(--body)',
             lineHeight: 1.7,
             maxWidth: '520px',
           }}
@@ -89,7 +89,7 @@ export function Hero() {
                     fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                     fontWeight: 800,
                     fontSize: '24px',
-                    color: '#1a5fd4',
+                    color: 'var(--accent)',
                     lineHeight: 1.1,
                   }}
                 >
@@ -99,7 +99,7 @@ export function Hero() {
                   style={{
                     fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                     fontSize: '10px',
-                    color: '#6080b0',
+                    color: 'var(--muted)',
                     textTransform: 'uppercase',
                     letterSpacing: '0.12em',
                     marginTop: '6px',
@@ -119,10 +119,10 @@ export function Hero() {
                 href={stat.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${cardClass} hover:shadow-md hover:border-[#1a5fd4] hover:-translate-y-0.5`}
+                className={`${cardClass} hover:shadow-md hover:border-accent hover:-translate-y-0.5`}
                 style={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #d0dcf0',
+                  backgroundColor: 'var(--card)',
+                  border: '1px solid var(--line)',
                   textDecoration: 'none',
                   padding: '14px 10px',
                   display: 'block',
@@ -135,8 +135,8 @@ export function Hero() {
                 key={i}
                 className={cardClass}
                 style={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #d0dcf0',
+                  backgroundColor: 'var(--card)',
+                  border: '1px solid var(--line)',
                   padding: '14px 10px',
                 }}
               >

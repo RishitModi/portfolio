@@ -129,7 +129,7 @@ export function CustomCursor() {
         ref={dotRef}
         className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference opacity-0 transition-opacity duration-200"
       >
-        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#1a5fd4' }} />
+        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--accent)' }} />
       </div>
       <div
         ref={ringRef}
@@ -137,9 +137,9 @@ export function CustomCursor() {
         style={{
           width: isHovering ? '48px' : '28px',
           height: isHovering ? '48px' : '28px',
-          border: '1px solid #1a5fd4',
+          border: '1px solid var(--accent)',
           borderRadius: '50%',
-          backgroundColor: isHovering ? 'rgba(26, 95, 212, 0.15)' : 'transparent',
+          backgroundColor: isHovering ? 'color-mix(in srgb, var(--accent) 15%, transparent)' : 'transparent',
           transition: 'width 0.15s ease, height 0.15s ease, background-color 0.15s ease, opacity 0.2s ease',
         }}
       />

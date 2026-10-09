@@ -7,6 +7,7 @@ import { Hero } from './components/hero';
 import { About } from './components/about';
 import { Skills } from './components/skills';
 import { Projects } from './components/projects';
+import { Competitive } from './components/competitive';
 import { Contact } from './components/contact';
 import { Footer } from './components/footer';
 import { PanelToggle } from './components/panel-toggle';
@@ -83,7 +84,7 @@ export default function App() {
         {/* ── Left sidebar (lg+) ── */}
         <div
           id="sidebar-panel"
-          className="hidden lg:block overflow-hidden min-w-0 h-full"
+          className="hidden lg:block sticky top-0 self-start h-dvh min-w-0 overflow-hidden"
           aria-hidden={!leftOpen}
           {...(!leftOpen ? { inert: '' } : {})}
           style={{
@@ -103,8 +104,8 @@ export default function App() {
         <main className="min-w-0 overflow-x-clip pt-[72px] lg:pt-0">
           {/* Feed column left+right borders at xl */}
           <div
-            className="xl:border-l xl:border-r min-h-screen relative"
-            style={{ borderColor: '#d0dcf0' }}
+            className="xl:border-l xl:border-r relative"
+            style={{ borderColor: 'var(--line)' }}
           >
             {/* Zero-height sticky row for panel toggles */}
             <div className="sticky top-3 z-40 h-0 pointer-events-none">
@@ -130,6 +131,7 @@ export default function App() {
             <div className={!leftOpen || (isXl && !rightOpen) ? 'max-w-[960px] mx-auto w-full' : ''}>
               <Hero />
               <About />
+              <Competitive />
               <Skills />
               <Projects />
               <Contact />
@@ -144,10 +146,11 @@ export default function App() {
         <div
           id="rail-panel"
           className={[
-            'min-w-0 h-full',
+            'min-w-0',
+            'xl:sticky xl:top-0 xl:self-start xl:h-dvh',
             isRailCollapsed
               ? 'xl:overflow-hidden xl:min-w-0'
-              : 'overflow-hidden xl:overflow-visible',
+              : 'overflow-hidden xl:overflow-y-auto',
           ].join(' ')}
           aria-hidden={isRailCollapsed ? 'true' : undefined}
           {...(isRailCollapsed ? { inert: '' } : {})}
@@ -156,7 +159,7 @@ export default function App() {
             transition: !isRailCollapsed ? 'visibility 0s 0s' : 'visibility 0s 300ms',
           }}
         >
-          <div className="w-[272px] max-xl:w-full h-full">
+          <div className="w-[272px] max-xl:w-full">
             <RightRail />
           </div>
         </div>

@@ -29,10 +29,10 @@ export const PanelToggle = forwardRef<HTMLButtonElement, PanelToggleProps>(
         aria-expanded={open}
         aria-controls={controls}
         className={[
-          'w-8 h-8 rounded-lg bg-white border border-[#d0dcf0] shadow-sm',
-          'flex items-center justify-center text-[#2a3a5a]',
-          'hover:bg-[#e8eef8] hover:text-[#1a5fd4]',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a5fd4]',
+          'w-8 h-8 rounded-lg bg-card border border-line shadow-sm',
+          'flex items-center justify-center text-body',
+          'hover:bg-surface hover:text-accent',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
           'transition-all duration-150 cursor-pointer',
           className,
         ]

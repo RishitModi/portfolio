@@ -69,8 +69,8 @@ export function Navigation() {
         aria-hidden="true"
         className="absolute inset-0 -z-10 transition-all duration-300"
         style={{
-          backgroundColor: isScrolled ? 'rgba(244, 246, 250, 0.92)' : 'transparent',
-          borderBottom: isScrolled ? '1px solid #d0dcf0' : 'none',
+          backgroundColor: isScrolled ? 'color-mix(in srgb, var(--canvas) 92%, transparent)' : 'transparent',
+          borderBottom: isScrolled ? '1px solid var(--line)' : 'none',
           backdropFilter: isScrolled ? 'blur(24px)' : 'none',
           WebkitBackdropFilter: isScrolled ? 'blur(24px)' : 'none',
         }}
@@ -83,8 +83,8 @@ export function Navigation() {
           className="flex items-center gap-1"
           style={{ fontFamily: 'Inter Variable, Inter, system-ui, sans-serif', fontWeight: 800 }}
         >
-          <span style={{ color: '#0f1828' }}>RM</span>
-          <span className="cursor-blink" style={{ color: '#1a5fd4' }}>_</span>
+          <span style={{ color: 'var(--ink)' }}>RM</span>
+          <span className="cursor-blink" style={{ color: 'var(--accent)' }}>_</span>
         </div>
 
         {/* Desktop Navigation */}
@@ -99,7 +99,7 @@ export function Navigation() {
                 fontSize: '11px',
                 textTransform: 'uppercase',
                 letterSpacing: '0.1em',
-                color: '#2a3a5a',
+                color: 'var(--body)',
               }}
             >
               {label}
@@ -118,7 +118,7 @@ export function Navigation() {
               fontSize: '11px',
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
-              color: '#2a3a5a',
+              color: 'var(--body)',
               textDecoration: 'none',
             }}
           >
@@ -131,7 +131,7 @@ export function Navigation() {
               fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
               fontSize: '11px',
               textTransform: 'uppercase',
-              backgroundColor: '#1a5fd4',
+              backgroundColor: 'var(--accent-solid)',
               color: '#ffffff',
               fontWeight: 500,
             }}
@@ -150,15 +150,15 @@ export function Navigation() {
           aria-controls="mobile-menu"
         >
           <span
-            className="block w-6 h-[2px] bg-[#0f1828] transition-transform duration-300"
+            className="block w-6 h-[2px] bg-ink transition-transform duration-300"
             style={{ transform: isMobileMenuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }}
           />
           <span
-            className="block w-6 h-[2px] bg-[#0f1828] transition-opacity duration-300"
+            className="block w-6 h-[2px] bg-ink transition-opacity duration-300"
             style={{ opacity: isMobileMenuOpen ? 0 : 1 }}
           />
           <span
-            className="block w-6 h-[2px] bg-[#0f1828] transition-transform duration-300"
+            className="block w-6 h-[2px] bg-ink transition-transform duration-300"
             style={{ transform: isMobileMenuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }}
           />
         </button>
@@ -189,7 +189,7 @@ export function Navigation() {
           left: 0,
           width: '100vw',
           height: '100dvh',
-          backgroundColor: '#f4f6fa',
+          backgroundColor: 'var(--canvas)',
           zIndex: 55, // above frosted-glass backdrop (-z-10 relative to nav), below nav content (z-10)
           display: 'flex',
           flexDirection: 'column',
@@ -216,7 +216,7 @@ export function Navigation() {
                 fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                 fontWeight: 700,
                 fontSize: '24px',
-                color: '#0f1828',
+                color: 'var(--ink)',
                 letterSpacing: '0.05em',
                 textTransform: 'uppercase',
               }}
@@ -225,7 +225,7 @@ export function Navigation() {
             </button>
           ))}
 
-          <div className="w-12 h-px bg-[#d0dcf0] my-2" />
+          <div className="w-12 h-px bg-line my-2" />
 
           <a
             href={LINKS.resume}
@@ -237,7 +237,7 @@ export function Navigation() {
               fontSize: '14px',
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
-              color: '#1a5fd4',
+              color: 'var(--accent)',
               textDecoration: 'none',
             }}
           >
@@ -267,11 +267,11 @@ export function Navigation() {
           left: 0;
           width: 0;
           height: 1px;
-          background-color: #1a5fd4;
+          background-color: var(--accent);
           transition: width 0.2s ease;
         }
         .nav-link:hover {
-          color: #1a5fd4 !important;
+          color: var(--accent) !important;
         }
         .nav-link:hover::after {
           width: 100%;

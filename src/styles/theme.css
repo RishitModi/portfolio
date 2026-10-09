@@ -1,53 +1,79 @@
-:root {
-  --color-canvas: #f4f6fa;
-  --color-surface: #e8eef8;
-  --color-line: #d0dcf0;
-  --color-muted: #6080b0;
-  --color-body: #2a3a5a;
-  --color-ink: #0f1828;
-  --color-accent: #1a5fd4;
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-  --background: var(--color-canvas);
-  --foreground: var(--color-body);
-  --surface: var(--color-surface);
+:root {
+  color-scheme: light;
+
+  --canvas: #f4f6fa;
+  --surface: #e8eef8;
   --card: #ffffff;
-  --border: var(--color-line);
-  --muted-text: var(--color-muted);
-  --body-text: var(--color-body);
-  --primary: var(--color-accent);
+  --chip: #eef2f9;
+  --line: #d0dcf0;
+  --faint: #e0e8f4;
+  --ink: #0f1828;
+  --body: #2a3a5a;
+  --muted: #6080b0;
+  --accent: #1a5fd4;
+  --accent-solid: #1a5fd4;
+  --accent-soft: #dce8fa;
+  --shadow: 15 24 40;
+  --good: #4ade80;
+
+  --background: var(--canvas);
+  --foreground: var(--body);
+  --border: var(--line);
+  --primary: var(--accent-solid);
   --primary-foreground: #ffffff;
-  --secondary: var(--color-surface);
-  --secondary-foreground: var(--color-ink);
-  --muted: var(--color-line);
-  --muted-foreground: var(--color-muted);
-  --accent: var(--color-accent);
-  --accent-foreground: #ffffff;
-  --ring: var(--color-accent);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--ink);
+  --muted-text: var(--muted);
+  --body-text: var(--body);
+  --ring: var(--accent);
   --radius: 0.625rem;
 }
 
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --canvas: #0b1220;
+  --surface: #101a2e;
+  --card: #131f38;
+  --chip: #17243f;
+  --line: #22314f;
+  --faint: #1a2745;
+  --ink: #eaf0ff;
+  --body: #b9c7e3;
+  --muted: #8197bd;
+  --accent: #5b9bff;
+  --accent-solid: #2f6fe8;
+  --accent-soft: #1b2c52;
+  --shadow: 0 0 0;
+  --good: #4ade80;
+}
+
 @theme inline {
-  --color-canvas: var(--color-canvas);
-  --color-surface: var(--color-surface);
-  --color-line: var(--color-line);
-  --color-muted: var(--color-muted);
-  --color-body: var(--color-body);
-  --color-ink: var(--color-ink);
-  --color-accent: var(--color-accent);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-chip: var(--chip);
+  --color-line: var(--line);
+  --color-faint: var(--faint);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-solid: var(--accent-solid);
+  --color-accent-soft: var(--accent-soft);
+  --color-good: var(--good);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
   --color-border: var(--border);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
   --color-ring: var(--ring);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -60,7 +86,8 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--canvas);
+    color: var(--body);
     font-family: 'Inter Variable', 'Inter', system-ui, -apple-system, sans-serif;
   }
 
@@ -77,6 +104,7 @@
 
   html {
     scroll-behavior: smooth;
+    transition: background-color 200ms ease;
     /* Offset for the fixed mobile top bar so sections aren't hidden on scroll */
     scroll-padding-top: 72px;
   }

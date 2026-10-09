@@ -11,7 +11,7 @@ export function SectionLabel({ children, className = '' }: SectionLabelProps) {
         fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
         fontWeight: 700,
         fontSize: '12px',
-        color: '#1a5fd4',
+        color: 'var(--accent)',
         letterSpacing: '0.2em',
         textTransform: 'uppercase',
         marginBottom: '16px',

@@ -13,7 +13,7 @@ export function Contact() {
       id="contact"
       className="relative overflow-hidden py-12 md:py-14 px-6 md:px-8"
       style={{
-        backgroundColor: '#f4f6fa',
+        backgroundColor: 'var(--canvas)',
       }}
     >
       {/* Decorative { } — sized to 220px and hidden below xl */}
@@ -24,7 +24,7 @@ export function Contact() {
           fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
           fontWeight: 800,
           fontSize: '220px',
-          color: '#d0dcf0',
+          color: 'var(--line)',
           opacity: 0.25,
         }}
       >
@@ -42,19 +42,19 @@ export function Contact() {
               letterSpacing: '-1.5px',
             }}
           >
-            <span className="block" style={{ color: '#0f1828' }}>
+            <span className="block" style={{ color: 'var(--ink)' }}>
               Let's
             </span>
             <span
               className="block"
               style={{
-                WebkitTextStroke: '1.5px #1a5fd4',
+                WebkitTextStroke: '1.5px var(--accent)',
                 color: 'transparent',
               }}
             >
               work
             </span>
-            <span className="block" style={{ color: '#0f1828' }}>
+            <span className="block" style={{ color: 'var(--ink)' }}>
               together.
             </span>
           </h2>
@@ -65,7 +65,7 @@ export function Contact() {
           style={{
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
             fontSize: '14px',
-            color: '#2a3a5a',
+            color: 'var(--body)',
             lineHeight: 1.6,
             marginBottom: '28px',
           }}
@@ -87,14 +87,14 @@ export function Contact() {
                 fontWeight: 600,
                 textTransform: 'uppercase',
                 padding: '8px 16px',
-                border: '1px solid #d0dcf0',
+                border: '1px solid var(--line)',
                 borderRadius: '4px',
-                color: '#2a3a5a',
-                backgroundColor: '#ffffff',
+                color: 'var(--body)',
+                backgroundColor: 'var(--card)',
                 textDecoration: 'none',
               }}
             >
-              <span style={{ color: '#1a5fd4', flexShrink: 0 }}>{link.icon}</span>
+              <span style={{ color: 'var(--accent)', flexShrink: 0 }}>{link.icon}</span>
               <span className="truncate">{link.label}</span>
             </a>
           ))}
@@ -103,8 +103,8 @@ export function Contact() {
 
       <style>{`
         .contact-link:hover {
-          border-color: #1a5fd4;
-          color: #1a5fd4;
+          border-color: var(--accent);
+          color: var(--accent);
         }
       `}</style>
     </section>

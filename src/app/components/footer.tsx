@@ -6,18 +6,18 @@ export function Footer() {
     <footer
       className="py-8 px-6 md:px-16"
       style={{
-        borderTop: '1px solid #d0dcf0',
-        backgroundColor: '#e8eef8',
+        borderTop: '1px solid var(--line)',
+        backgroundColor: 'var(--surface)',
         fontFamily: 'Inter',
         fontSize: '11px',
-        color: '#6080b0',
+        color: 'var(--muted)',
       }}
     >
       <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <span style={{ color: '#0f1828', fontWeight: 600 }}>RM.</span>
+          <span style={{ color: 'var(--ink)', fontWeight: 600 }}>RM.</span>
           <span>© {PROFILE.year}</span>
-          <span className="hidden md:inline" style={{ color: '#d0dcf0' }}>|</span>
+          <span className="hidden md:inline" style={{ color: 'var(--line)' }}>|</span>
           <span className="hidden md:inline">Designed & developed by {PROFILE.name}</span>
         </div>
 
@@ -38,14 +38,14 @@ export function Footer() {
 
       <style>{`
         .footer-link {
-          color: #6080b0;
+          color: var(--muted);
           text-decoration: none;
           text-transform: uppercase;
           letter-spacing: 0.05em;
           transition: color 0.2s ease;
         }
         .footer-link:hover {
-          color: #1a5fd4;
+          color: var(--accent);
         }
       `}</style>
     </footer>

@@ -70,7 +70,7 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
             href={iframeSrc}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded bg-white/95 backdrop-blur-sm border border-[#d0dcf0] text-[#1a5fd4] hover:bg-white shadow-sm transition-colors"
+            className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded bg-card/95 backdrop-blur-sm border border-line text-accent hover:bg-card shadow-sm transition-colors"
             style={{
               fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
               fontSize: '11px',
@@ -87,7 +87,7 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
             style={{
               fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
               fontSize: '13px',
-              color: '#6080b0',
+              color: 'var(--muted)',
               fontWeight: 500,
             }}
           >
@@ -101,7 +101,7 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
               fontSize: '12px',
               fontWeight: 600,
               textTransform: 'uppercase',
-              backgroundColor: '#1a5fd4',
+              backgroundColor: 'var(--accent-solid)',
               color: '#ffffff',
               padding: '8px 16px',
               borderRadius: '4px',
@@ -119,7 +119,7 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
             style={{
               fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
               fontSize: '12px',
-              color: '#1a5fd4',
+              color: 'var(--accent)',
               textDecoration: 'none',
               fontWeight: 600,
             }}
@@ -163,8 +163,8 @@ function ProjectCard({ project }: { project: ProjectItem }) {
         <div
           className="relative aspect-video w-full overflow-hidden"
           style={{
-            backgroundColor: '#eef2f9',
-            borderBottom: '1px solid #d0dcf0',
+            backgroundColor: 'var(--chip)',
+            borderBottom: '1px solid var(--line)',
           }}
         >
           {project.videoSrc ? (
@@ -194,7 +194,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
             fontWeight: 600,
             textTransform: 'uppercase',
             letterSpacing: '0.12em',
-            color: '#1a5fd4',
+            color: 'var(--accent)',
           }}
         >
           {project.index} · {project.category}
@@ -208,7 +208,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
             fontWeight: 800,
             letterSpacing: '-0.5px',
             lineHeight: 1.2,
-            color: '#0f1828',
+            color: 'var(--ink)',
           }}
         >
           {project.title}
@@ -220,7 +220,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
             fontSize: '15px',
             lineHeight: 1.7,
-            color: '#2a3a5a',
+            color: 'var(--body)',
           }}
         >
           {project.description}
@@ -232,10 +232,10 @@ function ProjectCard({ project }: { project: ProjectItem }) {
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
             fontSize: '13px',
             fontWeight: 500,
-            color: '#2a3a5a',
+            color: 'var(--body)',
           }}
         >
-          <span style={{ color: '#1a5fd4', marginRight: '6px' }}>◆</span>
+          <span style={{ color: 'var(--accent)', marginRight: '6px' }}>◆</span>
           {project.metric}
         </div>
 
@@ -249,9 +249,9 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                 fontSize: '12px',
                 padding: '4px 10px',
                 borderRadius: '4px',
-                border: '1px solid #d0dcf0',
-                backgroundColor: '#eef2f9',
-                color: '#2a3a5a',
+                border: '1px solid var(--line)',
+                backgroundColor: 'var(--chip)',
+                color: 'var(--body)',
                 fontWeight: 500,
               }}
             >
@@ -268,7 +268,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded transition-colors hover:border-[#1a5fd4]"
+                className="inline-flex items-center gap-2 rounded transition-colors hover:border-accent"
                 style={{
                   fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                   fontSize: '12px',
@@ -276,9 +276,9 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                   textTransform: 'uppercase',
                   padding: '8px 16px',
                   borderRadius: '4px',
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #d0dcf0',
-                  color: '#1a5fd4',
+                  backgroundColor: 'var(--card)',
+                  border: '1px solid var(--line)',
+                  color: 'var(--accent)',
                   textDecoration: 'none',
                 }}
               >
@@ -314,7 +314,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                   textTransform: 'uppercase',
                   padding: '8px 16px',
                   borderRadius: '4px',
-                  backgroundColor: '#1a5fd4',
+                  backgroundColor: 'var(--accent-solid)',
                   color: '#ffffff',
                   textDecoration: 'none',
                 }}
@@ -325,7 +325,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                     width: '6px',
                     height: '6px',
                     borderRadius: '50%',
-                    backgroundColor: '#4ade80',
+                    backgroundColor: 'var(--good)',
                     display: 'inline-block',
                   }}
                 />
@@ -344,11 +344,11 @@ export function Projects() {
     <section
       id="projects"
       className="py-12 md:py-14 px-6 md:px-8"
-      style={{ backgroundColor: '#f4f6fa' }}
+      style={{ backgroundColor: 'var(--canvas)' }}
     >
       {/* ── Section Header ── */}
       <div>
-        <SectionLabel>[ 03 — PROJECTS ]</SectionLabel>
+        <SectionLabel>[ 04 — PROJECTS ]</SectionLabel>
 
         <h2
           style={{
@@ -357,7 +357,7 @@ export function Projects() {
             fontSize: 'clamp(26px, 4vw, 38px)',
             letterSpacing: '-1px',
             lineHeight: 1.1,
-            color: '#0f1828',
+            color: 'var(--ink)',
           }}
         >
           Things I've shipped.
@@ -367,7 +367,7 @@ export function Projects() {
           style={{
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
             fontSize: '14px',
-            color: '#6080b0',
+            color: 'var(--muted)',
             marginTop: '8px',
             marginBottom: '28px',
           }}
@@ -385,9 +385,9 @@ export function Projects() {
 
       <style>{`
         .project-card {
-          background-color: #ffffff;
-          border: 1px solid #d0dcf0;
-          box-shadow: 0 1px 2px rgba(15, 24, 40, 0.04);
+          background-color: var(--card);
+          border: 1px solid var(--line);
+          box-shadow: 0 1px 2px rgb(var(--shadow) / 0.04);
           transition: opacity 500ms ease-out, transform 500ms ease-out;
         }
 
@@ -396,9 +396,9 @@ export function Projects() {
             transition: opacity 500ms ease-out, transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
           }
           .project-card.is-visible:hover {
-            border-color: rgba(26, 95, 212, 0.5) !important;
+            border-color: color-mix(in srgb, var(--accent) 50%, transparent) !important;
             transform: translateY(-2px) !important;
-            box-shadow: 0 12px 28px -4px rgba(15, 24, 40, 0.08) !important;
+            box-shadow: 0 12px 28px -4px rgb(var(--shadow) / 0.08) !important;
           }
         }
 
@@ -414,8 +414,8 @@ export function Projects() {
           animation: pulse-dot 2s ease-in-out infinite;
         }
         @keyframes pulse-dot {
-          0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
-          50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(74, 222, 128, 0); }
+          0%, 100% { opacity: 1; box-shadow: 0 0 0 0 color-mix(in srgb, var(--good) 40%, transparent); }
+          50% { opacity: 0.7; box-shadow: 0 0 0 4px transparent; }
         }
       `}</style>
     </section>
