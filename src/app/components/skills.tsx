@@ -8,14 +8,14 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="-mt-px py-12 md:py-14 px-6 md:px-8"
+      className="py-12 md:py-14 px-6 md:px-8"
       style={{
-        backgroundColor: 'var(--canvas)',
-        borderTop: '1px solid var(--line)',
+        backgroundColor: 'var(--surface)',
+        borderBottom: '1px solid var(--line)',
       }}
     >
       <div>
-        <SectionLabel>[ 03 — SKILLS ]</SectionLabel>
+        <SectionLabel>[ 05 — SKILLS ]</SectionLabel>
 
         <h2
           style={{

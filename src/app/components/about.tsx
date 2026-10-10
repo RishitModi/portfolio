@@ -43,7 +43,7 @@ export function About() {
           }}
         >
           <p>
-            Student at VJTI Mumbai, one of India's most competitive CS programs. Minor in Cybersecurity.
+            Student at VJTI Mumbai, one of India's most competitive Computer Engineering programs. Minor in Cybersecurity.
           </p>
           <p>
             Work spans Energy-Based Transformers for cipher classification, VAE-based biodiversity pipelines, and production travel apps powered by Gemini 1.5. Full ownership from training loops to polished UIs.

@@ -7,7 +7,7 @@ export function Hero() {
 
   const stats = [
     { number: '99.97', label: 'MHT-CET %ILE', url: null as string | null },
-    { number: lcStats.solved, label: 'DSA PROBLEMS', url: null as string | null },
+    { number: '750+', label: 'DSA PROBLEMS', url: null as string | null },
     { number: lcStats.maxRating, label: 'LC MAX RATING', url: LINKS.leetcode },
     { number: '3★', label: 'CODECHEF', url: LINKS.codechef },
   ];
@@ -76,7 +76,7 @@ export function Hero() {
             maxWidth: '520px',
           }}
         >
-          Building intelligent systems at the edge of cryptography, deep learning, and scalable product engineering. B.Tech CS @ VJTI — top 0.03% nationally.
+          Building intelligent systems at the edge of cryptography, deep learning, and scalable product engineering. B.Tech Computer Engineering @ VJTI — top 0.03% nationally.
         </p>
 
         {/* 5. Stat cards */}

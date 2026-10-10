@@ -5,6 +5,8 @@ import { DesktopSidebar, MobileTopBar } from './components/sidebar';
 import { RightRail } from './components/right-rail';
 import { Hero } from './components/hero';
 import { About } from './components/about';
+import { Education } from './components/education';
+import { Experience } from './components/experience';
 import { Skills } from './components/skills';
 import { Projects } from './components/projects';
 import { Competitive } from './components/competitive';
@@ -131,6 +133,8 @@ export default function App() {
             <div className={!leftOpen || (isXl && !rightOpen) ? 'max-w-[960px] mx-auto w-full' : ''}>
               <Hero />
               <About />
+              <Education />
+              <Experience />
               <Competitive />
               <Skills />
               <Projects />

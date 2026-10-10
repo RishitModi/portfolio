@@ -74,55 +74,10 @@ export function RightRail() {
         {/* Card 1 — About me */}
         <Card title="About me">
           Building intelligent systems at the edge of cryptography, deep learning, and scalable
-          product engineering. B.Tech CS @ VJTI — top 0.03% nationally.
+          product engineering. B.Tech Computer Engineering @ VJTI — top 0.03% nationally.
         </Card>
 
-        {/* Card 2 — Highlights */}
-        <Card title="Highlights">
-          <ul className="flex flex-col gap-2.5">
-            <li className="flex items-start gap-2">
-              <span
-                style={{
-                  color: 'var(--accent)',
-                  fontSize: '10px',
-                  lineHeight: '1.6',
-                  flexShrink: 0,
-                }}
-              >
-                ◆
-              </span>
-              <span>800+ DSA Problems Solved</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span
-                style={{
-                  color: 'var(--accent)',
-                  fontSize: '10px',
-                  lineHeight: '1.6',
-                  flexShrink: 0,
-                }}
-              >
-                ◆
-              </span>
-              <span>Knight at Leetcode, 3 Star at CodeChef</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span
-                style={{
-                  color: 'var(--accent)',
-                  fontSize: '10px',
-                  lineHeight: '1.6',
-                  flexShrink: 0,
-                }}
-              >
-                ◆
-              </span>
-              <span>6+ merged PRs during Hacktoberfest 2025</span>
-            </li>
-          </ul>
-        </Card>
-
-        {/* Card 3 — Status */}
+        {/* Card 2 — Status */}
         <Card title="Status">
           <div className="flex items-start gap-2">
             {/* live pulse dot */}

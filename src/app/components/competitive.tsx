@@ -89,7 +89,7 @@ export function Competitive() {
       }}
     >
       <div>
-        <SectionLabel>[ 02 — COMPETITIVE PROGRAMMING ]</SectionLabel>
+        <SectionLabel>[ 04 — COMPETITIVE PROGRAMMING ]</SectionLabel>
 
         <h2
           style={{

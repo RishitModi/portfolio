@@ -344,11 +344,14 @@ export function Projects() {
     <section
       id="projects"
       className="py-12 md:py-14 px-6 md:px-8"
-      style={{ backgroundColor: 'var(--canvas)' }}
+      style={{
+        backgroundColor: 'var(--canvas)',
+        borderBottom: '1px solid var(--line)',
+      }}
     >
       {/* ── Section Header ── */}
       <div>
-        <SectionLabel>[ 04 — PROJECTS ]</SectionLabel>
+        <SectionLabel>[ 06 — PROJECTS ]</SectionLabel>
 
         <h2
           style={{

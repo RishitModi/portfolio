@@ -79,9 +79,29 @@ function IconTrophy({ size = 20 }: IconProps) {
   );
 }
 
+function IconGraduationCap({ size = 20 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+      <path d="M6 12v5c3 3 9 3 12 0v-5" />
+    </svg>
+  );
+}
+
+function IconBriefcase({ size = 20 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+    </svg>
+  );
+}
+
 const NAV_ICONS: Record<NavId, (props: IconProps) => JSX.Element> = {
   profile: IconHome,
   about: IconUser,
+  education: IconGraduationCap,
+  experience: IconBriefcase,
   competitive: IconTrophy,
   skills: IconZap,
   projects: IconCode,
@@ -142,7 +162,7 @@ export function DesktopSidebar() {
         </div>
 
         {/* Nav */}
-        <nav aria-label="Primary" className="flex-1">
+        <nav aria-label="Primary" className="flex-1 overflow-y-auto min-h-0 pr-1">
           <ul className="flex flex-col gap-1">
             {NAV_ITEMS.map(({ label, id }) => {
               const isActive = activeId === id;
@@ -377,7 +397,7 @@ export function MobileTopBar() {
         {...(!isOpen ? { inert: '' } : {})}
       >
         {/* Nav items */}
-        <nav aria-label="Mobile primary" className="flex flex-col items-center gap-6 text-center w-full px-6">
+        <nav aria-label="Mobile primary" className="flex flex-col items-center gap-4 text-center w-full px-6 overflow-y-auto max-h-[60vh] py-2">
           {NAV_ITEMS.map(({ label, id }) => (
             <a
               key={id}
@@ -387,7 +407,7 @@ export function MobileTopBar() {
               style={{
                 fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                 fontWeight: 700,
-                fontSize: '28px',
+                fontSize: '24px',
                 color: 'var(--ink)',
                 letterSpacing: '0.04em',
                 textTransform: 'uppercase',

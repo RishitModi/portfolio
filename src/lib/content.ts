@@ -78,6 +78,8 @@ export const CP_FALLBACK: CpFallbackData = {
 export const NAV_ITEMS = [
   { label: 'Profile', id: 'profile' },
   { label: 'About', id: 'about' },
+  { label: 'Education', id: 'education' },
+  { label: 'Experience', id: 'experience' },
   { label: 'Competitive Programming', id: 'competitive' },
   { label: 'Skills', id: 'skills' },
   { label: 'Projects', id: 'projects' },
@@ -85,6 +87,125 @@ export const NAV_ITEMS = [
 ] as const;
 
 export type NavId = (typeof NAV_ITEMS)[number]['id'];
+
+export interface EducationStage {
+  id: string;
+  stage: 'School' | 'College' | 'University';
+  institution: string;
+  qualification?: string;
+  period?: string;
+  location?: string;
+  highlights?: string[];
+  tags?: string[];
+  current?: boolean;
+}
+
+// Edit these entries; optional fields are hidden when omitted
+export const EDUCATION: EducationStage[] = [
+  {
+    id: 'school-1',
+    stage: 'School',
+    institution: 'Witty International School',
+    period: '2006 – 2015',
+  },
+  {
+    id: 'school-2',
+    stage: 'School',
+    institution: 'Dr S Radhakrishnan International School',
+    qualification: 'Class 10',
+    period: '2015 – 2022',
+    highlights: ['10th: 95.33%'],
+  },
+  {
+    id: 'college',
+    stage: 'College',
+    institution: 'Prakash College of Commerce and Science',
+    qualification: 'HSC (Class 12)',
+    location: 'Kandivali, Mumbai',
+    period: '2022 – 2024',
+    highlights: [
+      'HSC 2024: 90.67%',
+      'MHT-CET 2024: 99.97 percentile',
+      'JEE Main: 92.4 percentile',
+    ],
+  },
+  {
+    id: 'university',
+    stage: 'University',
+    institution: 'Veermata Jijabai Technological Institute (VJTI)',
+    qualification: 'B.Tech, Computer Engineering (Minor in Cybersecurity)',
+    location: 'Matunga, Mumbai',
+    period: '2024 – 2028',
+    current: true,
+    highlights: ['CGPA: 7.69', 'Top 0.03% nationally via MHT-CET'],
+    tags: [
+      'Data Structures',
+      'Operating Systems',
+      'Design and Analysis of Algorithms',
+      'Deep Learning',
+      'Cybersecurity',
+      'Database Management Systems',
+    ],
+  },
+];
+
+export interface ExperienceEntry {
+  id: string;
+  role: string;
+  org: string;
+  type?: string;
+  period?: string;
+  points?: string[];
+  tags?: string[];
+  link?: string;
+}
+
+// Edit these entries; optional fields are hidden when omitted
+// TODO: add period (e.g. 'Mar 2026 – Present') and 2-3 bullet points
+export const EXPERIENCE_PROFESSIONAL: ExperienceEntry[] = [
+  {
+    id: 'handshake-ai',
+    role: 'AI Evaluation Specialist',
+    org: 'HandshakeAI',
+    type: 'Part-time · Contract',
+    tags: ['AI Evaluation'],
+  },
+];
+
+// Edit these entries; optional fields are hidden when omitted
+export const EXPERIENCE_COLLEGE: ExperienceEntry[] = [
+  {
+    id: 'projectx',
+    role: 'AI/ML Mentor',
+    org: 'Project X, VJTI',
+    period: 'Jul 2025 – Present',
+    points: [
+      'Mentored 200+ juniors in AI/ML prototyping',
+      'Conducted hands-on Git and Python workshops',
+    ],
+    tags: ['Mentorship', 'AI/ML', 'Git', 'Python'],
+  },
+  {
+    id: 'hacktoberfest',
+    role: 'Open-source Contributor',
+    org: 'Hacktoberfest 2025 · Open Source Contribution Program',
+    period: 'Oct 2025',
+    points: [
+      'Contributed 6+ merged PRs to open-source repositories, including a Vigenère cipher tool built in Python',
+    ],
+    tags: ['Open Source', 'GitHub', 'Python'],
+  },
+  {
+    id: 'pratibimb',
+    role: 'Department Coordinator',
+    org: 'Pratibimb, Cultural Committee at VJTI',
+    period: 'Oct 2024 – Present',
+    points: [
+      'Coordinated logistics and promotions for Pratibimb VJTI, driving student participation across university-wide events',
+    ],
+    tags: ['Leadership', 'Events'],
+  },
+];
 
 export interface ProjectItem {
   index: string;
