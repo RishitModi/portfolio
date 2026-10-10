@@ -7,7 +7,7 @@ Personal developer portfolio showcasing software engineering, AI/ML research pro
 - **3-column layout:** Sticky sidebar and right rail flanking a fluid main content feed.
 - **Scroll-spy navigation:** Active section detection with smooth-scroll linking.
 - **Project cards:** Rich cards with lazy-loading demo videos, live links, and interactive doc previews.
-- **Competitive programming stats:** Live ratings and stats for LeetCode, Codeforces (official API), and CodeChef (via community endpoint with static fallback values in `src/lib/content.ts`), featuring client-side localStorage caching and SVG sparklines.
+- **Competitive programming stats:** Live ratings and stats for LeetCode, Codeforces (official API), and CodeChef (via community endpoint with static fallback values in `src/lib/content.ts`), featuring client-side localStorage caching, SVG sparklines, and visible timestamps showing when each profile was last updated (with CodeChef's date sourced from `CODECHEF_STATS.updatedAt`).
 - **Reduced-motion support:** Full accessibility support honoring `prefers-reduced-motion` across animations, transitions, and smooth scrolling.
 
 ## Tech Stack

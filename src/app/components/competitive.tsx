@@ -1,9 +1,32 @@
-import { useMemo } from 'react';
 import { SectionLabel } from './section-label';
 import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
-import { useCodeforcesStats, useCodechefStats, type CpStatus } from '../../hooks/useCpStats';
-import { HANDLES, LINKS } from '../../lib/content';
-import { formatRelativeTime } from '../../lib/time';
+import { useCodeforcesStats, useCodechefStats } from '../../hooks/useCpStats';
+import { HANDLES, LINKS, CODECHEF_STATS } from '../../lib/content';
+import { relativeTime, useNow } from '../../lib/time';
+
+function formatAbsoluteDate(input: number | string | Date): string {
+  try {
+    let d: Date;
+    if (input instanceof Date) {
+      d = input;
+    } else if (typeof input === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(input)) {
+      const [y, m, day] = input.split('-').map(Number);
+      d = new Date(y, m - 1, day);
+    } else {
+      d = new Date(input);
+    }
+    if (Number.isNaN(d.getTime())) return '';
+    return d.toLocaleString(undefined, {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+    });
+  } catch {
+    return '';
+  }
+}
 
 function Sparkline({ history, contests }: { history: number[]; contests: number }) {
   if (!history || history.length < 2) return null;
@@ -50,61 +73,11 @@ function Sparkline({ history, contests }: { history: number[]; contests: number 
   );
 }
 
-interface StatusChipProps {
-  platform: string;
-  status: CpStatus;
-  updatedAt: number | null;
-}
-
-function StatusChip({ platform, status, updatedAt }: StatusChipProps) {
-  if (status === 'loading') {
-    return null;
-  }
-
-  const isLive = status === 'live' || status === 'cached';
-
-  if (isLive) {
-    const timeLabel = updatedAt ? formatRelativeTime(updatedAt) : 'just now';
-    return (
-      <span
-        title={`Updated ${timeLabel}`}
-        className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold tracking-wider uppercase text-emerald-700 bg-emerald-50 border border-emerald-200 cursor-default"
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-        Live
-      </span>
-    );
-  }
-
-  return (
-    <span
-      title={`Couldn't reach ${platform}; showing last known values`}
-      className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-medium tracking-wider uppercase text-muted bg-canvas border border-line cursor-default"
-    >
-      <span className="w-1.5 h-1.5 rounded-full bg-muted" />
-      Offline
-    </span>
-  );
-}
-
 export function Competitive() {
+  const now = useNow();
   const lcStats = useLeetCodeStats();
-  const { data: cfData, status: cfStatus, updatedAt: cfUpdatedAt } = useCodeforcesStats();
-  const { data: ccData, status: ccStatus, updatedAt: ccUpdatedAt } = useCodechefStats();
-
-  const lcUpdatedAt = useMemo(() => {
-    try {
-      const raw = localStorage.getItem('lc-stats-v1');
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      if (typeof parsed?.ts === 'number') {
-        return parsed.ts;
-      }
-    } catch {
-      // Ignore localStorage errors
-    }
-    return null;
-  }, [lcStats]);
+  const { data: cfData, updatedAt: cfUpdatedAt } = useCodeforcesStats();
+  const { data: ccData } = useCodechefStats();
 
   return (
     <section
@@ -144,28 +117,25 @@ export function Competitive() {
         </p>
 
         {/* ── 3 Platform Cards Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
           {/* Card 1: LeetCode */}
-          <div className="w-full min-w-0 bg-card border border-line rounded-2xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-200 motion-safe:hover:-translate-y-[2px] hover:border-accent/50 hover:shadow-md">
+          <div className="w-full min-w-0 bg-card border border-line rounded-2xl p-4 sm:p-5 flex flex-col justify-between h-full transition-all duration-200 motion-safe:hover:-translate-y-[2px] hover:border-accent/50 hover:shadow-md">
             <div>
               {/* Header row */}
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <div className="min-w-0">
-                  <div
-                    style={{
-                      fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-                      fontSize: '15px',
-                      fontWeight: 700,
-                      color: 'var(--ink)',
-                    }}
-                  >
-                    LeetCode
-                  </div>
-                  <div style={{ fontSize: '12px', color: 'var(--muted)' }}>
-                    @{HANDLES.leetcode}
-                  </div>
+              <div className="mb-3">
+                <div
+                  style={{
+                    fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+                    fontSize: '15px',
+                    fontWeight: 700,
+                    color: 'var(--ink)',
+                  }}
+                >
+                  LeetCode
                 </div>
-                <StatusChip platform="LeetCode" status="live" updatedAt={lcUpdatedAt} />
+                <div style={{ fontSize: '12px', color: 'var(--muted)' }}>
+                  @{HANDLES.leetcode}
+                </div>
               </div>
 
               {/* Big Rating */}
@@ -213,12 +183,18 @@ export function Competitive() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-line/60 mt-3">
+            <div className="pt-4 border-t border-line/60 mt-3 flex flex-wrap items-center justify-between gap-2">
+              <span
+                className="text-[12px] text-muted cursor-default"
+                title={formatAbsoluteDate(lcStats.updatedAt)}
+              >
+                Last updated: {relativeTime(lcStats.updatedAt, now)}
+              </span>
               <a
                 href={LINKS.leetcode}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1"
+                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1 shrink-0"
               >
                 View profile ↗
               </a>
@@ -226,26 +202,23 @@ export function Competitive() {
           </div>
 
           {/* Card 2: CodeChef */}
-          <div className="w-full min-w-0 bg-card border border-line rounded-2xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-200 motion-safe:hover:-translate-y-[2px] hover:border-accent/50 hover:shadow-md">
+          <div className="w-full min-w-0 bg-card border border-line rounded-2xl p-4 sm:p-5 flex flex-col justify-between h-full transition-all duration-200 motion-safe:hover:-translate-y-[2px] hover:border-accent/50 hover:shadow-md">
             <div>
               {/* Header row */}
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <div className="min-w-0">
-                  <div
-                    style={{
-                      fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-                      fontSize: '15px',
-                      fontWeight: 700,
-                      color: 'var(--ink)',
-                    }}
-                  >
-                    CodeChef
-                  </div>
-                  <div style={{ fontSize: '12px', color: 'var(--muted)' }}>
-                    @{HANDLES.codechef}
-                  </div>
+              <div className="mb-3">
+                <div
+                  style={{
+                    fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+                    fontSize: '15px',
+                    fontWeight: 700,
+                    color: 'var(--ink)',
+                  }}
+                >
+                  CodeChef
                 </div>
-                <StatusChip platform="CodeChef" status={ccStatus} updatedAt={ccUpdatedAt} />
+                <div style={{ fontSize: '12px', color: 'var(--muted)' }}>
+                  @{HANDLES.codechef}
+                </div>
               </div>
 
               {/* Big Rating */}
@@ -308,12 +281,18 @@ export function Competitive() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-line/60 mt-3">
+            <div className="pt-4 border-t border-line/60 mt-3 flex flex-wrap items-center justify-between gap-2">
+              <span
+                className="text-[12px] text-muted cursor-default"
+                title={formatAbsoluteDate(CODECHEF_STATS.updatedAt)}
+              >
+                Last updated: {relativeTime(CODECHEF_STATS.updatedAt, now)}
+              </span>
               <a
                 href={LINKS.codechef}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1"
+                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1 shrink-0"
               >
                 View profile ↗
               </a>
@@ -321,26 +300,23 @@ export function Competitive() {
           </div>
 
           {/* Card 3: Codeforces */}
-          <div className="w-full min-w-0 bg-card border border-line rounded-2xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-200 motion-safe:hover:-translate-y-[2px] hover:border-accent/50 hover:shadow-md">
+          <div className="w-full min-w-0 bg-card border border-line rounded-2xl p-4 sm:p-5 flex flex-col justify-between h-full transition-all duration-200 motion-safe:hover:-translate-y-[2px] hover:border-accent/50 hover:shadow-md">
             <div>
               {/* Header row */}
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <div className="min-w-0">
-                  <div
-                    style={{
-                      fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-                      fontSize: '15px',
-                      fontWeight: 700,
-                      color: 'var(--ink)',
-                    }}
-                  >
-                    Codeforces
-                  </div>
-                  <div style={{ fontSize: '12px', color: 'var(--muted)' }}>
-                    @{HANDLES.codeforces}
-                  </div>
+              <div className="mb-3">
+                <div
+                  style={{
+                    fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+                    fontSize: '15px',
+                    fontWeight: 700,
+                    color: 'var(--ink)',
+                  }}
+                >
+                  Codeforces
                 </div>
-                <StatusChip platform="Codeforces" status={cfStatus} updatedAt={cfUpdatedAt} />
+                <div style={{ fontSize: '12px', color: 'var(--muted)' }}>
+                  @{HANDLES.codeforces}
+                </div>
               </div>
 
               {/* Big Rating */}
@@ -403,12 +379,18 @@ export function Competitive() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-line/60 mt-3">
+            <div className="pt-4 border-t border-line/60 mt-3 flex flex-wrap items-center justify-between gap-2">
+              <span
+                className="text-[12px] text-muted cursor-default"
+                title={formatAbsoluteDate(cfUpdatedAt)}
+              >
+                Last updated: {relativeTime(cfUpdatedAt, now)}
+              </span>
               <a
                 href={LINKS.codeforces}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1"
+                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1 shrink-0"
               >
                 View profile ↗
               </a>

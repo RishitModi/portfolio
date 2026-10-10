@@ -38,6 +38,7 @@ export interface CpFallbackData {
     globalRank: number;
     solved: number;
     contests: number;
+    updatedAt: string;
   };
   codeforces: {
     rating: number;
@@ -45,24 +46,32 @@ export interface CpFallbackData {
     rank: string;
     solved: number | null;
     contests: number;
+    updatedAt: string;
   };
 }
 
+// Update both the stats and updatedAt together whenever CodeChef numbers change.
+export const CODECHEF_STATS = {
+  rating: 1732,
+  maxRating: 1732,
+  stars: 3,
+  globalRank: 6153,
+  solved: 561,
+  contests: 22,
+  updatedAt: '2026-10-09',
+};
+
+export const LEETCODE_FALLBACK_UPDATED_AT = '2026-10-09';
+
 export const CP_FALLBACK: CpFallbackData = {
-  codechef: {
-    rating: 1732,
-    maxRating: 1732,
-    stars: 3,
-    globalRank: 6153,
-    solved: 561,
-    contests: 22,
-  },
+  codechef: CODECHEF_STATS,
   codeforces: {
     rating: 1377,
     maxRating: 1377,
     rank: 'pupil',
     solved: null,
     contests: 5,
+    updatedAt: '2026-10-09',
   },
 };
 

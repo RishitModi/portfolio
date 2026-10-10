@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
-import { LEETCODE_USERNAME } from '../lib/content';
+import { LEETCODE_USERNAME, LEETCODE_FALLBACK_UPDATED_AT } from '../lib/content';
 
 export interface LeetCodeStats {
   currentRating: string;
   maxRating: string;
   solved: string;
+  updatedAt: number | string;
 }
 
 const FALLBACK: LeetCodeStats = {
   currentRating: '2055',
   maxRating: '2055',
   solved: '600+',
+  updatedAt: LEETCODE_FALLBACK_UPDATED_AT,
 };
 
 const API_URL = `https://alfa-leetcode-api.onrender.com/${LEETCODE_USERNAME}/contest`;
@@ -20,7 +22,11 @@ const TIMEOUT_MS = 6000; // 6 seconds
 
 interface CacheEntry {
   ts: number;
-  data: LeetCodeStats;
+  data: {
+    currentRating: string;
+    maxRating: string;
+    solved: string;
+  };
 }
 
 interface ContestParticipationItem {
@@ -39,7 +45,10 @@ function getValidCachedStats(): LeetCodeStats | null {
     const parsed: CacheEntry = JSON.parse(raw);
     if (typeof parsed?.ts === 'number' && parsed?.data) {
       if (Date.now() - parsed.ts < CACHE_TTL_MS) {
-        return parsed.data;
+        return {
+          ...parsed.data,
+          updatedAt: parsed.ts,
+        };
       }
     }
   } catch {
@@ -48,11 +57,15 @@ function getValidCachedStats(): LeetCodeStats | null {
   return null;
 }
 
-function writeCachedStats(data: LeetCodeStats): void {
+function writeCachedStats(data: { currentRating: string; maxRating: string; solved: string }, ts: number): void {
   try {
     const entry: CacheEntry = {
-      ts: Date.now(),
-      data,
+      ts,
+      data: {
+        currentRating: data.currentRating,
+        maxRating: data.maxRating,
+        solved: data.solved,
+      },
     };
     localStorage.setItem(CACHE_KEY, JSON.stringify(entry));
   } catch {
@@ -99,15 +112,17 @@ export function useLeetCodeStats(): LeetCodeStats {
         }
 
         const max = Math.round(Math.max(current, ...participationRatings));
+        const now = Date.now();
 
         const newStats: LeetCodeStats = {
           currentRating: current.toString(),
           maxRating: max.toString(),
           solved: FALLBACK.solved,
+          updatedAt: now,
         };
 
         setStats(newStats);
-        writeCachedStats(newStats);
+        writeCachedStats(newStats, now);
       } catch (err: unknown) {
         if (err instanceof Error && err.name === 'AbortError') {
           return;
@@ -115,6 +130,7 @@ export function useLeetCodeStats(): LeetCodeStats {
         if (import.meta.env.DEV) {
           console.warn('Failed to fetch LeetCode stats:', err);
         }
+        setStats(FALLBACK);
       } finally {
         clearTimeout(timerId);
       }

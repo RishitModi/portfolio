@@ -11,8 +11,6 @@ const TIMEOUT_MS = 6000; // 6 seconds
 const CF_CACHE_KEY = 'cf-stats-v1';
 const CC_CACHE_KEY = 'cc-stats-v1';
 
-export type CpStatus = 'fallback' | 'loading' | 'live' | 'cached';
-
 export interface CodeforcesData {
   rating: number;
   maxRating: number;
@@ -127,19 +125,17 @@ interface CcApiResponse {
 
 export function useCodeforcesStats(): {
   data: CodeforcesData;
-  status: CpStatus;
-  updatedAt: number | null;
+  updatedAt: number | string;
 } {
   const [state, setState] = useState<{
     data: CodeforcesData;
-    status: CpStatus;
-    updatedAt: number | null;
+    updatedAt: number | string;
   }>(() => {
     const cached = getCached<CodeforcesData>(CF_CACHE_KEY);
     if (cached) {
-      return { data: cached.data, status: 'cached', updatedAt: cached.ts };
+      return { data: cached.data, updatedAt: cached.ts };
     }
-    return { data: CP_FALLBACK.codeforces, status: 'loading', updatedAt: null };
+    return { data: CP_FALLBACK.codeforces, updatedAt: CP_FALLBACK.codeforces.updatedAt };
   });
 
   useEffect(() => {
@@ -231,7 +227,7 @@ export function useCodeforcesStats(): {
         };
 
         const now = Date.now();
-        setState({ data: parsedData, status: 'live', updatedAt: now });
+        setState({ data: parsedData, updatedAt: now });
         setCached(CF_CACHE_KEY, parsedData, now);
       } catch (err: unknown) {
         if (err instanceof Error && err.name === 'AbortError') {
@@ -240,7 +236,7 @@ export function useCodeforcesStats(): {
         if (import.meta.env.DEV) {
           console.warn('Failed to fetch Codeforces stats:', err);
         }
-        setState({ data: CP_FALLBACK.codeforces, status: 'fallback', updatedAt: null });
+        setState({ data: CP_FALLBACK.codeforces, updatedAt: CP_FALLBACK.codeforces.updatedAt });
       } finally {
         clearTimeout(timeoutId);
       }
@@ -261,19 +257,17 @@ export function useCodeforcesStats(): {
 
 export function useCodechefStats(): {
   data: CodechefData;
-  status: CpStatus;
-  updatedAt: number | null;
+  updatedAt: number | string;
 } {
   const [state, setState] = useState<{
     data: CodechefData;
-    status: CpStatus;
-    updatedAt: number | null;
+    updatedAt: number | string;
   }>(() => {
     const cached = getCached<CodechefData>(CC_CACHE_KEY);
     if (cached) {
-      return { data: cached.data, status: 'cached', updatedAt: cached.ts };
+      return { data: cached.data, updatedAt: cached.ts };
     }
-    return { data: CP_FALLBACK.codechef, status: 'loading', updatedAt: null };
+    return { data: CP_FALLBACK.codechef, updatedAt: CP_FALLBACK.codechef.updatedAt };
   });
 
   useEffect(() => {
@@ -368,7 +362,7 @@ export function useCodechefStats(): {
         };
 
         const now = Date.now();
-        setState({ data: parsedData, status: 'live', updatedAt: now });
+        setState({ data: parsedData, updatedAt: now });
         setCached(CC_CACHE_KEY, parsedData, now);
       } catch (err: unknown) {
         if (err instanceof Error && err.name === 'AbortError') {
@@ -377,7 +371,7 @@ export function useCodechefStats(): {
         if (import.meta.env.DEV) {
           console.warn('Failed to fetch CodeChef stats:', err);
         }
-        setState({ data: CP_FALLBACK.codechef, status: 'fallback', updatedAt: null });
+        setState({ data: CP_FALLBACK.codechef, updatedAt: CP_FALLBACK.codechef.updatedAt });
       } finally {
         clearTimeout(timeoutId);
       }
