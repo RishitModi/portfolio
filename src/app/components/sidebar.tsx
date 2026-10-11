@@ -26,13 +26,6 @@ function IconUser({ size = 20 }: IconProps) {
     </svg>
   );
 }
-function IconZap({ size = 20 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-    </svg>
-  );
-}
 function IconCode({ size = 20 }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -103,7 +96,6 @@ const NAV_ICONS: Record<NavId, (props: IconProps) => JSX.Element> = {
   education: IconGraduationCap,
   experience: IconBriefcase,
   competitive: IconTrophy,
-  skills: IconZap,
   projects: IconCode,
   contact: IconMail,
 };

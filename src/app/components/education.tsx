@@ -4,42 +4,83 @@ import { EDUCATION, type EducationStage } from '../../lib/content';
 
 function EducationCard({
   stage,
-  isReached,
+  index,
+  activeIndex,
+  hasMeasured,
   isActive,
+  isLeft,
   prefersReducedMotion,
 }: {
   stage: EducationStage;
-  isReached: boolean;
+  index: number;
+  activeIndex: number;
+  hasMeasured: boolean;
   isActive: boolean;
+  isLeft: boolean;
   prefersReducedMotion: boolean;
 }) {
+  const distance = activeIndex >= 0 ? Math.abs(index - activeIndex) : 1;
+  const isNotYetReached = activeIndex >= 0 ? index > activeIndex : true;
+
+  let blur = '0px';
+  let opacity = 1;
+  let transform = 'translateY(0) scale(1)';
+  let willChange: string | undefined = undefined;
+
+  if (prefersReducedMotion) {
+    blur = '0px';
+    opacity = 1;
+    transform = 'none';
+  } else if (!hasMeasured) {
+    // Before the scroll measurement runs on first render, render all cards sharp (no blur)
+    blur = '0px';
+    opacity = 1;
+    transform = 'translateY(0) scale(1)';
+  } else if (distance === 0) {
+    blur = '0px';
+    opacity = 1;
+    transform = 'translateY(0) scale(var(--active-scale, 1.03))';
+    willChange = 'transform, filter';
+  } else if (distance === 1) {
+    blur = '1.2px';
+    opacity = 0.8;
+    transform = `translateY(${isNotYetReached ? '12px' : '0'}) scale(0.98)`;
+  } else if (distance === 2) {
+    blur = '2px';
+    opacity = 0.7;
+    transform = `translateY(${isNotYetReached ? '12px' : '0'}) scale(0.97)`;
+  } else {
+    // distance 3 and beyond
+    blur = '2.5px';
+    opacity = 0.65;
+    transform = `translateY(${isNotYetReached ? '12px' : '0'}) scale(0.96)`;
+  }
+
   const cardStyle: React.CSSProperties = {
-    opacity: prefersReducedMotion ? 1 : isReached ? 1 : 0.7,
-    transform: prefersReducedMotion
-      ? 'none'
-      : isActive
-      ? 'translateY(0) scale(1.015)'
-      : isReached
-      ? 'translateY(0)'
-      : 'translateY(12px)',
+    ['--blur' as string]: blur,
+    ['--fade' as string]: opacity,
+    transform,
     borderColor: isActive
       ? 'color-mix(in srgb, var(--accent) 60%, transparent)'
       : stage.current
-      ? 'color-mix(in srgb, var(--accent) 50%, transparent)'
-      : 'var(--line)',
+        ? 'color-mix(in srgb, var(--accent) 50%, transparent)'
+        : 'var(--line)',
     boxShadow:
       isActive && !prefersReducedMotion
         ? '0 12px 32px -12px rgb(var(--shadow) / 0.12)'
         : '0 0 0 0 transparent',
     transition: prefersReducedMotion
       ? 'none'
-      : 'opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1), border-color 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1)',
+      : 'filter 350ms cubic-bezier(0.16, 1, 0.3, 1), opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), transform 350ms cubic-bezier(0.16, 1, 0.3, 1), border-color 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1)',
+    ...(willChange ? { willChange } : {}),
   };
 
   return (
     <div
+      tabIndex={0}
       style={cardStyle}
-      className="w-full bg-card border rounded-2xl p-4 flex flex-col justify-between text-left"
+      className={`education-card ${isLeft ? 'is-left' : ''
+        } w-full bg-card border rounded-2xl p-4 flex flex-col justify-between text-left`}
     >
       <div>
         {/* Stage label */}
@@ -221,7 +262,7 @@ export function Education() {
   return (
     <section
       id="education"
-      className="py-12 md:py-14 px-6 md:px-8"
+      className="py-14 md:py-16 section-pad"
       style={{
         backgroundColor: 'var(--canvas)',
         borderBottom: '1px solid var(--line)',
@@ -259,7 +300,7 @@ export function Education() {
         <ol
           ref={olRef}
           aria-label="Education timeline"
-          className="relative overflow-x-clip"
+          className="relative px-2 md:px-3 max-w-[1000px] mx-auto"
           style={{
             ['--progress' as string]: prefersReducedMotion || !hasMeasured ? '1' : '0',
           }}
@@ -267,7 +308,7 @@ export function Education() {
           {/* Vertical track line (2px, var(--line)) running down middle on desktop and left on mobile */}
           <div
             aria-hidden="true"
-            className="absolute left-[11px] md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[2px] bg-line pointer-events-none"
+            className="absolute left-[19px] md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[2px] bg-line pointer-events-none"
           >
             {/* Accent progress line */}
             <div
@@ -287,8 +328,8 @@ export function Education() {
               prefersReducedMotion
                 ? index === EDUCATION.length - 1
                 : hasMeasured
-                ? index === activeIndex
-                : false;
+                  ? index === activeIndex
+                  : false;
             const isLeft = index % 2 === 0;
 
             return (
@@ -307,8 +348,11 @@ export function Education() {
                   >
                     <EducationCard
                       stage={stage}
-                      isReached={isReached}
+                      index={index}
+                      activeIndex={activeIndex}
+                      hasMeasured={hasMeasured}
                       isActive={isActive}
+                      isLeft={isLeft}
                       prefersReducedMotion={prefersReducedMotion}
                     />
                   </div>
@@ -355,9 +399,8 @@ export function Education() {
                     {/* 14px circle Node */}
                     <div
                       aria-hidden="true"
-                      className={`w-[14px] h-[14px] rounded-full z-10 ${
-                        isActive && !prefersReducedMotion ? 'animate-pulse' : ''
-                      }`}
+                      className={`w-[14px] h-[14px] rounded-full z-10 ${isActive && !prefersReducedMotion ? 'animate-pulse' : ''
+                        }`}
                       style={{
                         backgroundColor: isReached
                           ? 'var(--accent-solid)'
@@ -387,8 +430,11 @@ export function Education() {
                   >
                     <EducationCard
                       stage={stage}
-                      isReached={isReached}
+                      index={index}
+                      activeIndex={activeIndex}
+                      hasMeasured={hasMeasured}
                       isActive={isActive}
+                      isLeft={isLeft}
                       prefersReducedMotion={prefersReducedMotion}
                     />
                   </div>
@@ -403,6 +449,49 @@ export function Education() {
           })}
         </ol>
       </div>
+
+      <style>{`
+        .education-card {
+          transform-origin: center center;
+          --active-scale: 1.02;
+          --current-blur: var(--blur, 0px);
+          --current-fade: var(--fade, 1);
+          filter: blur(var(--current-blur));
+          opacity: var(--current-fade);
+        }
+        @media (min-width: 768px) {
+          .education-card {
+            --active-scale: 1.03;
+          }
+        }
+        .education-card:hover,
+        .education-card:focus-within {
+          --current-blur: 0px;
+          --current-fade: 1;
+          --blur: 0px;
+          --fade: 1;
+          filter: blur(0px);
+          opacity: 1;
+        }
+        .education-card:focus,
+        .education-card:focus-visible {
+          outline: 2px solid var(--accent);
+          outline-offset: 2px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .education-card {
+            filter: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+          }
+          .education-card:hover,
+          .education-card:focus-within {
+            filter: none !important;
+            opacity: 1 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

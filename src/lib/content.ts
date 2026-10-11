@@ -77,11 +77,10 @@ export const CP_FALLBACK: CpFallbackData = {
 
 export const NAV_ITEMS = [
   { label: 'Profile', id: 'profile' },
-  { label: 'About', id: 'about' },
+  { label: 'About & Skills', id: 'about' },
   { label: 'Education', id: 'education' },
   { label: 'Experience', id: 'experience' },
   { label: 'Competitive Programming', id: 'competitive' },
-  { label: 'Skills', id: 'skills' },
   { label: 'Projects', id: 'projects' },
   { label: 'Contact', id: 'contact' },
 ] as const;
@@ -158,52 +157,34 @@ export interface ExperienceEntry {
   points?: string[];
   tags?: string[];
   link?: string;
+  images?: { src: string; alt: string; caption?: string }[];
 }
 
 // Edit these entries; optional fields are hidden when omitted
-// TODO: add period (e.g. 'Mar 2026 – Present') and 2-3 bullet points
 export const EXPERIENCE_PROFESSIONAL: ExperienceEntry[] = [
   {
     id: 'handshake-ai',
     role: 'AI Evaluation Specialist',
     org: 'HandshakeAI',
     type: 'Part-time · Contract',
-    tags: ['AI Evaluation'],
-  },
-];
-
-// Edit these entries; optional fields are hidden when omitted
-export const EXPERIENCE_COLLEGE: ExperienceEntry[] = [
-  {
-    id: 'projectx',
-    role: 'AI/ML Mentor',
-    org: 'Project X, VJTI',
-    period: 'Jul 2025 – Present',
+    period: 'Aug 2026 – Present',
     points: [
-      'Mentored 200+ juniors in AI/ML prototyping',
-      'Conducted hands-on Git and Python workshops',
+      'Developed complex, domain-specific prompts to test boundaries and reasoning limits of frontier Large Language Models (LLMs)',
+      'Identified model hallucinations, bias, and reasoning gaps to deliver rigorous, structured qualitative feedback',
     ],
-    tags: ['Mentorship', 'AI/ML', 'Git', 'Python'],
-  },
-  {
-    id: 'hacktoberfest',
-    role: 'Open-source Contributor',
-    org: 'Hacktoberfest 2025 · Open Source Contribution Program',
-    period: 'Oct 2025',
-    points: [
-      'Contributed 6+ merged PRs to open-source repositories, including a Vigenère cipher tool built in Python',
+    tags: ['Large Language Models(LLM)', 'Prompt Engineering', 'Data Annotation', 'Model Evaluation', 'Research'],
+    images: [
+      {
+        src: `${import.meta.env.BASE_URL}images/experience/handshake-ai-1.jpg`,
+        alt: 'Certification issued by Handshake for the program (1 of 2)',
+        caption: 'Handshake program certification',
+      },
+      {
+        src: `${import.meta.env.BASE_URL}images/experience/handshake-ai-2.jpg`,
+        alt: 'Certification issued by Handshake for the program (2 of 2)',
+        caption: 'Handshake program certification',
+      },
     ],
-    tags: ['Open Source', 'GitHub', 'Python'],
-  },
-  {
-    id: 'pratibimb',
-    role: 'Department Coordinator',
-    org: 'Pratibimb, Cultural Committee at VJTI',
-    period: 'Oct 2024 – Present',
-    points: [
-      'Coordinated logistics and promotions for Pratibimb VJTI, driving student participation across university-wide events',
-    ],
-    tags: ['Leadership', 'Events'],
   },
 ];
 
@@ -229,9 +210,9 @@ export const PROJECTS: ProjectItem[] = [
     title: 'Wealthio',
     category: 'ACTIVE PROJECT',
     description:
-      'A comprehensive personal wealth management platform integrating real-time market data with machine learning to offer tailored financial insights, risk profiling, and predictive forecasting.',
-    metric: 'Microservices · AI Risk Profiling',
-    tags: ['React', 'Spring Boot', 'FastAPI', 'scikit-learn', 'Prophet', 'Recharts'],
+      'Personal wealth-management platform that profiles an investor with K-Means clustering, then builds a personalised allocation with a mean-variance optimiser using James-Stein-shrunk returns and reverse-optimised risk aversion. Prophet forecasts gold and Nifty prices with buy/hold/wait signals. Spring Boot API, FastAPI ML service and a React dashboard.',
+    metric: 'K-Means risk profiling · MPT optimiser · Prophet forecasts',
+    tags: ['React', 'Spring Boot', 'FastAPI', 'scikit-learn', 'SciPy', 'Prophet', 'PostgreSQL', 'Recharts', 'Docker'],
     liveUrl: 'https://wealthio-eight.vercel.app',
     githubUrl: 'https://github.com/RishitModi/Wealthio',
     videoSrc: null,
@@ -243,9 +224,9 @@ export const PROJECTS: ProjectItem[] = [
     title: 'Voyexa',
     category: 'AI TRAVEL COMPANION',
     description:
-      'AI-powered travel companion using Gemini 1.5 Flash for intelligent itinerary generation. Full-stack app with React frontend, Spring Boot backend, and PostgreSQL for user data persistence.',
-    metric: 'Gemini 1.5 integration · Live deployment',
-    tags: ['React', 'Tailwind', 'Spring Boot', 'PostgreSQL', 'Gemini 1.5', 'Geoapify'],
+      'AI travel planner that turns preferences into validated day-by-day itineraries. A Spring Boot REST API runs a planner and validator Gemini pipeline over a rotating API-key pool with cooldowns and exponential backoff, streams Pexels images over SSE, caches on-demand activity alternatives, and shares trips through tokenised links. React frontend with drag-and-drop itinerary editing and Leaflet maps.',
+    metric: 'Gemini LLM pipeline · SSE image streaming · Live deployment',
+    tags: ['React', 'Tailwind', 'Spring Boot', 'PostgreSQL', 'Flyway', 'Docker', 'Gemini API', 'Leaflet'],
     liveUrl: 'https://voyexa.vercel.app',
     githubUrl: 'https://github.com/RishitModi/Voyexa',
     videoSrc: `${import.meta.env.BASE_URL}images/voyexa_demo.webm`,
@@ -271,7 +252,7 @@ export const PROJECTS: ProjectItem[] = [
     title: 'Energy-based & Neurosymbolic Cryptanalysis',
     category: 'ML RESEARCH',
     description:
-      'Novel approach to cipher classification using Energy-Based Transformers and side-channel analysis. Achieved 76% validation accuracy across multiple cipher families with deep learning architectures.',
+      'Cipher classification with an Energy-Based Transformer across AES, DES, SPECK32 and Vigenère, reaching 76% validation accuracy, plus a CNN side-channel model for DES key recovery that narrows the key to the top 4 candidates across 10,000 synthetic traces. Classical cryptanalysis (index of coincidence, Kasiski examination, frequency analysis) recovers Vigenère keys with no prior knowledge of key length.',
     metric: '76% validation accuracy · 10K SCA traces',
     tags: ['PyTorch', 'Pycryptodome', 'CNN', 'Transformer', 'Side-Channel'],
     liveUrl: null,
@@ -282,41 +263,17 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     index: '05',
-    title: 'Enterprise E-Commerce API',
-    category: 'BACKEND ARCHITECTURE',
+    title: 'Full-Stack E-Commerce Platform',
+    category: 'FULL-STACK + NLP',
     description:
-      'Production-ready backend system for a scalable e-commerce platform. Engineered with modern Java and Spring Boot, featuring secure JWT authentication with RBAC, automated Flyway migrations, and a complete order processing pipeline.',
-    metric: 'Scalable Architecture · JWT Security',
-    tags: ['Java 23', 'Spring Boot', 'Spring Security', 'MySQL', 'JWT'],
+      'Microservice e-commerce app: a Spring Boot API with JWT access tokens and an httpOnly refresh cookie, role-based admin, Flyway migrations and Stripe Checkout with webhook order syncing, a React and TypeScript storefront with cart, orders and admin product management, and a FastAPI service serving a fine-tuned DistilRoBERTa model that classifies product-review sentiment. Orchestrated with Docker Compose.',
+    metric: 'DistilRoBERTa sentiment · 82.8% accuracy · Stripe checkout',
+    tags: ['React', 'TypeScript', 'Spring Boot', 'Spring Security', 'MySQL', 'FastAPI', 'DistilRoBERTa', 'Stripe', 'Docker'],
     liveUrl: null,
     githubUrl: 'https://github.com/RishitModi/e-commerceBackend',
-    videoSrc: null,
+    videoSrc: `${import.meta.env.BASE_URL}images/ecommerce_demo.mp4`,
     imageSrc: null,
     iframeSrc: null,
-  },
-];
-
-export interface AboutBlock {
-  category: string;
-  description: string;
-  tags: string[];
-}
-
-export const ABOUT_BLOCKS: AboutBlock[] = [
-  {
-    category: 'AI & Deep Learning',
-    description: 'Building intelligent systems with state-of-the-art architectures',
-    tags: ['PyTorch', 'TensorFlow', 'VAE', 'CNN', 'Transformers'],
-  },
-  {
-    category: 'Full-Stack Engineering',
-    description: 'End-to-end product development from APIs to polished interfaces',
-    tags: ['React', 'Spring Boot', 'Node.js', 'PostgreSQL', 'REST'],
-  },
-  {
-    category: 'Cybersecurity',
-    description: 'Applied cryptography and security analysis',
-    tags: ['Cryptanalysis', 'AES/DES', 'Side-Channel', 'Pycryptodome'],
   },
 ];
 
@@ -368,6 +325,15 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: 'MongoDB', isPrimary: false },
       { name: 'Git', isPrimary: false },
       { name: 'Linux', isPrimary: false },
+    ],
+  },
+  {
+    category: 'Cybersecurity',
+    skills: [
+      { name: 'Cryptanalysis', isPrimary: false },
+      { name: 'AES/DES', isPrimary: false },
+      { name: 'Side-Channel Analysis', isPrimary: false },
+      { name: 'Pycryptodome', isPrimary: false },
     ],
   },
 ];

@@ -11,7 +11,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden py-12 md:py-14 px-6 md:px-8"
+      className="relative py-12 md:py-14 section-pad"
       style={{
         backgroundColor: 'var(--canvas)',
       }}

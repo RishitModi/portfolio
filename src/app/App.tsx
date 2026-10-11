@@ -7,7 +7,6 @@ import { Hero } from './components/hero';
 import { About } from './components/about';
 import { Education } from './components/education';
 import { Experience } from './components/experience';
-import { Skills } from './components/skills';
 import { Projects } from './components/projects';
 import { Competitive } from './components/competitive';
 import { Contact } from './components/contact';
@@ -73,7 +72,7 @@ export default function App() {
        */}
       <div
         className={[
-          'w-full mx-auto max-w-[1400px]',
+          'w-full',
           'lg:grid lg:grid-cols-[var(--left)_minmax(0,1fr)]',
           'xl:grid-cols-[var(--left)_minmax(0,1fr)_var(--right)]',
         ].join(' ')}
@@ -103,45 +102,45 @@ export default function App() {
          * ── Middle column: main content feed ──
          * min-w-0 prevents grid blowout from wide children.
          */}
-        <main className="min-w-0 overflow-x-clip pt-[72px] lg:pt-0">
-          {/* Feed column left+right borders at xl */}
-          <div
-            className="xl:border-l xl:border-r relative"
-            style={{ borderColor: 'var(--line)' }}
-          >
-            {/* Zero-height sticky row for panel toggles */}
-            <div className="sticky top-3 z-40 h-0 pointer-events-none">
-              <PanelToggle
-                ref={leftToggleRef}
-                side="left"
-                open={leftOpen}
-                onClick={handleToggleLeft}
-                controls="sidebar-panel"
-                className="hidden lg:flex pointer-events-auto absolute left-3 top-0"
-              />
-              <PanelToggle
-                ref={rightToggleRef}
-                side="right"
-                open={rightOpen}
-                onClick={handleToggleRight}
-                controls="rail-panel"
-                className="hidden xl:flex pointer-events-auto absolute right-3 top-0"
-              />
-            </div>
-
-            {/* Main content feed: constrained to 960px when a side panel is collapsed */}
-            <div className={!leftOpen || (isXl && !rightOpen) ? 'max-w-[960px] mx-auto w-full' : ''}>
-              <Hero />
-              <About />
-              <Education />
-              <Experience />
-              <Competitive />
-              <Skills />
-              <Projects />
-              <Contact />
-              <Footer />
-            </div>
+        <main
+          className={[
+            'min-w-0 overflow-x-clip pt-[72px] lg:pt-0 relative',
+            leftOpen ? 'xl:border-l' : '',
+            rightOpen ? 'xl:border-r' : '',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+          style={{ borderColor: 'var(--line)' }}
+        >
+          {/* Zero-height sticky row for panel toggles */}
+          <div className="sticky top-3 z-40 h-0 pointer-events-none">
+            <PanelToggle
+              ref={leftToggleRef}
+              side="left"
+              open={leftOpen}
+              onClick={handleToggleLeft}
+              controls="sidebar-panel"
+              className="hidden lg:flex pointer-events-auto absolute left-3 top-0"
+            />
+            <PanelToggle
+              ref={rightToggleRef}
+              side="right"
+              open={rightOpen}
+              onClick={handleToggleRight}
+              controls="rail-panel"
+              className="hidden xl:flex pointer-events-auto absolute right-3 top-0"
+            />
           </div>
+
+          {/* Main content feed: fills middle column track */}
+          <Hero />
+          <About />
+          <Education />
+          <Experience />
+          <Competitive />
+          <Projects />
+          <Contact />
+          <Footer />
         </main>
 
         {/* ── Right rail ──

@@ -343,15 +343,16 @@ export function Projects() {
   return (
     <section
       id="projects"
-      className="py-12 md:py-14 px-6 md:px-8"
+      className="py-12 md:py-14 section-pad"
       style={{
-        backgroundColor: 'var(--canvas)',
+        backgroundColor: 'var(--surface)',
+        borderTop: '1px solid var(--line)',
         borderBottom: '1px solid var(--line)',
       }}
     >
       {/* ── Section Header ── */}
       <div>
-        <SectionLabel>[ 06 — PROJECTS ]</SectionLabel>
+        <SectionLabel>[ 05 — PROJECTS ]</SectionLabel>
 
         <h2
           style={{

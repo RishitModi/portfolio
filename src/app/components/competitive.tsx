@@ -82,7 +82,7 @@ export function Competitive() {
   return (
     <section
       id="competitive"
-      className="py-12 md:py-14 px-6 md:px-8"
+      className="py-12 md:py-14 section-pad"
       style={{
         backgroundColor: 'var(--canvas)',
         borderBottom: '1px solid var(--line)',

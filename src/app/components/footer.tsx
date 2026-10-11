@@ -4,7 +4,7 @@ import { scrollToTop } from '../../lib/scroll';
 export function Footer() {
   return (
     <footer
-      className="py-8 px-6 md:px-16"
+      className="py-8 section-pad"
       style={{
         borderTop: '1px solid var(--line)',
         backgroundColor: 'var(--surface)',
@@ -13,7 +13,7 @@ export function Footer() {
         color: 'var(--muted)',
       }}
     >
-      <div className="max-w-[1920px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <span style={{ color: 'var(--ink)', fontWeight: 600 }}>RM.</span>
           <span>© {PROFILE.year}</span>

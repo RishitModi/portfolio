@@ -1,12 +1,259 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SectionLabel } from './section-label';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import { scrollToId } from '../../lib/scroll';
 import {
   EXPERIENCE_PROFESSIONAL,
-  EXPERIENCE_COLLEGE,
   type ExperienceEntry,
 } from '../../lib/content';
+
+function ExperienceGallery({
+  images,
+}: {
+  images: NonNullable<ExperienceEntry['images']>;
+}) {
+  const [failedSrcs, setFailedSrcs] = useState<Set<string>>(new Set());
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const triggerRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const handleImageError = (src: string) => {
+    setFailedSrcs((prev) => {
+      const next = new Set(prev);
+      next.add(src);
+      return next;
+    });
+  };
+
+  const validImages = images.filter((img) => !failedSrcs.has(img.src));
+
+  const openLightbox = (index: number) => {
+    setActiveIdx(index);
+    dialogRef.current?.showModal();
+    document.documentElement.style.overflow = 'hidden';
+  };
+
+  const closeLightbox = () => {
+    dialogRef.current?.close();
+    document.documentElement.style.overflow = '';
+    const lastIdx = activeIdx;
+    setActiveIdx(null);
+    if (lastIdx !== null && triggerRefs.current[lastIdx]) {
+      triggerRefs.current[lastIdx]?.focus();
+    }
+  };
+
+  const showPrev = () => {
+    if (activeIdx === null || validImages.length === 0) return;
+    setActiveIdx((prev) => ((prev ?? 0) - 1 + validImages.length) % validImages.length);
+  };
+
+  const showNext = () => {
+    if (activeIdx === null || validImages.length === 0) return;
+    setActiveIdx((prev) => ((prev ?? 0) + 1) % validImages.length);
+  };
+
+  // Keyboard navigation for ArrowLeft / ArrowRight
+  useEffect(() => {
+    if (activeIdx === null) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        showPrev();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        showNext();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [activeIdx, validImages.length]);
+
+  // Clean up body scroll lock if unmounted while open
+  useEffect(() => {
+    return () => {
+      document.documentElement.style.overflow = '';
+    };
+  }, []);
+
+  if (validImages.length === 0) {
+    return null;
+  }
+
+  const currentImg = activeIdx !== null ? validImages[activeIdx] : null;
+
+  return (
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-3">
+        {validImages.map((img, idx) => (
+          <div key={img.src} className="flex flex-col">
+            <button
+              ref={(el) => {
+                triggerRefs.current[idx] = el;
+              }}
+              type="button"
+              onClick={() => openLightbox(idx)}
+              className="group/gallery relative block w-full text-left cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              style={{
+                background: 'none',
+                border: 'none',
+                padding: 0,
+                margin: 0,
+              }}
+            >
+              <div
+                className="gallery-box relative aspect-[16/10] w-full overflow-hidden rounded-lg transition-colors duration-200"
+                style={{
+                  border: '1px solid var(--line)',
+                  backgroundColor: 'var(--chip)',
+                }}
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  loading="lazy"
+                  decoding="async"
+                  onError={() => handleImageError(img.src)}
+                  className="gallery-img w-full h-full object-cover transition-transform duration-200"
+                />
+
+                <span
+                  className="absolute bottom-2 right-2 px-1.5 py-0.5 rounded text-[11px] font-medium pointer-events-none"
+                  style={{
+                    backgroundColor: 'color-mix(in srgb, var(--card) 85%, transparent)',
+                    color: 'var(--muted)',
+                    border: '1px solid var(--line)',
+                    backdropFilter: 'blur(4px)',
+                    WebkitBackdropFilter: 'blur(4px)',
+                  }}
+                >
+                  ⤢ View larger
+                </span>
+              </div>
+            </button>
+
+            {img.caption && (
+              <span
+                className="mt-1.5 text-[12px] block"
+                style={{
+                  color: 'var(--muted)',
+                  fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+                }}
+              >
+                {img.caption}
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Lightbox dialog */}
+      <dialog
+        ref={dialogRef}
+        className="lightbox-dialog"
+        onClick={(e) => {
+          if (e.target === dialogRef.current) {
+            closeLightbox();
+          }
+        }}
+        onCancel={(e) => {
+          e.preventDefault();
+          closeLightbox();
+        }}
+      >
+        {currentImg && (
+          <div className="relative flex flex-col items-center">
+            {/* Top row with counter & close button */}
+            <div className="w-full flex items-center justify-between pb-2 mb-2 border-b border-line/60">
+              <span
+                className="text-[12px] text-muted font-medium"
+                style={{ fontFamily: 'Inter Variable, Inter, system-ui, sans-serif' }}
+              >
+                {validImages.length > 1
+                  ? `${(activeIdx ?? 0) + 1} / ${validImages.length}`
+                  : ''}
+              </span>
+              <button
+                type="button"
+                onClick={closeLightbox}
+                aria-label="Close image"
+                className="w-9 h-9 flex items-center justify-center rounded-full cursor-pointer hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ml-auto"
+                style={{
+                  backgroundColor: 'var(--chip)',
+                  color: 'var(--ink)',
+                  border: '1px solid var(--line)',
+                  fontSize: '15px',
+                  lineHeight: 1,
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Image viewer with Prev / Next buttons */}
+            <div className="relative flex items-center justify-center w-full min-h-[160px]">
+              {validImages.length > 1 && (
+                <button
+                  type="button"
+                  onClick={showPrev}
+                  aria-label="Previous image"
+                  className="absolute left-2 z-10 w-9 h-9 flex items-center justify-center rounded-full cursor-pointer hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  style={{
+                    backgroundColor: 'color-mix(in srgb, var(--card) 85%, transparent)',
+                    color: 'var(--ink)',
+                    border: '1px solid var(--line)',
+                    backdropFilter: 'blur(4px)',
+                    WebkitBackdropFilter: 'blur(4px)',
+                    fontSize: '18px',
+                    lineHeight: 1,
+                  }}
+                >
+                  ‹
+                </button>
+              )}
+
+              <img
+                src={currentImg.src}
+                alt={currentImg.alt}
+                className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg"
+              />
+
+              {validImages.length > 1 && (
+                <button
+                  type="button"
+                  onClick={showNext}
+                  aria-label="Next image"
+                  className="absolute right-2 z-10 w-9 h-9 flex items-center justify-center rounded-full cursor-pointer hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  style={{
+                    backgroundColor: 'color-mix(in srgb, var(--card) 85%, transparent)',
+                    color: 'var(--ink)',
+                    border: '1px solid var(--line)',
+                    backdropFilter: 'blur(4px)',
+                    WebkitBackdropFilter: 'blur(4px)',
+                    fontSize: '18px',
+                    lineHeight: 1,
+                  }}
+                >
+                  ›
+                </button>
+              )}
+            </div>
+
+            {/* Visible caption (caption || alt) */}
+            <div className="w-full text-center pt-2.5 mt-1">
+              <p
+                className="text-[13px] text-body"
+                style={{ fontFamily: 'Inter Variable, Inter, system-ui, sans-serif' }}
+              >
+                {currentImg.caption || currentImg.alt}
+              </p>
+            </div>
+          </div>
+        )}
+      </dialog>
+    </>
+  );
+}
 
 function ExperienceCard({
   entry,
@@ -98,6 +345,11 @@ function ExperienceCard({
             ))}
           </ul>
         )}
+
+        {/* Image gallery */}
+        {entry.images && entry.images.length > 0 && (
+          <ExperienceGallery images={entry.images} />
+        )}
       </div>
 
       {/* Tags chips */}
@@ -111,76 +363,6 @@ function ExperienceCard({
               {tag}
             </span>
           ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ExperienceGroup({
-  title,
-  entries,
-  emptyMessage,
-  emptyAction,
-  isAnimated,
-  startIndex,
-  prefersReducedMotion,
-}: {
-  title: string;
-  entries: ExperienceEntry[];
-  emptyMessage: string;
-  emptyAction?: { label: string; onClick: () => void };
-  isAnimated: boolean;
-  startIndex: number;
-  prefersReducedMotion: boolean;
-}) {
-  return (
-    <div>
-      <h3 className="text-[14px] font-bold uppercase tracking-[0.12em] text-ink flex items-center gap-2 mb-4">
-        <span>{title}</span>
-        <span className="text-muted font-semibold text-[13px]">
-          ({entries.length})
-        </span>
-      </h3>
-
-      {entries.length === 0 ? (
-        <div className="border border-dashed border-line rounded-2xl p-5 bg-card/60">
-          <p className="text-[14px] text-body">{emptyMessage}</p>
-          {emptyAction && (
-            <button
-              type="button"
-              onClick={emptyAction.onClick}
-              className="text-accent hover:underline font-semibold text-[13px] inline-flex items-center gap-1 mt-2.5 cursor-pointer"
-            >
-              {emptyAction.label}
-            </button>
-          )}
-        </div>
-      ) : (
-        <div className="relative pl-6">
-          {/* 2px left rail */}
-          <div
-            aria-hidden="true"
-            className="absolute left-[4px] top-3.5 bottom-3.5 w-[2px] bg-line pointer-events-none"
-          />
-
-          <ul className="flex flex-col gap-3">
-            {entries.map((entry, idx) => (
-              <li key={entry.id} className="relative">
-                {/* 10px node on the rail */}
-                <div
-                  aria-hidden="true"
-                  className="absolute -left-[24px] top-4 w-2.5 h-2.5 rounded-full bg-accent-solid"
-                />
-                <ExperienceCard
-                  entry={entry}
-                  isAnimated={isAnimated}
-                  staggerIndex={startIndex + idx}
-                  prefersReducedMotion={prefersReducedMotion}
-                />
-              </li>
-            ))}
-          </ul>
         </div>
       )}
     </div>
@@ -207,7 +389,7 @@ export function Experience() {
     <section
       id="experience"
       ref={sectionRef}
-      className="py-12 md:py-14 px-6 md:px-8"
+      className="py-12 md:py-14 section-pad"
       style={{
         backgroundColor: 'var(--surface)',
         borderTop: '1px solid var(--line)',
@@ -239,34 +421,93 @@ export function Experience() {
             marginBottom: '28px',
           }}
         >
-          Professional roles and campus experience.
+          Professional experience.
         </p>
 
-        {/* Stacked Groups */}
-        <div className="flex flex-col gap-8">
-          <ExperienceGroup
-            title="Professional"
-            entries={EXPERIENCE_PROFESSIONAL}
-            emptyMessage="No full-time roles yet — I'm open to internships and research collaborations."
-            emptyAction={{
-              label: 'Get in touch →',
-              onClick: () => scrollToId('contact'),
-            }}
-            isAnimated={isAnimated}
-            startIndex={0}
-            prefersReducedMotion={prefersReducedMotion}
-          />
+        {EXPERIENCE_PROFESSIONAL.length === 0 ? (
+          <div className="border border-dashed border-line rounded-2xl p-5 bg-card/60">
+            <p className="text-[14px] text-body">
+              No full-time roles yet — I'm open to internships and research collaborations.
+            </p>
+            <button
+              type="button"
+              onClick={() => scrollToId('contact')}
+              className="text-accent hover:underline font-semibold text-[13px] inline-flex items-center gap-1 mt-2.5 cursor-pointer"
+            >
+              Get in touch →
+            </button>
+          </div>
+        ) : (
+          <div className="relative pl-6">
+            {/* 2px left rail */}
+            <div
+              aria-hidden="true"
+              className="absolute left-[4px] top-3.5 bottom-3.5 w-[2px] bg-line pointer-events-none"
+            />
 
-          <ExperienceGroup
-            title="College"
-            entries={EXPERIENCE_COLLEGE}
-            emptyMessage="More coming soon."
-            isAnimated={isAnimated}
-            startIndex={EXPERIENCE_PROFESSIONAL.length}
-            prefersReducedMotion={prefersReducedMotion}
-          />
-        </div>
+            <ul className="flex flex-col gap-3 max-w-[960px]">
+              {EXPERIENCE_PROFESSIONAL.map((entry, idx) => (
+                <li key={entry.id} className="relative">
+                  {/* 10px node on the rail */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute -left-[24px] top-4 w-2.5 h-2.5 rounded-full bg-accent-solid"
+                  />
+                  <ExperienceCard
+                    entry={entry}
+                    isAnimated={isAnimated}
+                    staggerIndex={idx}
+                    prefersReducedMotion={prefersReducedMotion}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
+
+      <style>{`
+        .gallery-box:hover,
+        .group\\/gallery:hover .gallery-box {
+          border-color: color-mix(in srgb, var(--accent) 50%, transparent) !important;
+        }
+        @media (prefers-reduced-motion: no-preference) {
+          .group\\/gallery:hover .gallery-img {
+            transform: scale(1.03);
+          }
+        }
+        dialog.lightbox-dialog {
+          margin: auto;
+          border: 1px solid var(--line);
+          background-color: var(--card);
+          border-radius: 1rem;
+          padding: 0.75rem;
+          color: var(--ink);
+          max-width: 95vw;
+          max-height: 95vh;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+          outline: none;
+          overflow: visible;
+        }
+        dialog.lightbox-dialog::backdrop {
+          background-color: rgb(0 0 0 / 0.7);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+        }
+        @media (prefers-reduced-motion: no-preference) {
+          dialog.lightbox-dialog[open] {
+            animation: lightbox-dialog-fade 180ms ease-out;
+          }
+        }
+        @keyframes lightbox-dialog-fade {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+      `}</style>
     </section>
   );
 }

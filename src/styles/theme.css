@@ -132,3 +132,14 @@
     }
   }
 }
+
+.section-pad {
+  --gutter-min: 1.5rem;
+  padding-inline: max(var(--gutter-min), calc((100% - 1280px) / 2));
+}
+
+@media (min-width: 768px) {
+  .section-pad {
+    --gutter-min: 2rem;
+  }
+}

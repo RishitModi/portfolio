@@ -13,7 +13,7 @@ export function Hero() {
   ];
 
   return (
-    <section id="profile" className="pt-[96px] pb-10 lg:pt-14 px-6 md:px-8">
+    <section id="profile" className="pt-[96px] pb-10 lg:pt-14 section-pad">
       <div className="flex flex-col gap-6 fade-up">
         {/* 1. Location label */}
         <div
