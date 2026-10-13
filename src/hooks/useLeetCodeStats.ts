@@ -9,9 +9,9 @@ export interface LeetCodeStats {
 }
 
 const FALLBACK: LeetCodeStats = {
-  currentRating: '2055',
-  maxRating: '2055',
-  solved: '600+',
+  currentRating: '2070',
+  maxRating: '2092',
+  solved: '693',
   updatedAt: LEETCODE_FALLBACK_UPDATED_AT,
 };
 
@@ -117,7 +117,7 @@ export function useLeetCodeStats(): LeetCodeStats {
         const newStats: LeetCodeStats = {
           currentRating: current.toString(),
           maxRating: max.toString(),
-          solved: FALLBACK.solved,
+          solved: '693', // /contest endpoint doesn't return solved count; keep in sync with FALLBACK
           updatedAt: now,
         };
 
