@@ -275,6 +275,20 @@ export const PROJECTS: ProjectItem[] = [
     imageSrc: null,
     iframeSrc: null,
   },
+  {
+    index: '06',
+    title: 'Visual Semantic Encoder',
+    category: 'IMAGE CAPTIONING',
+    description:
+      'Image-captioning model built from scratch in PyTorch. A five-layer CNN encoder turns each image into a 7×7 grid of region features, and an LSTM decoder with soft attention writes the caption one word at a time, looking at a different part of the image for each word. Trained on a 60K image–caption subset of MS COCO 2017 and evaluated with BLEU-1 and BLEU-4, with per-word attention heatmaps for interpretability.',
+    metric: 'CNN encoder + LSTM decoder · Soft attention · Attention heatmaps',
+    tags: ['PyTorch', 'CNN', 'LSTM', 'Attention', 'MS COCO', 'NLTK', 'Matplotlib'],
+    liveUrl: null,
+    githubUrl: 'https://github.com/RishitModi/Visual-Semantic-Encoder',
+    videoSrc: null,
+    imageSrc: null,
+    iframeSrc: null,
+  },
 ];
 
 export interface SkillCategory {
