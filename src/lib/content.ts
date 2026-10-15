@@ -289,6 +289,20 @@ export const PROJECTS: ProjectItem[] = [
     imageSrc: null,
     iframeSrc: null,
   },
+  {
+    index: '07',
+    title: 'AlphaAgent: Equity Research AI',
+    category: 'MULTI-AGENT AI · TEAM PROJECT',
+    description:
+      'Multi-agent equity-research platform for Indian specialty-chemicals companies, built with Team Ctrl+Alt+De-Dragon for DataHack 4.0. A LangGraph pipeline runs risk, financial-quality, management-credibility, industry-news and knowledge-graph agents, then a Bull and a Bear analyst argue opposing theses over the same data, with the Bear seeded with the Bull case. An Evidence Auditor resolves every cited claim against the pipeline state with JSONPath to flag untraceable ones, and financial ratios are computed deterministically rather than by the LLM. Hybrid retrieval fuses ChromaDB dense search, BM25 and a Neo4j knowledge graph with Reciprocal Rank Fusion.',
+    metric: 'Bull vs Bear debate · Evidence auditor · Hybrid RAG (RRF)',
+    tags: ['LangGraph', 'LangChain', 'Gemini', 'FastAPI', 'React', 'ChromaDB', 'Neo4j', 'SQLite', 'Python'],
+    githubUrl: 'https://github.com/aryan-2206/Equity-Research-AI-Agent',
+    liveUrl: null,
+    videoSrc: null,
+    imageSrc: null,
+    iframeSrc: null,
+  },
 ];
 
 export interface SkillCategory {
