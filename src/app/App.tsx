@@ -8,6 +8,7 @@ import { About } from './components/about';
 import { Education } from './components/education';
 import { Experience } from './components/experience';
 import { Projects } from './components/projects';
+import { CertificationsSection } from './components/certifications-section';
 import { Competitive } from './components/competitive';
 import { Contact } from './components/contact';
 import { Footer } from './components/footer';
@@ -139,6 +140,7 @@ export default function App() {
           <Experience />
           <Competitive />
           <Projects />
+          <CertificationsSection />
           <Contact />
           <Footer />
         </main>
