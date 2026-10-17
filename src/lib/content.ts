@@ -76,8 +76,7 @@ export const CP_FALLBACK: CpFallbackData = {
 };
 
 export const NAV_ITEMS = [
-  { label: 'Profile', id: 'profile' },
-  { label: 'About & Skills', id: 'about' },
+  { label: 'About', id: 'about' },
   { label: 'Education', id: 'education' },
   { label: 'Experience', id: 'experience' },
   { label: 'Competitive Programming', id: 'competitive' },
@@ -307,61 +306,28 @@ export const PROJECTS: ProjectItem[] = [
 
 export interface SkillCategory {
   category: string;
-  skills: { name: string; isPrimary: boolean }[];
+  skills: string[];
 }
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
     category: 'Languages',
-    skills: [
-      { name: 'Python', isPrimary: true },
-      { name: 'Java', isPrimary: false },
-      { name: 'C++', isPrimary: true },
-      { name: 'JavaScript', isPrimary: false },
-      { name: 'TypeScript', isPrimary: false },
-      { name: 'SQL', isPrimary: false },
-    ],
+    skills: ['Java', 'Python', 'C++', 'SQL', 'JavaScript', 'HTML/CSS'],
   },
   {
-    category: 'AI / ML',
-    skills: [
-      { name: 'PyTorch', isPrimary: true },
-      { name: 'TensorFlow', isPrimary: false },
-      { name: 'Scikit-learn', isPrimary: false },
-      { name: 'Transformers', isPrimary: false },
-      { name: 'CNN', isPrimary: false },
-      { name: 'VAE', isPrimary: false },
-      { name: 'HDBSCAN', isPrimary: false },
-    ],
+    category: 'Frameworks & Libraries',
+    skills: ['PyTorch', 'TensorFlow', 'NumPy', 'Pandas'],
   },
   {
-    category: 'Backend & Frameworks',
-    skills: [
-      { name: 'Spring Boot', isPrimary: true },
-      { name: 'React', isPrimary: true },
-      { name: 'Node.js', isPrimary: false },
-      { name: 'Flask', isPrimary: false },
-      { name: 'REST APIs', isPrimary: false },
-      { name: 'Tailwind', isPrimary: false },
-    ],
+    category: 'Backend Technologies',
+    skills: ['Spring Boot', 'Flask', 'RESTful APIs'],
   },
   {
-    category: 'Databases & DevOps',
-    skills: [
-      { name: 'Docker', isPrimary: true },
-      { name: 'PostgreSQL', isPrimary: false },
-      { name: 'MongoDB', isPrimary: false },
-      { name: 'Git', isPrimary: false },
-      { name: 'Linux', isPrimary: false },
-    ],
+    category: 'Developer Tools',
+    skills: ['Git', 'Docker', 'Linux (Ubuntu)', 'IntelliJ IDEA', 'Postman'],
   },
   {
-    category: 'Cybersecurity',
-    skills: [
-      { name: 'Cryptanalysis', isPrimary: false },
-      { name: 'AES/DES', isPrimary: false },
-      { name: 'Side-Channel Analysis', isPrimary: false },
-      { name: 'Pycryptodome', isPrimary: false },
-    ],
+    category: 'Databases',
+    skills: ['MySQL', 'Supabase', 'PostgreSQL'],
   },
 ];

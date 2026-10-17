@@ -13,7 +13,7 @@ export function Hero() {
   ];
 
   return (
-    <section id="profile" className="pt-[96px] pb-10 lg:pt-14 section-pad">
+    <section className="pt-[96px] pb-10 lg:pt-14 section-pad">
       <div className="flex flex-col gap-6 fade-up">
         {/* 1. Location label */}
         <div
@@ -63,7 +63,7 @@ export function Hero() {
             fontWeight: 500,
           }}
         >
-          AI/ML Engineer & Full-Stack Builder
+          AI/ML Enthusiast & Full-Stack Builder
         </p>
 
         {/* 4. Bio */}
@@ -76,7 +76,7 @@ export function Hero() {
             maxWidth: '520px',
           }}
         >
-          Building intelligent systems at the edge of cryptography, deep learning, and scalable product engineering. B.Tech Computer Engineering @ VJTI — top 0.03% nationally.
+          Third Year CE student at VJTI with Minors in Cybersecurity.
         </p>
 
         {/* 5. Stat cards */}

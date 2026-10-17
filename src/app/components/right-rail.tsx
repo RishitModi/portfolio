@@ -73,8 +73,8 @@ export function RightRail() {
       <div className="w-full flex flex-col gap-4">
         {/* Card 1 — About me */}
         <Card title="About me">
-          Building intelligent systems at the edge of cryptography, deep learning, and scalable
-          product engineering. B.Tech Computer Engineering @ VJTI — top 0.03% nationally.
+          Passionate about backend engineering, with a strong interest in Spring Boot, microservices architecture, and designing scalable, robust systems.
+          I am also interested in Applied AI and Machine Learning, particularly in leveraging intelligent technologies to develop practical solutions to real-world challenges.
         </Card>
 
         {/* Card 2 — Status */}

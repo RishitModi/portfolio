@@ -1,13 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { scrollToId } from '../../lib/scroll';
-import { LINKS } from '../../lib/content';
-
-const NAV_ITEMS = [
-  { label: 'About', id: 'about' },
-  { label: 'Skills', id: 'skills' },
-  { label: 'Projects', id: 'projects' },
-  { label: 'Contact', id: 'contact' },
-] as const;
+import { LINKS, NAV_ITEMS } from '../../lib/content';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);

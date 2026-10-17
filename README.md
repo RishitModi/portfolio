@@ -6,7 +6,7 @@ Personal developer portfolio showcasing software engineering, AI/ML research pro
 
 - **3-column layout:** Sticky sidebar and right rail flanking a fluid main content feed.
 - **Scroll-spy navigation:** Active section detection with smooth-scroll linking.
-- **About & Skills:** Merged overview of background, technical focus, and categorised core stack with primary proficiency markers and staggered entrance animation.
+- **About:** Overview of technical skills and categorized core stack with primary proficiency markers and staggered entrance animation.
 - **Project cards:** Rich cards with lazy-loading demo videos, live links, and interactive doc previews.
 - **Education timeline:** Responsive roadmap tracking academic milestones from school through university with horizontal scroll-snap on desktop and vertical flow on mobile.
 - **Professional experience:** Industry roles featuring bulleted impact points, role tags, and a work sample image gallery with a native `<dialog>` lightbox modal.
