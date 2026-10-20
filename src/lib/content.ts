@@ -192,6 +192,8 @@ export interface ProjectItem {
   index: string;
   title: string;
   category: string;
+  summary: string;
+  highlights: string[];
   description: string;
   metric: string;
   tags: string[];
@@ -209,6 +211,13 @@ export const PROJECTS: ProjectItem[] = [
     index: '01',
     title: 'Visual Semantic Encoder',
     category: 'IMAGE CAPTIONING',
+    summary:
+      'PyTorch image-captioning model generating word-by-word descriptions with visual soft attention from scratch.',
+    highlights: [
+      'Problem: Translating raw visual features into coherent sequential text captions while maintaining spatial context.',
+      'Approach: Built a five-layer CNN encoder producing 7×7 region feature grids and an LSTM decoder with soft attention.',
+      'Result: Trained on 60K MS COCO 2017 subset, evaluated with BLEU-1/BLEU-4, and visualised via per-word attention heatmaps.',
+    ],
     description:
       'Image-captioning model built from scratch in PyTorch. A five-layer CNN encoder turns each image into a 7×7 grid of region features, and an LSTM decoder with soft attention writes the caption one word at a time, looking at a different part of the image for each word. Trained on a 60K image–caption subset of MS COCO 2017 and evaluated with BLEU-1 and BLEU-4, with per-word attention heatmaps for interpretability.',
     metric: 'CNN encoder + LSTM decoder · Soft attention · Attention heatmaps',
@@ -223,6 +232,13 @@ export const PROJECTS: ProjectItem[] = [
     index: '02',
     title: 'Voyexa',
     category: 'AI TRAVEL COMPANION',
+    summary:
+      'AI travel planner generating validated day-by-day itineraries with real-time streaming and interactive map editing.',
+    highlights: [
+      'Problem: Turning freeform travel preferences into reliable, validated multi-day itineraries without hitting LLM rate limits.',
+      'Approach: Engineered a Spring Boot Gemini pipeline with rotating key pools, cooldowns, exponential backoff, and SSE image streaming.',
+      'Result: Delivered interactive React UI with drag-and-drop editing, Leaflet maps, cached alternatives, and tokenised trip sharing.',
+    ],
     description:
       'AI travel planner that turns preferences into validated day-by-day itineraries. A Spring Boot REST API runs a planner and validator Gemini pipeline over a rotating API-key pool with cooldowns and exponential backoff, streams Pexels images over SSE, caches on-demand activity alternatives, and shares trips through tokenised links. React frontend with drag-and-drop itinerary editing and Leaflet maps.',
     metric: 'Gemini LLM pipeline · SSE image streaming · Live deployment',
@@ -237,6 +253,13 @@ export const PROJECTS: ProjectItem[] = [
     index: '03',
     title: 'Full-Stack E-Commerce Platform',
     category: 'FULL-STACK + NLP',
+    summary:
+      'Dockerized microservice storefront pairing secure Spring Boot commerce with FastAPI DistilRoBERTa review sentiment analysis.',
+    highlights: [
+      'Problem: Building a secure microservice e-commerce architecture integrating real-time payment handling and review sentiment intelligence.',
+      'Approach: Developed Spring Boot JWT auth with httpOnly refresh cookies, Stripe webhooks, Flyway migrations, and React storefront.',
+      'Result: Served fine-tuned DistilRoBERTa model via FastAPI classifying review sentiment at 82.8% accuracy under Docker Compose.',
+    ],
     description:
       'Microservice e-commerce app: a Spring Boot API with JWT access tokens and an httpOnly refresh cookie, role-based admin, Flyway migrations and Stripe Checkout with webhook order syncing, a React and TypeScript storefront with cart, orders and admin product management, and a FastAPI service serving a fine-tuned DistilRoBERTa model that classifies product-review sentiment. Orchestrated with Docker Compose.',
     metric: 'DistilRoBERTa sentiment · 82.8% accuracy · Stripe checkout',
@@ -251,6 +274,13 @@ export const PROJECTS: ProjectItem[] = [
     index: '04',
     title: 'AlphaAgent: Equity Research AI',
     category: 'MULTI-AGENT AI · TEAM PROJECT',
+    summary:
+      'Multi-agent equity research platform running adversarial analyst debates and verifiable hybrid RAG for Indian specialty chemicals.',
+    highlights: [
+      'Problem: Eliminating hallucinations in equity research while evaluating specialty-chemicals firms from opposing market viewpoints.',
+      'Approach: Built LangGraph pipeline with specialized domain agents, adversarial Bull vs Bear debate, and deterministic ratio calculations.',
+      'Result: Audited claims via JSONPath and fused ChromaDB, BM25, and Neo4j knowledge graphs using Reciprocal Rank Fusion.',
+    ],
     description:
       'Multi-agent equity-research platform for Indian specialty-chemicals companies, built with Team Ctrl+Alt+De-Dragon for DataHack 4.0. A LangGraph pipeline runs risk, financial-quality, management-credibility, industry-news and knowledge-graph agents, then a Bull and a Bear analyst argue opposing theses over the same data, with the Bear seeded with the Bull case. An Evidence Auditor resolves every cited claim against the pipeline state with JSONPath to flag untraceable ones, and financial ratios are computed deterministically rather than by the LLM. Hybrid retrieval fuses ChromaDB dense search, BM25 and a Neo4j knowledge graph with Reciprocal Rank Fusion.',
     metric: 'Bull vs Bear debate · Evidence auditor · Hybrid RAG (RRF)',
@@ -265,6 +295,13 @@ export const PROJECTS: ProjectItem[] = [
     index: '05',
     title: 'Energy-based & Neurosymbolic Cryptanalysis',
     category: 'ML RESEARCH',
+    summary:
+      'Machine learning research applying Energy-Based Transformers, CNNs, and classical cryptanalysis to cipher classification and key recovery.',
+    highlights: [
+      'Problem: Classifying block and stream ciphers and recovering cryptographic keys without prior knowledge of key lengths.',
+      'Approach: Combined Energy-Based Transformers, CNN side-channel power trace analysis, and classical methods like Kasiski examination and frequency analysis.',
+      'Result: Achieved 76% cipher classification accuracy and narrowed DES keys to top 4 candidates across 10,000 synthetic traces.',
+    ],
     description:
       'Cipher classification with an Energy-Based Transformer across AES, DES, SPECK32 and Vigenère, reaching 76% validation accuracy, plus a CNN side-channel model for DES key recovery that narrows the key to the top 4 candidates across 10,000 synthetic traces. Classical cryptanalysis (index of coincidence, Kasiski examination, frequency analysis) recovers Vigenère keys with no prior knowledge of key length.',
     metric: '76% validation accuracy · 10K SCA traces',
@@ -279,6 +316,12 @@ export const PROJECTS: ProjectItem[] = [
     index: '06',
     title: 'eDNA Analyser',
     category: 'BIODIVERSITY ML',
+    summary:
+      'Automated environmental DNA analysis pipeline using Variational Autoencoders for species clustering and biodiversity assessment.',
+    highlights: [
+      'Engineered a VAE and HDBSCAN unsupervised pipeline for genetic sequence clustering and biodiversity assessment.',
+      'Deployed an interactive Flask web interface with dynamic visualizations and scikit-learn analytics.',
+    ],
     description:
       'Automated environmental DNA analysis pipeline using Variational Autoencoders for species clustering and biodiversity assessment. Flask-based web interface with interactive visualizations.',
     metric: 'VAE clustering · HDBSCAN · Real-time viz',
@@ -293,6 +336,13 @@ export const PROJECTS: ProjectItem[] = [
     index: '07',
     title: 'Wealthio',
     category: 'ACTIVE PROJECT',
+    summary:
+      'Personal wealth-management platform featuring K-Means risk profiling, MPT portfolio optimisation, and Prophet price forecasting.',
+    highlights: [
+      'Problem: Personalising asset allocation dynamically while accounting for investor risk tolerance and volatile asset returns.',
+      'Approach: Combined K-Means clustering with James-Stein-shrunk returns and reverse-optimised risk aversion in a mean-variance optimiser.',
+      'Result: Delivered Prophet gold and Nifty price forecasts with buy/hold/wait signals across Spring Boot, FastAPI, and React.',
+    ],
     description:
       'Personal wealth-management platform that profiles an investor with K-Means clustering, then builds a personalised allocation with a mean-variance optimiser using James-Stein-shrunk returns and reverse-optimised risk aversion. Prophet forecasts gold and Nifty prices with buy/hold/wait signals. Spring Boot API, FastAPI ML service and a React dashboard.',
     metric: 'K-Means risk profiling · MPT optimiser · Prophet forecasts',

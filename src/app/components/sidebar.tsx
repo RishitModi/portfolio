@@ -211,13 +211,14 @@ export function DesktopSidebar() {
         </a>
 
         {/* Social links */}
-        <div className="flex items-center gap-4 justify-center pt-2" style={{ borderTop: '1px solid var(--line)' }}>
+        <div className="flex items-center gap-1 justify-center pt-2" style={{ borderTop: '1px solid var(--line)' }}>
           <a
             href={LINKS.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
-            className="sidebar-social-link transition-colors duration-200"
+            title="GitHub"
+            className="sidebar-social-link transition-colors duration-200 inline-flex items-center justify-center min-w-[40px] min-h-[40px] rounded"
             style={{ color: 'var(--muted)' }}
           >
             <IconGitHub size={18} />
@@ -227,7 +228,8 @@ export function DesktopSidebar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
-            className="sidebar-social-link transition-colors duration-200"
+            title="LinkedIn"
+            className="sidebar-social-link transition-colors duration-200 inline-flex items-center justify-center min-w-[40px] min-h-[40px] rounded"
             style={{ color: 'var(--muted)' }}
           >
             <IconLinkedIn size={18} />
@@ -235,7 +237,8 @@ export function DesktopSidebar() {
           <a
             href={LINKS.email}
             aria-label="Email"
-            className="sidebar-social-link transition-colors duration-200"
+            title="Email"
+            className="sidebar-social-link transition-colors duration-200 inline-flex items-center justify-center min-w-[40px] min-h-[40px] rounded"
             style={{ color: 'var(--muted)' }}
           >
             <IconMail size={18} />
@@ -336,7 +339,7 @@ export function MobileTopBar() {
           {/* Hamburger */}
           <button
             id="mobile-topbar-toggle"
-            className="flex flex-col justify-center gap-[5px] w-8 h-8 z-10 relative"
+            className="flex flex-col justify-center items-center gap-[5px] w-10 h-10 z-10 relative"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isOpen}
@@ -397,6 +400,7 @@ export function MobileTopBar() {
               href={`#${id}`}
               onClick={(e) => { e.preventDefault(); nav(id); }}
               title={label}
+              className="py-2 inline-flex items-center justify-center min-h-[44px]"
               style={{
                 fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                 fontWeight: 700,
@@ -421,6 +425,7 @@ export function MobileTopBar() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={close}
+            className="inline-flex items-center min-h-[40px] px-2"
             style={{
               fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
               fontSize: '14px',
@@ -430,20 +435,42 @@ export function MobileTopBar() {
               textDecoration: 'none',
             }}
           >
-            Download Resume ↗
+            Resume ↗
           </a>
           <ThemeToggle />
         </div>
 
         {/* Social icons */}
-        <div className="flex items-center gap-6 mt-4" style={{ color: 'var(--muted)' }}>
-          <a href={LINKS.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" style={{ color: 'inherit' }}>
+        <div className="flex items-center gap-2 mt-4" style={{ color: 'var(--muted)' }}>
+          <a
+            href={LINKS.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            title="GitHub"
+            className="inline-flex items-center justify-center min-w-[40px] min-h-[40px] rounded transition-colors"
+            style={{ color: 'inherit' }}
+          >
             <IconGitHub />
           </a>
-          <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" style={{ color: 'inherit' }}>
+          <a
+            href={LINKS.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            title="LinkedIn"
+            className="inline-flex items-center justify-center min-w-[40px] min-h-[40px] rounded transition-colors"
+            style={{ color: 'inherit' }}
+          >
             <IconLinkedIn />
           </a>
-          <a href={LINKS.email} aria-label="Email" style={{ color: 'inherit' }}>
+          <a
+            href={LINKS.email}
+            aria-label="Email"
+            title="Email"
+            className="inline-flex items-center justify-center min-w-[40px] min-h-[40px] rounded transition-colors"
+            style={{ color: 'inherit' }}
+          >
             <IconMail />
           </a>
         </div>

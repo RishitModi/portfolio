@@ -1,9 +1,31 @@
+import { useEffect, useState } from 'react';
 import { SectionLabel } from './section-label';
 import { SKILL_CATEGORIES } from '../../lib/content';
 
 const SPEEDS = [90, 110, 100, 120, 95];
 
 export function About() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    return false;
+  });
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mql.matches);
+    const onChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    if (mql.addEventListener) {
+      mql.addEventListener('change', onChange);
+      return () => mql.removeEventListener('change', onChange);
+    } else if (mql.addListener) {
+      mql.addListener(onChange);
+      return () => mql.removeListener(onChange);
+    }
+  }, []);
+
   return (
     <section
       id="about"
@@ -18,22 +40,70 @@ export function About() {
       <div className="section-pad mb-3 md:mb-4">
         <SectionLabel className="!mb-1">[ 01 — ABOUT ]</SectionLabel>
 
-        <h2
-          style={{
-            fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-            fontWeight: 800,
-            fontSize: 'clamp(22px, 2.5vw, 30px)',
-            letterSpacing: '-0.5px',
-            lineHeight: 1.1,
-            color: 'var(--ink)',
-          }}
-        >
-          THE STACK
-        </h2>
+        <div className="flex items-center justify-between gap-4">
+          <h2
+            style={{
+              fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+              fontWeight: 800,
+              fontSize: 'clamp(22px, 2.5vw, 30px)',
+              letterSpacing: '-0.5px',
+              lineHeight: 1.1,
+              color: 'var(--ink)',
+            }}
+          >
+            THE STACK
+          </h2>
+
+          {!prefersReducedMotion && (
+            <button
+              type="button"
+              onClick={() => setIsPaused((prev) => !prev)}
+              aria-pressed={isPaused}
+              aria-label={isPaused ? 'Play skills animation' : 'Pause skills animation'}
+              className="min-w-[40px] min-h-[40px] h-10 px-3 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-colors shadow-sm hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+              style={{
+                backgroundColor: 'var(--card)',
+                border: '1px solid var(--line)',
+                color: 'var(--ink)',
+                fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+                fontSize: '13px',
+                fontWeight: 600,
+              }}
+            >
+              {isPaused ? (
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className="shrink-0"
+                >
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+              ) : (
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className="shrink-0"
+                >
+                  <rect x="6" y="4" width="4" height="16" rx="1" />
+                  <rect x="14" y="4" width="4" height="16" rx="1" />
+                </svg>
+              )}
+              <span className="hidden sm:inline">
+                {isPaused ? 'Play' : 'Pause'}
+              </span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Full-bleed Stack Marquee Bands */}
-      <div className="w-full flex flex-col border-t border-[var(--line)]">
+      <div className={`w-full flex flex-col border-t border-[var(--line)] ${isPaused ? 'marquee-paused' : ''}`}>
         {SKILL_CATEGORIES.map((category, idx) => {
           const isReverse = idx % 2 === 1;
           const speed = SPEEDS[idx % SPEEDS.length];
@@ -146,6 +216,10 @@ export function About() {
           will-change: transform;
         }
 
+        .marquee-paused .marquee-track {
+          animation-play-state: paused !important;
+        }
+
         .marquee-band:hover .marquee-track,
         .marquee-band:focus-within .marquee-track {
           animation-play-state: paused;
@@ -190,11 +264,8 @@ export function About() {
           font-size: clamp(1.25rem, 2.4vw, 2rem);
           line-height: 1.2;
           white-space: nowrap;
-          color: transparent;
-          -webkit-text-stroke: 1.25px color-mix(in srgb, var(--muted) 65%, transparent);
-          transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                      -webkit-text-stroke 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                      text-shadow 0.25s ease;
+          color: var(--body);
+          transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
           user-select: none;
           cursor: default;
         }
@@ -202,14 +273,11 @@ export function About() {
         @media (max-width: 768px) {
           .marquee-skill {
             font-size: clamp(1.1rem, 3.8vw, 1.4rem);
-            -webkit-text-stroke: 1px color-mix(in srgb, var(--muted) 70%, transparent);
           }
         }
 
         .marquee-skill:hover {
           color: var(--accent);
-          -webkit-text-stroke: 1.25px var(--accent);
-          text-shadow: 0 0 20px color-mix(in srgb, var(--accent) 35%, transparent);
         }
 
         .marquee-sep {

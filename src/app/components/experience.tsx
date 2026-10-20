@@ -93,7 +93,7 @@ function ExperienceGallery({
               }}
               type="button"
               onClick={() => openLightbox(idx)}
-              className="group/gallery relative block w-full text-left cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="group/gallery relative block w-full text-left cursor-pointer rounded-lg"
               style={{
                 background: 'none',
                 border: 'none',
@@ -177,7 +177,7 @@ function ExperienceGallery({
                 type="button"
                 onClick={closeLightbox}
                 aria-label="Close image"
-                className="w-9 h-9 flex items-center justify-center rounded-full cursor-pointer hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ml-auto"
+                className="w-9 h-9 flex items-center justify-center rounded-full cursor-pointer hover:opacity-80 transition-opacity ml-auto"
                 style={{
                   backgroundColor: 'var(--chip)',
                   color: 'var(--ink)',
@@ -197,7 +197,7 @@ function ExperienceGallery({
                   type="button"
                   onClick={showPrev}
                   aria-label="Previous image"
-                  className="absolute left-2 z-10 w-9 h-9 flex items-center justify-center rounded-full cursor-pointer hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="absolute left-2 z-10 w-9 h-9 flex items-center justify-center rounded-full cursor-pointer hover:scale-105 transition-transform"
                   style={{
                     backgroundColor: 'color-mix(in srgb, var(--card) 85%, transparent)',
                     color: 'var(--ink)',
@@ -223,7 +223,7 @@ function ExperienceGallery({
                   type="button"
                   onClick={showNext}
                   aria-label="Next image"
-                  className="absolute right-2 z-10 w-9 h-9 flex items-center justify-center rounded-full cursor-pointer hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="absolute right-2 z-10 w-9 h-9 flex items-center justify-center rounded-full cursor-pointer hover:scale-105 transition-transform"
                   style={{
                     backgroundColor: 'color-mix(in srgb, var(--card) 85%, transparent)',
                     color: 'var(--ink)',

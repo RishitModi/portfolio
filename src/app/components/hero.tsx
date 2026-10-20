@@ -98,10 +98,10 @@ export function Hero() {
                 <div
                   style={{
                     fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-                    fontSize: '10px',
+                    fontSize: '12px',
                     color: 'var(--muted)',
                     textTransform: 'uppercase',
-                    letterSpacing: '0.12em',
+                    letterSpacing: '0.08em',
                     marginTop: '6px',
                     fontWeight: 600,
                   }}

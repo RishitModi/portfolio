@@ -54,6 +54,14 @@ export default function App() {
 
   return (
     <div className="bg-canvas text-body">
+      {/* Skip to content link — first focusable element */}
+      <a
+        href="#main-content"
+        className="skip-to-content sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-card focus:text-ink focus:text-sm focus:font-semibold focus:rounded-md focus:border focus:border-line focus:shadow-lg"
+      >
+        Skip to content
+      </a>
+
       {/* Global overlays — always on top */}
       <CustomCursor />
       <GrainOverlay />
@@ -104,8 +112,10 @@ export default function App() {
          * min-w-0 prevents grid blowout from wide children.
          */}
         <main
+          id="main-content"
+          tabIndex={-1}
           className={[
-            'min-w-0 overflow-x-clip pt-[72px] lg:pt-0 relative',
+            'min-w-0 overflow-x-clip pt-[72px] lg:pt-0 relative focus:outline-none',
             leftOpen ? 'xl:border-l' : '',
             rightOpen ? 'xl:border-r' : '',
           ]

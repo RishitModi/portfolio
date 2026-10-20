@@ -28,6 +28,46 @@ function formatAbsoluteDate(input: number | string | Date): string {
   }
 }
 
+function formatShortDate(input: number | string | Date): string {
+  try {
+    let d: Date;
+    if (input instanceof Date) {
+      d = input;
+    } else if (typeof input === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(input)) {
+      const [y, m, day] = input.split('-').map(Number);
+      d = new Date(y, m - 1, day);
+    } else {
+      d = new Date(input);
+    }
+    if (Number.isNaN(d.getTime())) return '';
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+  } catch {
+    return '';
+  }
+}
+
+function toIsoDateString(input: number | string | Date): string {
+  try {
+    if (typeof input === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(input)) {
+      return input;
+    }
+    const d = input instanceof Date ? input : new Date(input);
+    if (Number.isNaN(d.getTime())) return '';
+    return d.toISOString();
+  } catch {
+    return '';
+  }
+}
+
+function formatUpdatedLabel(input: number | string | Date, now: number): { text: string; iso: string } {
+  const relative = relativeTime(input, now);
+  const shortDate = formatShortDate(input);
+  const text = shortDate ? `Updated ${relative} · ${shortDate}` : `Updated ${relative}`;
+  const iso = toIsoDateString(input);
+  return { text, iso };
+}
+
 function Sparkline({ history, contests }: { history: number[]; contests: number }) {
   if (!history || history.length < 2) return null;
 
@@ -154,7 +194,7 @@ export function Competitive() {
                 <div
                   style={{
                     fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-                    fontSize: '10px',
+                    fontSize: '12px',
                     letterSpacing: '0.12em',
                     textTransform: 'uppercase',
                     color: 'var(--muted)',
@@ -169,32 +209,34 @@ export function Competitive() {
               {/* 2-column mini stat grid */}
               <div className="grid grid-cols-2 gap-2 text-[13px] pt-3 pb-2 border-t border-line">
                 <div>
-                  <span className="block text-[11px] uppercase tracking-wider text-muted">Max Rating</span>
+                  <span className="block text-xs uppercase tracking-wider text-muted">Max Rating</span>
                   <span className="font-semibold text-ink">{lcStats.maxRating}</span>
                 </div>
                 <div>
-                  <span className="block text-[11px] uppercase tracking-wider text-muted">Contest Rating</span>
+                  <span className="block text-xs uppercase tracking-wider text-muted">Contest Rating</span>
                   <span className="font-semibold text-ink">{lcStats.currentRating}</span>
                 </div>
                 <div>
-                  <span className="block text-[11px] uppercase tracking-wider text-muted">Solved</span>
+                  <span className="block text-xs uppercase tracking-wider text-muted">Solved</span>
                   <span className="font-semibold text-ink">{lcStats.solved}</span>
                 </div>
               </div>
             </div>
 
             <div className="pt-4 border-t border-line/60 mt-3 flex flex-wrap items-center justify-between gap-2">
-              <span
-                className="text-[12px] text-muted cursor-default"
-                title={formatAbsoluteDate(lcStats.updatedAt)}
+              <time
+                dateTime={toIsoDateString(lcStats.updatedAt)}
+                className="text-[12px] text-muted"
               >
-                Last updated: {relativeTime(lcStats.updatedAt, now)}
-              </span>
+                {formatShortDate(lcStats.updatedAt)
+                  ? `Updated ${relativeTime(lcStats.updatedAt, now)} · ${formatShortDate(lcStats.updatedAt)}`
+                  : `Updated ${relativeTime(lcStats.updatedAt, now)}`}
+              </time>
               <a
                 href={LINKS.leetcode}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1 shrink-0"
+                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1 shrink-0 min-h-[40px]"
               >
                 View profile ↗
               </a>
@@ -237,7 +279,7 @@ export function Competitive() {
                 <div
                   style={{
                     fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-                    fontSize: '10px',
+                    fontSize: '12px',
                     letterSpacing: '0.12em',
                     textTransform: 'uppercase',
                     color: 'var(--muted)',
@@ -257,24 +299,24 @@ export function Competitive() {
               {/* 2-column mini stat grid */}
               <div className="grid grid-cols-2 gap-2 text-[13px] pt-3 pb-2 border-t border-line">
                 <div>
-                  <span className="block text-[11px] uppercase tracking-wider text-muted">Max Rating</span>
+                  <span className="block text-xs uppercase tracking-wider text-muted">Max Rating</span>
                   <span className="font-semibold text-ink">{ccData.maxRating}</span>
                 </div>
                 <div>
-                  <span className="block text-[11px] uppercase tracking-wider text-muted">Stars</span>
+                  <span className="block text-xs uppercase tracking-wider text-muted">Stars</span>
                   <span className="font-semibold text-amber-600">{'★'.repeat(ccData.stars)}</span>
                 </div>
                 <div>
-                  <span className="block text-[11px] uppercase tracking-wider text-muted">Global Rank</span>
+                  <span className="block text-xs uppercase tracking-wider text-muted">Global Rank</span>
                   <span className="font-semibold text-ink">#{ccData.globalRank.toLocaleString()}</span>
                 </div>
                 <div>
-                  <span className="block text-[11px] uppercase tracking-wider text-muted">Contests</span>
+                  <span className="block text-xs uppercase tracking-wider text-muted">Contests</span>
                   <span className="font-semibold text-ink">{ccData.contests}</span>
                 </div>
                 {Number.isFinite(ccData.solved) && (
                   <div>
-                    <span className="block text-[11px] uppercase tracking-wider text-muted">Solved</span>
+                    <span className="block text-xs uppercase tracking-wider text-muted">Solved</span>
                     <span className="font-semibold text-ink">{ccData.solved}</span>
                   </div>
                 )}
@@ -282,17 +324,19 @@ export function Competitive() {
             </div>
 
             <div className="pt-4 border-t border-line/60 mt-3 flex flex-wrap items-center justify-between gap-2">
-              <span
-                className="text-[12px] text-muted cursor-default"
-                title={formatAbsoluteDate(CODECHEF_STATS.updatedAt)}
+              <time
+                dateTime={toIsoDateString(CODECHEF_STATS.updatedAt)}
+                className="text-[12px] text-muted"
               >
-                Last updated: {relativeTime(CODECHEF_STATS.updatedAt, now)}
-              </span>
+                {formatShortDate(CODECHEF_STATS.updatedAt)
+                  ? `Updated ${relativeTime(CODECHEF_STATS.updatedAt, now)} · ${formatShortDate(CODECHEF_STATS.updatedAt)}`
+                  : `Updated ${relativeTime(CODECHEF_STATS.updatedAt, now)}`}
+              </time>
               <a
                 href={LINKS.codechef}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1 shrink-0"
+                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1 shrink-0 min-h-[40px]"
               >
                 View profile ↗
               </a>
@@ -335,7 +379,7 @@ export function Competitive() {
                 <div
                   style={{
                     fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-                    fontSize: '10px',
+                    fontSize: '12px',
                     letterSpacing: '0.12em',
                     textTransform: 'uppercase',
                     color: 'var(--muted)',
@@ -355,24 +399,24 @@ export function Competitive() {
               {/* 2-column mini stat grid */}
               <div className="grid grid-cols-2 gap-2 text-[13px] pt-3 pb-2 border-t border-line">
                 <div>
-                  <span className="block text-[11px] uppercase tracking-wider text-muted">Max Rating</span>
+                  <span className="block text-xs uppercase tracking-wider text-muted">Max Rating</span>
                   <span className="font-semibold text-ink">{cfData.maxRating}</span>
                 </div>
                 {cfData.rank && (
                   <div>
-                    <span className="block text-[11px] uppercase tracking-wider text-muted">Rank</span>
+                    <span className="block text-xs uppercase tracking-wider text-muted">Rank</span>
                     <span className="font-semibold text-ink">
                       {cfData.rank.charAt(0).toUpperCase() + cfData.rank.slice(1)}
                     </span>
                   </div>
                 )}
                 <div>
-                  <span className="block text-[11px] uppercase tracking-wider text-muted">Contests</span>
+                  <span className="block text-xs uppercase tracking-wider text-muted">Contests</span>
                   <span className="font-semibold text-ink">{cfData.contests}</span>
                 </div>
                 {cfData.solved !== null && (
                   <div>
-                    <span className="block text-[11px] uppercase tracking-wider text-muted">Solved</span>
+                    <span className="block text-xs uppercase tracking-wider text-muted">Solved</span>
                     <span className="font-semibold text-ink">{cfData.solved}</span>
                   </div>
                 )}
@@ -380,17 +424,19 @@ export function Competitive() {
             </div>
 
             <div className="pt-4 border-t border-line/60 mt-3 flex flex-wrap items-center justify-between gap-2">
-              <span
-                className="text-[12px] text-muted cursor-default"
-                title={formatAbsoluteDate(cfUpdatedAt)}
+              <time
+                dateTime={toIsoDateString(cfUpdatedAt)}
+                className="text-[12px] text-muted"
               >
-                Last updated: {relativeTime(cfUpdatedAt, now)}
-              </span>
+                {formatShortDate(cfUpdatedAt)
+                  ? `Updated ${relativeTime(cfUpdatedAt, now)} · ${formatShortDate(cfUpdatedAt)}`
+                  : `Updated ${relativeTime(cfUpdatedAt, now)}`}
+              </time>
               <a
                 href={LINKS.codeforces}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1 shrink-0"
+                className="text-[12px] font-semibold text-accent hover:underline uppercase tracking-wide inline-flex items-center gap-1 shrink-0 min-h-[40px]"
               >
                 View profile ↗
               </a>

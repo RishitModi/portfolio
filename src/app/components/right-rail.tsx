@@ -113,7 +113,7 @@ export function RightRail() {
                 <span>{link.label}</span>
                 <span className="flex items-center gap-1.5" style={{ color: 'var(--muted)' }}>
                   {link.badge && (
-                    <span style={{ fontSize: '11px', color: 'var(--muted)' }}>
+                    <span style={{ fontSize: '12px', color: 'var(--muted)' }}>
                       {link.badge}
                     </span>
                   )}

@@ -55,7 +55,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       aria-label={label}
       aria-pressed={theme === 'dark'}
       title={label}
-      className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 ${className}`}
+      className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${className}`}
       style={{
         backgroundColor: 'var(--card)',
         border: '1px solid var(--line)',

@@ -5,7 +5,7 @@ export function Contact() {
     { icon: '✉', label: PROFILE.email, href: LINKS.email },
     { icon: '↗', label: LINKS.github.replace('https://', ''), href: LINKS.github },
     { icon: '↗', label: LINKS.linkedin.replace('https://', ''), href: LINKS.linkedin },
-    { icon: '↓', label: 'Resume', href: LINKS.resume },
+    { icon: '↗', label: 'Resume', href: LINKS.resume },
   ];
 
   return (
@@ -80,13 +80,14 @@ export function Contact() {
               href={link.href}
               target={link.href.startsWith('http') ? '_blank' : undefined}
               rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="contact-link transition-all duration-200 flex items-center gap-2 w-full text-left"
+              className="contact-link transition-all duration-200 flex items-center gap-2 w-full text-left min-h-[40px]"
               style={{
                 fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                 fontSize: '12px',
                 fontWeight: 600,
                 textTransform: 'uppercase',
                 padding: '8px 16px',
+                minHeight: '40px',
                 border: '1px solid var(--line)',
                 borderRadius: '4px',
                 color: 'var(--body)',

@@ -473,11 +473,6 @@ export function Education() {
           filter: blur(0px);
           opacity: 1;
         }
-        .education-card:focus,
-        .education-card:focus-visible {
-          outline: 2px solid var(--accent);
-          outline-offset: 2px;
-        }
         @media (prefers-reduced-motion: reduce) {
           .education-card {
             filter: none !important;

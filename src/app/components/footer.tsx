@@ -9,7 +9,7 @@ export function Footer() {
         borderTop: '1px solid var(--line)',
         backgroundColor: 'var(--surface)',
         fontFamily: 'Inter',
-        fontSize: '11px',
+        fontSize: '12px',
         color: 'var(--muted)',
       }}
     >
@@ -21,7 +21,7 @@ export function Footer() {
           <span className="hidden md:inline">Designed & developed by {PROFILE.name}</span>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-6">
+        <div className="flex flex-wrap items-center justify-center gap-2">
           <a href={LINKS.email} className="footer-link">Email</a>
           <a href={LINKS.github} target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
           <a href={LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a>
@@ -30,7 +30,7 @@ export function Footer() {
 
         <button 
           onClick={scrollToTop}
-          className="footer-link flex items-center gap-2"
+          className="footer-link flex items-center gap-2 px-2 min-h-[40px]"
         >
           Back to top ↑
         </button>
@@ -38,6 +38,10 @@ export function Footer() {
 
       <style>{`
         .footer-link {
+          display: inline-flex;
+          align-items: center;
+          min-height: 40px;
+          padding-inline: 0.5rem;
           color: var(--muted);
           text-decoration: none;
           text-transform: uppercase;

@@ -5,27 +5,67 @@ import { PROJECTS, type ProjectItem } from '../../lib/content';
 
 function ProjectVideo({ videoSrc, title }: { videoSrc: string; title: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const userPausedRef = useRef<boolean>(false);
+  const wasOutOfViewRef = useRef<boolean>(false);
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [, setUserPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    return false;
+  });
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) {
-      video.controls = true;
-      return;
+    // Keep isPlaying strictly in sync with HTMLVideoElement events
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+
+    video.addEventListener('play', onPlay);
+    video.addEventListener('pause', onPause);
+
+    // Initial playing state in case already playing
+    setIsPlaying(!video.paused);
+
+    // Watch prefers-reduced-motion changes
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mql.matches);
+    const onMqlChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    if (mql.addEventListener) {
+      mql.addEventListener('change', onMqlChange);
+    } else if (mql.addListener) {
+      mql.addListener(onMqlChange);
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(() => {
-              // Ignore autoplay failure
-            });
+          // If video was out of view and re-entered, reset userPaused
+          if (wasOutOfViewRef.current) {
+            userPausedRef.current = false;
+            setUserPaused(false);
+            wasOutOfViewRef.current = false;
+          }
+
+          // Autoplay if reduced-motion is not set and user hasn't explicitly paused
+          const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (!isReduced && !userPausedRef.current) {
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+              playPromise.catch(() => {
+                // Ignore autoplay failures from browser policy
+              });
+            }
           }
         } else {
+          // Mark as out of view and pause video when leaving viewport
+          wasOutOfViewRef.current = true;
           video.pause();
         }
       },
@@ -33,21 +73,102 @@ function ProjectVideo({ videoSrc, title }: { videoSrc: string; title: string }) 
     );
 
     observer.observe(video);
-    return () => observer.disconnect();
+
+    return () => {
+      video.removeEventListener('play', onPlay);
+      video.removeEventListener('pause', onPause);
+      if (mql.removeEventListener) {
+        mql.removeEventListener('change', onMqlChange);
+      } else if (mql.removeListener) {
+        mql.removeListener(onMqlChange);
+      }
+      observer.disconnect();
+    };
   }, []);
 
+  const handleTogglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      userPausedRef.current = false;
+      setUserPaused(false);
+      video.play().catch(() => {});
+    } else {
+      userPausedRef.current = true;
+      setUserPaused(true);
+      video.pause();
+    }
+  };
+
+  const showControls = prefersReducedMotion || isHovered || isFocused;
+
   return (
-    <video
-      ref={videoRef}
-      src={videoSrc}
-      muted
-      loop
-      playsInline
-      preload="metadata"
-      aria-label={`${title} demo`}
-      className="w-full h-full object-contain"
-      style={{ display: 'block' }}
-    />
+    <div
+      className="relative w-full h-full group/video"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsFocused(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) {
+          setIsFocused(false);
+        }
+      }}
+    >
+      <video
+        ref={videoRef}
+        src={videoSrc}
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-label={`${title} demo`}
+        controls={showControls}
+        className="w-full h-full object-contain"
+        style={{ display: 'block' }}
+      />
+
+      <button
+        type="button"
+        onClick={handleTogglePlay}
+        aria-label={isPlaying ? `Pause ${title} demo` : `Play ${title} demo`}
+        aria-pressed={isPlaying}
+        className={`absolute right-3 ${
+          showControls ? 'bottom-14' : 'bottom-3'
+        } z-20 min-w-[40px] min-h-[40px] w-10 h-10 rounded-lg flex items-center justify-center cursor-pointer transition-[bottom,background-color] duration-200 hover:scale-105 active:scale-95 shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]`}
+        style={{
+          backgroundColor: 'color-mix(in srgb, var(--card) 85%, transparent)',
+          border: '1px solid var(--line)',
+          color: 'var(--ink)',
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
+        }}
+      >
+        {isPlaying ? (
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <rect x="6" y="4" width="4" height="16" rx="1" />
+            <rect x="14" y="4" width="4" height="16" rx="1" />
+          </svg>
+        ) : (
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+            className="ml-0.5"
+          >
+            <polygon points="6 4 20 12 6 20 6 4" />
+          </svg>
+        )}
+      </button>
+    </div>
   );
 }
 
@@ -70,12 +191,13 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
             href={iframeSrc}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded bg-card/95 backdrop-blur-sm border border-line text-accent hover:bg-card shadow-sm transition-colors"
+            className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded bg-card/95 backdrop-blur-sm border border-line text-accent hover:bg-card shadow-sm transition-colors inline-flex items-center min-h-[40px]"
             style={{
               fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-              fontSize: '11px',
+              fontSize: '12px',
               fontWeight: 600,
               textDecoration: 'none',
+              minHeight: '40px',
             }}
           >
             Open in new tab ↗
@@ -95,7 +217,7 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
           </p>
           <button
             onClick={() => setIsLoaded(true)}
-            className="transition-opacity hover:opacity-90"
+            className="inline-flex items-center justify-center transition-opacity hover:opacity-90 min-h-[40px]"
             style={{
               fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
               fontSize: '12px',
@@ -104,6 +226,7 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
               backgroundColor: 'var(--accent-solid)',
               color: '#ffffff',
               padding: '8px 16px',
+              minHeight: '40px',
               borderRadius: '4px',
               border: 'none',
               cursor: 'pointer',
@@ -115,13 +238,14 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
             href={iframeSrc}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:underline"
+            className="hover:underline inline-flex items-center min-h-[40px] px-2"
             style={{
               fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
               fontSize: '12px',
               color: 'var(--accent)',
               textDecoration: 'none',
               fontWeight: 600,
+              minHeight: '40px',
             }}
           >
             Open in new tab ↗
@@ -135,6 +259,8 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
 function ProjectCard({ project }: { project: ProjectItem }) {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.15 });
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
+  const [isTagsExpanded, setIsTagsExpanded] = useState(false);
 
   useEffect(() => {
     const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -148,6 +274,12 @@ function ProjectCard({ project }: { project: ProjectItem }) {
 
   const hasMedia = Boolean(project.videoSrc || project.iframeSrc || project.imageSrc);
   const shouldBeVisible = prefersReducedMotion || isVisible;
+  const descId = `project-desc-${project.index}`;
+
+  const MAX_TAGS = 6;
+  const hasMoreTags = project.tags.length > MAX_TAGS;
+  const hiddenTagsCount = project.tags.length - MAX_TAGS;
+  const visibleTags = isTagsExpanded || !hasMoreTags ? project.tags : project.tags.slice(0, MAX_TAGS);
 
   return (
     <div
@@ -214,17 +346,75 @@ function ProjectCard({ project }: { project: ProjectItem }) {
           {project.title}
         </h3>
 
-        {/* Description */}
+        {/* Summary (Lead Line) */}
         <p
           style={{
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
             fontSize: '15px',
-            lineHeight: 1.7,
+            lineHeight: 1.6,
             color: 'var(--body)',
           }}
         >
-          {project.description}
+          {project.summary}
         </p>
+
+        {/* Highlights (Bullets) */}
+        <ul
+          className="flex flex-col gap-2 pl-4 list-disc"
+          style={{
+            fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+            fontSize: '14px',
+            lineHeight: 1.6,
+            color: 'var(--body)',
+          }}
+        >
+          {project.highlights.map((bullet, idx) => (
+            <li
+              key={idx}
+              style={{
+                color: 'var(--body)',
+              }}
+              className="marker:text-[var(--accent)]"
+            >
+              {bullet}
+            </li>
+          ))}
+        </ul>
+
+        {/* Full description disclosure */}
+        <div className="pt-0.5">
+          <button
+            type="button"
+            onClick={() => setIsDescriptionOpen((prev) => !prev)}
+            aria-expanded={isDescriptionOpen}
+            aria-controls={descId}
+            className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-accent hover:underline cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] rounded"
+          >
+            <span>{isDescriptionOpen ? 'Hide full description' : 'Read full description'}</span>
+            <span
+              aria-hidden="true"
+              style={{
+                display: 'inline-block',
+                transition: prefersReducedMotion ? 'none' : 'transform 200ms ease',
+                transform: isDescriptionOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+              }}
+            >
+              ▾
+            </span>
+          </button>
+
+          {isDescriptionOpen && (
+            <p
+              id={descId}
+              className="mt-2 text-[14px] leading-relaxed text-muted bg-surface/60 p-3 rounded-lg border border-line"
+              style={{
+                fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+              }}
+            >
+              {project.description}
+            </p>
+          )}
+        </div>
 
         {/* Metric */}
         <div
@@ -241,7 +431,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag, i) => (
+          {visibleTags.map((tag, i) => (
             <span
               key={i}
               style={{
@@ -258,6 +448,32 @@ function ProjectCard({ project }: { project: ProjectItem }) {
               {tag}
             </span>
           ))}
+
+          {hasMoreTags && (
+            <button
+              type="button"
+              onClick={() => setIsTagsExpanded((prev) => !prev)}
+              aria-expanded={isTagsExpanded}
+              aria-label={
+                isTagsExpanded
+                  ? 'Show fewer'
+                  : `Show ${hiddenTagsCount} more technologies`
+              }
+              className="cursor-pointer hover:border-accent hover:text-accent transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+              style={{
+                fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
+                fontSize: '12px',
+                padding: '4px 10px',
+                borderRadius: '4px',
+                border: '1px solid var(--line)',
+                backgroundColor: 'var(--chip)',
+                color: 'var(--accent)',
+                fontWeight: 600,
+              }}
+            >
+              {isTagsExpanded ? 'Show fewer' : `+${hiddenTagsCount} more`}
+            </button>
+          )}
         </div>
 
         {/* Links row */}
@@ -268,13 +484,14 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded transition-colors hover:border-accent"
+                className="inline-flex items-center gap-2 rounded transition-colors hover:border-accent min-h-[40px]"
                 style={{
                   fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                   fontSize: '12px',
                   fontWeight: 600,
                   textTransform: 'uppercase',
                   padding: '8px 16px',
+                  minHeight: '40px',
                   borderRadius: '4px',
                   backgroundColor: 'var(--card)',
                   border: '1px solid var(--line)',
@@ -306,13 +523,14 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded transition-opacity hover:opacity-90 min-h-[40px]"
                 style={{
                   fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                   fontSize: '12px',
                   fontWeight: 600,
                   textTransform: 'uppercase',
                   padding: '8px 16px',
+                  minHeight: '40px',
                   borderRadius: '4px',
                   backgroundColor: 'var(--accent-solid)',
                   color: '#ffffff',
