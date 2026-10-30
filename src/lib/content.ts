@@ -21,7 +21,7 @@ export const HANDLES = {
 export const LEETCODE_USERNAME = HANDLES.leetcode;
 
 export const LINKS = {
-  resume: 'https://drive.google.com/file/d/1dujS7VBswnAi-Rb2ICW0JK79Y9O_yfnF/view?usp=sharing',
+  resume: 'https://drive.google.com/file/d/1joVtyY-EzWICdjQlr7nsg22K1btSjlzN/view?usp=sharing',
   github: 'https://github.com/RishitModi',
   linkedin: 'https://linkedin.com/in/rishitmodii',
   leetcode: `https://leetcode.com/u/${HANDLES.leetcode}/`,
