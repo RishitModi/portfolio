@@ -262,11 +262,7 @@ export function Education() {
   return (
     <section
       id="education"
-      className="py-14 md:py-16 section-pad"
-      style={{
-        backgroundColor: 'var(--canvas)',
-        borderBottom: '1px solid var(--line)',
-      }}
+      className="py-14 md:py-20 section-pad"
     >
       <div>
         <SectionLabel>[ 02 — EDUCATION ]</SectionLabel>

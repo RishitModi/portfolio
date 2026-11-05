@@ -257,7 +257,8 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
 }
 
 function ProjectCard({ project }: { project: ProjectItem }) {
-  const { ref, isVisible } = useScrollAnimation({ threshold: 0.15 });
+  const { ref: textRef, isVisible: isTextVisible } = useScrollAnimation({ threshold: 0.15 });
+  const { ref: mediaRef, isVisible: isMediaVisible } = useScrollAnimation({ threshold: 0.15 });
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
   const [isTagsExpanded, setIsTagsExpanded] = useState(false);
@@ -273,7 +274,8 @@ function ProjectCard({ project }: { project: ProjectItem }) {
   }, []);
 
   const hasMedia = Boolean(project.videoSrc || project.iframeSrc || project.imageSrc);
-  const shouldBeVisible = prefersReducedMotion || isVisible;
+  const shouldTextBeVisible = prefersReducedMotion || isTextVisible;
+  const shouldMediaBeVisible = prefersReducedMotion || isMediaVisible;
   const descId = `project-desc-${project.index}`;
 
   const MAX_TAGS = 6;
@@ -283,41 +285,16 @@ function ProjectCard({ project }: { project: ProjectItem }) {
 
   return (
     <div
-      ref={ref}
-      className={`project-card rounded-2xl overflow-hidden w-full ${shouldBeVisible ? 'is-visible' : ''}`}
-      style={{
-        opacity: shouldBeVisible ? 1 : 0,
-        transform: shouldBeVisible ? 'translateY(0)' : 'translateY(16px)',
-      }}
+      className="project-panel"
     >
-      {/* ── 16:9 Media container (rendered only if media exists) ── */}
-      {hasMedia && (
-        <div
-          className="relative aspect-video w-full overflow-hidden"
-          style={{
-            backgroundColor: 'var(--chip)',
-            borderBottom: '1px solid var(--line)',
-          }}
-        >
-          {project.videoSrc ? (
-            <ProjectVideo videoSrc={project.videoSrc} title={project.title} />
-          ) : project.iframeSrc ? (
-            <ProjectIframe iframeSrc={project.iframeSrc} title={project.title} />
-          ) : project.imageSrc ? (
-            <img
-              src={project.imageSrc}
-              alt={`${project.title} preview`}
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-contain"
-              style={{ display: 'block' }}
-            />
-          ) : null}
-        </div>
-      )}
-
-      {/* ── Card Body ── */}
-      <div className="p-4 sm:p-5 md:p-6 flex flex-col gap-3">
+      <div
+        ref={textRef}
+        className={`project-text ${shouldTextBeVisible ? 'is-visible' : ''}`}
+        style={{
+          opacity: shouldTextBeVisible ? 1 : 0,
+          transform: shouldTextBeVisible ? 'translateY(0)' : 'translateY(16px)',
+        }}
+      >
         {/* Meta line */}
         <div
           style={{
@@ -336,10 +313,10 @@ function ProjectCard({ project }: { project: ProjectItem }) {
         <h3
           style={{
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-            fontSize: '20px',
+            fontSize: 'clamp(24px, 2.3vw, 34px)',
             fontWeight: 800,
             letterSpacing: '-0.5px',
-            lineHeight: 1.2,
+            lineHeight: 1.15,
             color: 'var(--ink)',
           }}
         >
@@ -350,8 +327,9 @@ function ProjectCard({ project }: { project: ProjectItem }) {
         <p
           style={{
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-            fontSize: '15px',
-            lineHeight: 1.6,
+            fontSize: '14px',
+            lineHeight: 1.65,
+            maxWidth: '56ch',
             color: 'var(--body)',
           }}
         >
@@ -430,14 +408,14 @@ function ProjectCard({ project }: { project: ProjectItem }) {
         </div>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-[6px]">
           {visibleTags.map((tag, i) => (
             <span
               key={i}
               style={{
                 fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-                fontSize: '12px',
-                padding: '4px 10px',
+                fontSize: '11.5px',
+                padding: '3px 9px',
                 borderRadius: '4px',
                 border: '1px solid var(--line)',
                 backgroundColor: 'var(--chip)',
@@ -462,8 +440,8 @@ function ProjectCard({ project }: { project: ProjectItem }) {
               className="cursor-pointer hover:border-accent hover:text-accent transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
               style={{
                 fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
-                fontSize: '12px',
-                padding: '4px 10px',
+                fontSize: '11.5px',
+                padding: '3px 9px',
                 borderRadius: '4px',
                 border: '1px solid var(--line)',
                 backgroundColor: 'var(--chip)',
@@ -478,7 +456,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
 
         {/* Links row */}
         {(project.githubUrl || project.liveUrl) && (
-          <div className="flex flex-wrap items-center gap-3 mt-1">
+          <div className="flex flex-wrap items-center gap-3 mt-1 project-links">
             {project.githubUrl && (
               <a
                 href={project.githubUrl}
@@ -490,7 +468,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                   fontSize: '12px',
                   fontWeight: 600,
                   textTransform: 'uppercase',
-                  padding: '8px 16px',
+                  padding: '7px 14px',
                   minHeight: '40px',
                   borderRadius: '4px',
                   backgroundColor: 'var(--card)',
@@ -529,7 +507,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                   fontSize: '12px',
                   fontWeight: 600,
                   textTransform: 'uppercase',
-                  padding: '8px 16px',
+                  padding: '7px 14px',
                   minHeight: '40px',
                   borderRadius: '4px',
                   backgroundColor: 'var(--solid)',
@@ -553,6 +531,36 @@ function ProjectCard({ project }: { project: ProjectItem }) {
           </div>
         )}
       </div>
+
+      {hasMedia ? (
+        <div
+          ref={mediaRef}
+          className={`project-media ${shouldMediaBeVisible ? 'is-visible' : ''}`}
+          style={{
+            opacity: shouldMediaBeVisible ? 1 : 0,
+            transform: shouldMediaBeVisible ? 'translateY(0)' : 'translateY(16px)',
+          }}
+        >
+          {project.videoSrc ? (
+            <ProjectVideo videoSrc={project.videoSrc} title={project.title} />
+          ) : project.iframeSrc ? (
+            <ProjectIframe iframeSrc={project.iframeSrc} title={project.title} />
+          ) : project.imageSrc ? (
+            <img
+              src={project.imageSrc}
+              alt={`${project.title} preview`}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-contain"
+              style={{ display: 'block' }}
+            />
+          ) : null}
+        </div>
+      ) : (
+        <div className="project-index-mark" aria-hidden="true">
+          {project.index}
+        </div>
+      )}
     </div>
   );
 }
@@ -561,15 +569,13 @@ export function Projects() {
   return (
     <section
       id="projects"
-      className="py-12 md:py-14 section-pad"
+      className="projects-section"
       style={{
-        backgroundColor: 'var(--surface)',
-        borderTop: '1px solid var(--line)',
-        borderBottom: '1px solid var(--line)',
+        containerType: 'inline-size',
       }}
     >
       {/* ── Section Header ── */}
-      <div>
+      <div className="section-pad py-14 md:py-20 pb-0 projects-header">
         <SectionLabel>[ 05 — PROJECTS ]</SectionLabel>
 
         <h2
@@ -591,7 +597,7 @@ export function Projects() {
             fontSize: '14px',
             color: 'var(--muted)',
             marginTop: '8px',
-            marginBottom: '28px',
+            marginBottom: 0,
           }}
         >
           {PROJECTS.length} projects
@@ -599,33 +605,88 @@ export function Projects() {
       </div>
 
       {/* ── Projects List ── */}
-      <div className="flex flex-col gap-6 w-full">
+      <div className="projects-list w-full">
         {PROJECTS.map((project) => (
           <ProjectCard key={project.index} project={project} />
         ))}
       </div>
 
       <style>{`
-        .project-card {
-          background-color: var(--card);
-          border: 1px solid var(--line);
-          box-shadow: 0 1px 2px rgb(var(--shadow) / 0.04);
+        .project-panel {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 24px;
+          padding: 28px max(1.5rem, calc((100% - 1280px) / 2));
+        }
+        .project-panel:first-child {
+          padding-top: 8px;
+        }
+        .project-text {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
           transition: opacity 500ms ease-out, transform 500ms ease-out;
+          order: 2;
         }
-
-        @media (prefers-reduced-motion: no-preference) {
-          .project-card.is-visible {
-            transition: opacity 500ms ease-out, transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+        .project-media {
+          position: relative;
+          aspect-ratio: 16 / 9;
+          width: min(100%, calc(min(62dvh, 560px) * 16 / 9));
+          margin-inline: auto;
+          overflow: hidden;
+          background: var(--chip);
+          border: 1px solid var(--line);
+          border-radius: var(--radius-xl);
+          box-shadow: rgb(var(--shadow) / 0.12) 0 16px 40px -16px;
+          transition: opacity 500ms ease-out 120ms, transform 500ms ease-out 120ms;
+          order: 1;
+        }
+        .project-index-mark {
+          display: none;
+        }
+        .project-links {
+          margin-top: 6px;
+        }
+        @container (min-width: 860px) {
+          .project-panel {
+            grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+            column-gap: clamp(32px, 4vw, 64px);
+            align-items: center;
+            padding-block: clamp(28px, 5vh, 56px);
           }
-          .project-card.is-visible:hover {
-            border-color: color-mix(in srgb, var(--accent) 50%, transparent) !important;
-            transform: translateY(-2px) !important;
-            box-shadow: 0 12px 28px -4px rgb(var(--shadow) / 0.08) !important;
+          .project-panel:first-child {
+            padding-top: 12px;
+          }
+          .project-panel:nth-child(odd) .project-text {
+            order: 1;
+          }
+          .project-panel:nth-child(odd) .project-media,
+          .project-panel:nth-child(even) .project-index-mark {
+            order: 2;
+          }
+          .project-panel:nth-child(even) .project-text {
+            order: 2;
+          }
+          .project-panel:nth-child(odd) .project-index-mark {
+            order: 1;
+          }
+          .project-panel:nth-child(even) .project-media {
+            order: 1;
+          }
+          .project-index-mark {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+            font-size: clamp(120px, 16vw, 240px);
+            font-weight: 800;
+            line-height: 1;
+            color: var(--faint);
           }
         }
-
         @media (prefers-reduced-motion: reduce) {
-          .project-card {
+          .project-text,
+          .project-media {
             transition: none !important;
             transform: none !important;
             opacity: 1 !important;

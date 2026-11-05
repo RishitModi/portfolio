@@ -49,6 +49,7 @@ export interface CpFallbackData {
     maxRating: number;
     stars: number;
     globalRank: number;
+    countryRank?: number;
     solved: number;
     contests: number;
     updatedAt: string;
@@ -60,32 +61,36 @@ export interface CpFallbackData {
     maxRank: string;
     solved: number | null;
     contests: number;
+    history?: number[];
     updatedAt: string;
   };
 }
 
-// Update both the stats and updatedAt together whenever CodeChef numbers change.
+// Snapshot of 2026-11-05; the deploy-time stats job overrides these when it succeeds.
 export const CODECHEF_STATS = {
   rating: 1685,
   maxRating: 1732,
   stars: 3,
-  globalRank: 6153,
-  solved: 561,
-  contests: 22,
+  globalRank: 8274,
+  countryRank: 7577,
+  solved: 570,
+  contests: 25,
   updatedAt: '2026-11-05',
 };
 
-export const LEETCODE_FALLBACK_UPDATED_AT = '2026-10-09';
+export const LEETCODE_FALLBACK_UPDATED_AT = '2026-11-05';
 
 export const CP_FALLBACK: CpFallbackData = {
   codechef: CODECHEF_STATS,
+  // Snapshot of 2026-11-05; the deploy-time stats job overrides these when it succeeds.
   codeforces: {
     rating: 1359,
     maxRating: 1476,
     rank: 'pupil',
     maxRank: 'specialist',
-    solved: null,
-    contests: 5,
+    solved: 117,
+    contests: 10,
+    history: [462, 865, 1150, 1256, 1379, 1476, 1430, 1375, 1346, 1359],
     updatedAt: '2026-11-05',
   },
 };

@@ -9,17 +9,19 @@ export interface LeetCodeStats {
   badge: string | null;
   contests: number;
   topPercentage: number | null;
-  history?: number[];
+  history: number[];
   updatedAt: number | string;
 }
 
+// Snapshot of 2026-11-05; the deploy-time stats job overrides these when it succeeds.
 const FALLBACK: LeetCodeStats = {
   currentRating: '2096',
   maxRating: '2142',
-  solved: '693',
+  solved: '722',
   badge: null,
-  contests: 0,
-  topPercentage: null,
+  contests: 35,
+  topPercentage: 1.61,
+  history: [],
   updatedAt: LEETCODE_FALLBACK_UPDATED_AT,
 };
 
@@ -37,7 +39,9 @@ export function useLeetCodeStats(): LeetCodeStats {
       badge: source.badge,
       contests: source.contests,
       topPercentage: source.topPercentage,
-      history: source.history,
+      history: Array.isArray(source.history) && source.history.every(Number.isFinite)
+        ? source.history.slice(-30)
+        : [],
       updatedAt: data.generatedAt,
     });
   }, [data]);

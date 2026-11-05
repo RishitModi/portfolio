@@ -389,12 +389,7 @@ export function Experience() {
     <section
       id="experience"
       ref={sectionRef}
-      className="py-12 md:py-14 section-pad"
-      style={{
-        backgroundColor: 'var(--surface)',
-        borderTop: '1px solid var(--line)',
-        borderBottom: '1px solid var(--line)',
-      }}
+      className="py-14 md:py-20 section-pad"
     >
       <div>
         <SectionLabel>[ 03 — EXPERIENCE ]</SectionLabel>

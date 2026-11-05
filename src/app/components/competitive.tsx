@@ -122,11 +122,7 @@ export function Competitive() {
   return (
     <section
       id="competitive"
-      className="py-12 md:py-14 section-pad"
-      style={{
-        backgroundColor: 'var(--canvas)',
-        borderBottom: '1px solid var(--line)',
-      }}
+      className="py-14 md:py-20 section-pad"
     >
       <div>
         <SectionLabel>[ 04 — COMPETITIVE PROGRAMMING ]</SectionLabel>
@@ -205,6 +201,12 @@ export function Competitive() {
                   RATING
                 </div>
               </div>
+
+              {lcStats.history.length >= 2 ? (
+                <Sparkline history={lcStats.history} contests={lcStats.contests} />
+              ) : (
+                <div className="w-full my-2 h-9" aria-hidden="true" />
+              )}
 
               {/* 2-column mini stat grid */}
               <div className="grid grid-cols-2 gap-2 text-[13px] pt-3 pb-2 border-t border-line">

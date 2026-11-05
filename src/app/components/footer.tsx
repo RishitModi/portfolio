@@ -6,8 +6,6 @@ export function Footer() {
     <footer
       className="py-8 section-pad"
       style={{
-        borderTop: '1px solid var(--line)',
-        backgroundColor: 'var(--surface)',
         fontFamily: 'Inter',
         fontSize: '12px',
         color: 'var(--muted)',

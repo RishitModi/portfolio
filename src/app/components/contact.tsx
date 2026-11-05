@@ -11,10 +11,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative py-12 md:py-14 section-pad"
-      style={{
-        backgroundColor: 'var(--canvas)',
-      }}
+      className="relative py-14 md:py-20 section-pad"
     >
       {/* Decorative { } — sized to 220px and hidden below xl */}
       <div
