@@ -43,6 +43,34 @@ export const EXTRA_SOLVED = 0;
 // the hero never shows less than this
 export const TOTAL_SOLVED_FLOOR = 1000;
 
+// Skills that a project tag implies (e.g. a Spring Boot project is a Java project). Edit freely; skills with no matching project simply show no count.
+export const SKILL_TAG_ALIASES: Record<string, string[]> = {
+  Python: ['PyTorch', 'FastAPI', 'Flask', 'Scikit-learn', 'Pycryptodome', 'NLTK', 'SciPy', 'Prophet', 'LangGraph', 'LangChain', 'TensorFlow', 'HDBSCAN'],
+  Java: ['Spring Boot', 'Spring Security', 'Java 23'],
+  JavaScript: ['React'],
+  SQL: ['PostgreSQL', 'MySQL', 'SQLite'],
+  'REST APIs': ['Spring Boot'],
+  Transformers: ['Transformer', 'DistilRoBERTa'],
+};
+
+// A project with any of these tags counts as an ML/DL project
+export const ML_TAGS = ['PyTorch', 'TensorFlow', 'Scikit-learn', 'Prophet', 'VAE', 'HDBSCAN', 'CNN', 'LSTM', 'DistilRoBERTa'];
+
+// Extra rules that add projects to a skill on top of direct tag and alias matches. 'deployed' = the project has a liveUrl
+export const SKILL_PROJECT_RULES: Record<string, { type: 'all' } | { type: 'deployed' } | { type: 'tagsAny'; tags: string[] }> = {
+  Git: { type: 'all' },
+  Supabase: { type: 'deployed' },
+  NumPy: { type: 'tagsAny', tags: ML_TAGS },
+  Pandas: { type: 'tagsAny', tags: ML_TAGS },
+  'IntelliJ IDEA': { type: 'tagsAny', tags: ['Spring Boot'] },
+  Postman: { type: 'tagsAny', tags: ['Spring Boot'] },
+};
+
+// Usage that isn't a project (e.g. competitive programming)
+export const SKILL_EXTRA_USAGE: Record<string, { label: string; href: string }[]> = {
+  'C++': [{ label: 'DSA problems', href: '#competitive' }],
+};
+
 export interface CpFallbackData {
   codechef: {
     rating: number;
@@ -377,7 +405,7 @@ export const PROJECTS: ProjectItem[] = [
 
 export interface SkillCategory {
   category: string;
-  skills: string[];
+  skills: (string | { name: string; isPrimary?: boolean })[];
 }
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
@@ -386,19 +414,25 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     skills: ['Java', 'Python', 'C++', 'SQL', 'JavaScript', 'HTML/CSS'],
   },
   {
-    category: 'Frameworks & Libraries',
-    skills: ['PyTorch', 'TensorFlow', 'NumPy', 'Pandas'],
+    category: 'AI / ML',
+    skills: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'NumPy', 'Pandas'],
   },
   {
-    category: 'Backend Technologies',
-    skills: ['Spring Boot', 'Flask', 'RESTful APIs'],
-  },
-  {
-    category: 'Developer Tools',
-    skills: ['Git', 'Docker', 'Linux (Ubuntu)', 'IntelliJ IDEA', 'Postman'],
+    category: 'Backend & Frameworks',
+    skills: ['Spring Boot', 'React', 'Node.js', 'Flask', 'REST APIs', 'Tailwind'],
   },
   {
     category: 'Databases',
-    skills: ['MySQL', 'Supabase', 'PostgreSQL'],
+    skills: ['PostgreSQL', 'MongoDB', 'MySQL', 'Supabase'],
+  },
+  {
+    category: 'Developer Tools',
+    skills: [
+      { name: 'Docker', isPrimary: true },
+      'Git',
+      'Linux',
+      'IntelliJ IDEA',
+      'Postman',
+    ],
   },
 ];

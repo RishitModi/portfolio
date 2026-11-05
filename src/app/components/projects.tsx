@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { SectionLabel } from './section-label';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import { PROJECTS, type ProjectItem } from '../../lib/content';
+import { tagMatchesSkill } from '../../lib/skills';
+import { useSkillFocus } from '../../lib/skillFocus';
 
 function ProjectVideo({ videoSrc, title }: { videoSrc: string; title: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -257,6 +259,7 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
 }
 
 function ProjectCard({ project }: { project: ProjectItem }) {
+  const selectedSkill = useSkillFocus();
   const { ref: textRef, isVisible: isTextVisible } = useScrollAnimation({ threshold: 0.15 });
   const { ref: mediaRef, isVisible: isMediaVisible } = useScrollAnimation({ threshold: 0.15 });
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -286,6 +289,8 @@ function ProjectCard({ project }: { project: ProjectItem }) {
   return (
     <div
       className="project-panel"
+      id={`project-${project.index}`}
+      style={{ scrollMarginTop: '24px' }}
     >
       <div
         ref={textRef}
@@ -412,6 +417,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
           {visibleTags.map((tag, i) => (
             <span
               key={i}
+              className="project-tag"
               style={{
                 fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
                 fontSize: '11.5px',
@@ -421,6 +427,13 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                 backgroundColor: 'var(--chip)',
                 color: 'var(--body)',
                 fontWeight: 500,
+                ...(selectedSkill && tagMatchesSkill(tag, selectedSkill)
+                  ? {
+                      color: 'var(--accent)',
+                      borderColor: 'color-mix(in srgb, var(--accent) 60%, transparent)',
+                      backgroundColor: 'var(--accent-soft)',
+                    }
+                  : {}),
               }}
             >
               {tag}
@@ -647,6 +660,9 @@ export function Projects() {
         .project-links {
           margin-top: 6px;
         }
+        .project-tag {
+          transition: none;
+        }
         @container (min-width: 860px) {
           .project-panel {
             grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
@@ -690,6 +706,11 @@ export function Projects() {
             transition: none !important;
             transform: none !important;
             opacity: 1 !important;
+          }
+          @media (prefers-reduced-motion: no-preference) {
+            .project-tag {
+              transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
+            }
           }
         }
 
