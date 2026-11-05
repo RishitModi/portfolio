@@ -451,7 +451,7 @@ export function Experience() {
                   {/* 10px node on the rail */}
                   <div
                     aria-hidden="true"
-                    className="absolute -left-[24px] top-4 w-2.5 h-2.5 rounded-full bg-accent-solid"
+                    className="absolute -left-[24px] top-4 w-2.5 h-2.5 rounded-full bg-accent"
                   />
                   <ExperienceCard
                     entry={entry}

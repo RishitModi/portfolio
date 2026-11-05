@@ -198,8 +198,8 @@ export function DesktopSidebar() {
           rel="noopener noreferrer"
           className="block w-full text-center py-2.5 rounded-lg transition-opacity hover:opacity-90"
           style={{
-            backgroundColor: 'var(--accent-solid)',
-            color: '#ffffff',
+            backgroundColor: 'var(--solid)',
+            color: 'var(--on-solid)',
             fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
             fontSize: '13px',
             fontWeight: 600,
@@ -488,4 +488,3 @@ export function MobileTopBar() {
     </header>
   );
 }
-

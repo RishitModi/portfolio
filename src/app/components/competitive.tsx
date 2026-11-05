@@ -1,7 +1,7 @@
 import { SectionLabel } from './section-label';
 import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
 import { useCodeforcesStats, useCodechefStats } from '../../hooks/useCpStats';
-import { HANDLES, LINKS, CODECHEF_STATS } from '../../lib/content';
+import { HANDLES, HERO_PEAKS, LINKS } from '../../lib/content';
 import { relativeTime, useNow } from '../../lib/time';
 
 function formatAbsoluteDate(input: number | string | Date): string {
@@ -117,7 +117,7 @@ export function Competitive() {
   const now = useNow();
   const lcStats = useLeetCodeStats();
   const { data: cfData, updatedAt: cfUpdatedAt } = useCodeforcesStats();
-  const { data: ccData } = useCodechefStats();
+  const { data: ccData, updatedAt: ccUpdatedAt } = useCodechefStats();
 
   return (
     <section
@@ -186,7 +186,7 @@ export function Competitive() {
                     fontSize: '36px',
                     fontWeight: 800,
                     lineHeight: 1,
-                    color: 'var(--accent)',
+                    color: 'var(--accent-2)',
                   }}
                 >
                   {lcStats.currentRating}
@@ -208,6 +208,10 @@ export function Competitive() {
 
               {/* 2-column mini stat grid */}
               <div className="grid grid-cols-2 gap-2 text-[13px] pt-3 pb-2 border-t border-line">
+                <div>
+                  <span className="block text-xs uppercase tracking-wider text-muted">Peak</span>
+                  <span className="font-semibold text-ink">{HERO_PEAKS.leetcode.category} ({HERO_PEAKS.leetcode.maxRating})</span>
+                </div>
                 <div>
                   <span className="block text-xs uppercase tracking-wider text-muted">Max Rating</span>
                   <span className="font-semibold text-ink">{lcStats.maxRating}</span>
@@ -271,7 +275,7 @@ export function Competitive() {
                     fontSize: '36px',
                     fontWeight: 800,
                     lineHeight: 1,
-                    color: 'var(--accent)',
+                    color: 'var(--accent-2)',
                   }}
                 >
                   {ccData.rating}
@@ -325,12 +329,12 @@ export function Competitive() {
 
             <div className="pt-4 border-t border-line/60 mt-3 flex flex-wrap items-center justify-between gap-2">
               <time
-                dateTime={toIsoDateString(CODECHEF_STATS.updatedAt)}
+                dateTime={toIsoDateString(ccUpdatedAt)}
                 className="text-[12px] text-muted"
               >
-                {formatShortDate(CODECHEF_STATS.updatedAt)
-                  ? `Updated ${relativeTime(CODECHEF_STATS.updatedAt, now)} · ${formatShortDate(CODECHEF_STATS.updatedAt)}`
-                  : `Updated ${relativeTime(CODECHEF_STATS.updatedAt, now)}`}
+                {formatShortDate(ccUpdatedAt)
+                  ? `Updated ${relativeTime(ccUpdatedAt, now)} · ${formatShortDate(ccUpdatedAt)}`
+                  : `Updated ${relativeTime(ccUpdatedAt, now)}`}
               </time>
               <a
                 href={LINKS.codechef}
@@ -371,7 +375,7 @@ export function Competitive() {
                     fontSize: '36px',
                     fontWeight: 800,
                     lineHeight: 1,
-                    color: 'var(--accent)',
+                    color: 'var(--accent-2)',
                   }}
                 >
                   {cfData.rating}
@@ -398,6 +402,10 @@ export function Competitive() {
 
               {/* 2-column mini stat grid */}
               <div className="grid grid-cols-2 gap-2 text-[13px] pt-3 pb-2 border-t border-line">
+                <div>
+                  <span className="block text-xs uppercase tracking-wider text-muted">Peak</span>
+                  <span className="font-semibold text-ink">{HERO_PEAKS.codeforces.category} ({HERO_PEAKS.codeforces.maxRating})</span>
+                </div>
                 <div>
                   <span className="block text-xs uppercase tracking-wider text-muted">Max Rating</span>
                   <span className="font-semibold text-ink">{cfData.maxRating}</span>

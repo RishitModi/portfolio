@@ -223,8 +223,8 @@ function ProjectIframe({ iframeSrc, title }: { iframeSrc: string; title: string 
               fontSize: '12px',
               fontWeight: 600,
               textTransform: 'uppercase',
-              backgroundColor: 'var(--accent-solid)',
-              color: '#ffffff',
+              backgroundColor: 'var(--solid)',
+              color: 'var(--on-solid)',
               padding: '8px 16px',
               minHeight: '40px',
               borderRadius: '4px',
@@ -425,7 +425,7 @@ function ProjectCard({ project }: { project: ProjectItem }) {
             color: 'var(--body)',
           }}
         >
-          <span style={{ color: 'var(--accent)', marginRight: '6px' }}>◆</span>
+          <span style={{ color: 'var(--accent-2)', marginRight: '6px' }}>◆</span>
           {project.metric}
         </div>
 
@@ -532,8 +532,8 @@ function ProjectCard({ project }: { project: ProjectItem }) {
                   padding: '8px 16px',
                   minHeight: '40px',
                   borderRadius: '4px',
-                  backgroundColor: 'var(--accent-solid)',
-                  color: '#ffffff',
+                  backgroundColor: 'var(--solid)',
+                  color: 'var(--on-solid)',
                   textDecoration: 'none',
                 }}
               >

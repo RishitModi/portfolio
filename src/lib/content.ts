@@ -30,6 +30,19 @@ export const LINKS = {
   email: 'mailto:modirishit6@gmail.com',
 } as const;
 
+// Update after contests. The hero shows the PEAK category; the Competitive section shows live/current numbers.
+export const HERO_PEAKS = {
+  leetcode: { category: 'Guardian', maxRating: 2142, currentRating: 2096, currentTier: 'Knight' },
+  codechef: { stars: 3, maxRating: 1732, currentRating: 1685 },
+  codeforces: { category: 'Specialist', maxRating: 1476, currentRating: 1359, currentTier: 'Pupil' },
+} as const;
+
+// problems solved on platforms without an API (e.g. GFG); added to the automatic total
+export const EXTRA_SOLVED = 0;
+
+// the hero never shows less than this
+export const TOTAL_SOLVED_FLOOR = 1000;
+
 export interface CpFallbackData {
   codechef: {
     rating: number;
@@ -44,6 +57,7 @@ export interface CpFallbackData {
     rating: number;
     maxRating: number;
     rank: string;
+    maxRank: string;
     solved: number | null;
     contests: number;
     updatedAt: string;
@@ -52,13 +66,13 @@ export interface CpFallbackData {
 
 // Update both the stats and updatedAt together whenever CodeChef numbers change.
 export const CODECHEF_STATS = {
-  rating: 1732,
+  rating: 1685,
   maxRating: 1732,
   stars: 3,
   globalRank: 6153,
   solved: 561,
   contests: 22,
-  updatedAt: '2026-10-09',
+  updatedAt: '2026-11-05',
 };
 
 export const LEETCODE_FALLBACK_UPDATED_AT = '2026-10-09';
@@ -66,12 +80,13 @@ export const LEETCODE_FALLBACK_UPDATED_AT = '2026-10-09';
 export const CP_FALLBACK: CpFallbackData = {
   codechef: CODECHEF_STATS,
   codeforces: {
-    rating: 1377,
-    maxRating: 1377,
+    rating: 1359,
+    maxRating: 1476,
     rank: 'pupil',
+    maxRank: 'specialist',
     solved: null,
     contests: 5,
-    updatedAt: '2026-10-09',
+    updatedAt: '2026-11-05',
   },
 };
 

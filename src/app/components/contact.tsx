@@ -48,7 +48,7 @@ export function Contact() {
             <span
               className="block"
               style={{
-                WebkitTextStroke: '1.5px var(--accent)',
+                WebkitTextStroke: '1.5px var(--ink)',
                 color: 'transparent',
               }}
             >

@@ -403,10 +403,10 @@ export function Education() {
                         }`}
                       style={{
                         backgroundColor: isReached
-                          ? 'var(--accent-solid)'
+                          ? 'var(--accent)'
                           : 'var(--card)',
                         border: isReached
-                          ? '2px solid var(--accent-solid)'
+                          ? '2px solid var(--accent)'
                           : '2px solid var(--line)',
                         boxShadow:
                           isActive && !prefersReducedMotion

@@ -3,26 +3,29 @@
 :root {
   color-scheme: light;
 
-  --canvas: #f4f8f6;
-  --surface: #e6f0ec;
-  --card: #ffffff;
-  --chip: #edf4f1;
-  --line: #cfe0d8;
-  --faint: #dfece6;
-  --ink: #0c1a15;
-  --body: #2a4038;
-  --muted: #4d6b5d;
-  --accent: #047857;
-  --accent-solid: #047857;
-  --accent-soft: #d5ece2;
-  --shadow: 12 26 21;
-  --good: #16a34a;
+  --canvas: #f6f5f1;
+  --surface: #efede7;
+  --card: #fbfaf7;
+  --chip: #ece9e2;
+  --line: #dddbd5;
+  --faint: #ebe8e1;
+  --ink: #161618;
+  --body: #2e2d2b;
+  --muted: #66645f;
+  --accent: #3f51d6;
+  --accent-solid: #3f51d6;
+  --accent-soft: #e6e7f2;
+  --accent-2: #a8470a;
+  --solid: #161618;
+  --on-solid: #f6f5f1;
+  --shadow: 22 22 24;
+  --good: #13733a;
 
   --background: var(--canvas);
   --foreground: var(--body);
   --border: var(--line);
-  --primary: var(--accent-solid);
-  --primary-foreground: #ffffff;
+  --primary: var(--solid);
+  --primary-foreground: var(--on-solid);
   --secondary: var(--surface);
   --secondary-foreground: var(--ink);
   --muted-text: var(--muted);
@@ -34,20 +37,23 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
 
-  --canvas: #0c1311;
-  --surface: #111b18;
-  --card: #14201c;
-  --chip: #1a2924;
-  --line: #24352f;
-  --faint: #172420;
-  --ink: #ecf7f2;
-  --body: #bcd0c8;
-  --muted: #84a094;
-  --accent: #34d399;
-  --accent-solid: #047857;
-  --accent-soft: #0f2e24;
+  --canvas: #0b0b0c;
+  --surface: #111113;
+  --card: #161618;
+  --chip: #1d1d20;
+  --line: #242427;
+  --faint: #151517;
+  --ink: #f4f2ed;
+  --body: #c9c7c1;
+  --muted: #8f8d88;
+  --accent: #a9b8ff;
+  --accent-solid: #a9b8ff;
+  --accent-soft: #1f2233;
+  --accent-2: #f2b58a;
+  --solid: #e9e7e2;
+  --on-solid: #0b0b0c;
   --shadow: 0 0 0;
-  --good: #86efac;
+  --good: #4ade80;
 }
 
 @theme inline {
@@ -63,6 +69,9 @@
   --color-accent: var(--accent);
   --color-accent-solid: var(--accent-solid);
   --color-accent-soft: var(--accent-soft);
+  --color-accent-2: var(--accent-2);
+  --color-solid: var(--solid);
+  --color-on-solid: var(--on-solid);
   --color-good: var(--good);
 
   --color-background: var(--background);
@@ -181,4 +190,4 @@
   .section-pad {
     --gutter-min: 2rem;
   }
-}
+}

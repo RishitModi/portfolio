@@ -124,8 +124,8 @@ export function Navigation() {
               fontFamily: 'Inter Variable, Inter, system-ui, sans-serif',
               fontSize: '11px',
               textTransform: 'uppercase',
-              backgroundColor: 'var(--accent-solid)',
-              color: '#ffffff',
+              backgroundColor: 'var(--solid)',
+              color: 'var(--on-solid)',
               fontWeight: 500,
             }}
           >

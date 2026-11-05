@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc --noEmit && vite build",
+    "stats": "node scripts/fetch-cp-stats.mjs",
     "dev": "vite",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"

@@ -10,7 +10,7 @@ Personal developer portfolio showcasing software engineering, AI/ML research pro
 - **Project cards:** Rich cards with lazy-loading demo videos, live links, and interactive doc previews.
 - **Education timeline:** Responsive roadmap tracking academic milestones from school through university with horizontal scroll-snap on desktop and vertical flow on mobile.
 - **Professional experience:** Industry roles featuring bulleted impact points, role tags, and a work sample image gallery with a native `<dialog>` lightbox modal.
-- **Competitive programming stats:** Live ratings and stats for LeetCode, Codeforces (official API), and CodeChef (via community endpoint with static fallback values in `src/lib/content.ts`), featuring client-side localStorage caching, SVG sparklines, and visible timestamps showing when each profile was last updated (with CodeChef's date sourced from `CODECHEF_STATS.updatedAt`).
+- **Competitive programming stats:** Deploy-time ratings and stats for LeetCode, Codeforces, and CodeChef, shipped as a static JSON file with SVG sparklines and visible generation timestamps. CodeChef uses a best-effort profile-page parse with hand-maintained fallbacks.
 - **Reduced-motion support:** Full accessibility support honoring `prefers-reduced-motion` across animations, transitions, and smooth scrolling.
 
 ## Tech Stack
@@ -48,7 +48,8 @@ src/
 │   └── App.tsx           # Main application root and layout wrapper
 ├── hooks/                # Custom React hooks (scroll animations, LeetCode stats)
 ├── lib/
-│   ├── content.ts        # Single source of truth for profile, links, projects & skills
+│   ├── content.ts        # Single source of truth for profile, links, projects, skills & CP floors
+│   └── cp.ts             # CP peak-category and solved-total helpers
 │   └── scroll.ts         # Accessible smooth scroll helper utilities
 └── styles/
     ├── fonts.css         # Font imports (Inter variable)
@@ -63,3 +64,5 @@ All portfolio data — including profile details, social links, resume URL, navi
 ## Deployment
 
 Automated deployment to GitHub Pages is handled by [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) on every push to the `main` branch with the base path `/portfolio/`.
+
+The deploy job runs the dependency-free CP stats fetcher every six hours and also supports a manual **Run workflow** dispatch. It writes `public/data/cp-stats.json` at build time; the browser reads only that static file and never calls third-party stats APIs. `EXTRA_SOLVED`, `TOTAL_SOLVED_FLOOR`, and the hand-maintained `HERO_PEAKS` floor values live in `src/lib/content.ts`.

@@ -1,148 +1,46 @@
-import { useState, useEffect } from 'react';
-import { LEETCODE_USERNAME, LEETCODE_FALLBACK_UPDATED_AT } from '../lib/content';
+import { useEffect, useState } from 'react';
+import { LEETCODE_FALLBACK_UPDATED_AT } from '../lib/content';
+import { useCpData } from './useCpData';
 
 export interface LeetCodeStats {
   currentRating: string;
   maxRating: string;
   solved: string;
+  badge: string | null;
+  contests: number;
+  topPercentage: number | null;
+  history?: number[];
   updatedAt: number | string;
 }
 
 const FALLBACK: LeetCodeStats = {
-  currentRating: '2070',
-  maxRating: '2092',
+  currentRating: '2096',
+  maxRating: '2142',
   solved: '693',
+  badge: null,
+  contests: 0,
+  topPercentage: null,
   updatedAt: LEETCODE_FALLBACK_UPDATED_AT,
 };
 
-const API_URL = `https://alfa-leetcode-api.onrender.com/${LEETCODE_USERNAME}/contest`;
-const CACHE_KEY = 'lc-stats-v1';
-const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
-const TIMEOUT_MS = 6000; // 6 seconds
-
-interface CacheEntry {
-  ts: number;
-  data: {
-    currentRating: string;
-    maxRating: string;
-    solved: string;
-  };
-}
-
-interface ContestParticipationItem {
-  rating?: number;
-}
-
-interface ApiResponse {
-  contestRating?: number;
-  contestParticipation?: ContestParticipationItem[];
-}
-
-function getValidCachedStats(): LeetCodeStats | null {
-  try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const parsed: CacheEntry = JSON.parse(raw);
-    if (typeof parsed?.ts === 'number' && parsed?.data) {
-      if (Date.now() - parsed.ts < CACHE_TTL_MS) {
-        return {
-          ...parsed.data,
-          updatedAt: parsed.ts,
-        };
-      }
-    }
-  } catch {
-    // Ignore localStorage errors
-  }
-  return null;
-}
-
-function writeCachedStats(data: { currentRating: string; maxRating: string; solved: string }, ts: number): void {
-  try {
-    const entry: CacheEntry = {
-      ts,
-      data: {
-        currentRating: data.currentRating,
-        maxRating: data.maxRating,
-        solved: data.solved,
-      },
-    };
-    localStorage.setItem(CACHE_KEY, JSON.stringify(entry));
-  } catch {
-    // Ignore localStorage errors
-  }
-}
-
 export function useLeetCodeStats(): LeetCodeStats {
-  const [stats, setStats] = useState<LeetCodeStats>(() => {
-    return getValidCachedStats() ?? FALLBACK;
-  });
+  const { data } = useCpData();
+  const [stats, setStats] = useState(FALLBACK);
 
   useEffect(() => {
-    const cached = getValidCachedStats();
-    if (cached) {
-      return;
-    }
-
-    const controller = new AbortController();
-    const timerId = setTimeout(() => {
-      controller.abort();
-    }, TIMEOUT_MS);
-
-    const fetchStats = async () => {
-      try {
-        const res = await fetch(API_URL, { signal: controller.signal });
-        if (!res.ok) {
-          throw new Error(`HTTP error ${res.status}`);
-        }
-        const data: ApiResponse = await res.json();
-
-        if (typeof data.contestRating !== 'number' || !Number.isFinite(data.contestRating)) {
-          throw new Error('Invalid contestRating');
-        }
-
-        const current = Math.round(data.contestRating);
-        const participationRatings: number[] = [];
-        if (Array.isArray(data.contestParticipation)) {
-          for (const item of data.contestParticipation) {
-            if (typeof item.rating === 'number' && Number.isFinite(item.rating)) {
-              participationRatings.push(item.rating);
-            }
-          }
-        }
-
-        const max = Math.round(Math.max(current, ...participationRatings));
-        const now = Date.now();
-
-        const newStats: LeetCodeStats = {
-          currentRating: current.toString(),
-          maxRating: max.toString(),
-          solved: '693', // /contest endpoint doesn't return solved count; keep in sync with FALLBACK
-          updatedAt: now,
-        };
-
-        setStats(newStats);
-        writeCachedStats(newStats, now);
-      } catch (err: unknown) {
-        if (err instanceof Error && err.name === 'AbortError') {
-          return;
-        }
-        if (import.meta.env.DEV) {
-          console.warn('Failed to fetch LeetCode stats:', err);
-        }
-        setStats(FALLBACK);
-      } finally {
-        clearTimeout(timerId);
-      }
-    };
-
-    fetchStats();
-
-    return () => {
-      clearTimeout(timerId);
-      controller.abort();
-    };
-  }, []);
+    const source = data?.leetcode;
+    if (!source) return;
+    setStats({
+      currentRating: source.rating.toString(),
+      maxRating: source.maxRating.toString(),
+      solved: source.solved.toString(),
+      badge: source.badge,
+      contests: source.contests,
+      topPercentage: source.topPercentage,
+      history: source.history,
+      updatedAt: data.generatedAt,
+    });
+  }, [data]);
 
   return stats;
 }
