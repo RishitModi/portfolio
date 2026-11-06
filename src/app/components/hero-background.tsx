@@ -3,18 +3,18 @@ import { PixelBlast } from './pixel-blast';
 
 const PIXEL_THEME = {
   dark: {
-    color: '#4b5385',
-    accentColor: '#a9b8ff',
+    color: '#343957',
+    accentColor: '#7c8dcc',
     lightMode: false,
-    patternDensity: 1,
-    glow: 0.4,
+    patternDensity: 0.78,
+    glow: 0.22,
   },
   light: {
-    color: '#a3acdf',
-    accentColor: '#3f51d6',
+    color: '#c4c9e8',
+    accentColor: '#6673c4',
     lightMode: true,
-    patternDensity: 0.85,
-    glow: 0.25,
+    patternDensity: 0.68,
+    glow: 0.14,
   },
 } as const;
 
@@ -23,7 +23,7 @@ export function HeroBackground() {
   const t = PIXEL_THEME[theme];
 
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
       <PixelBlast
         variant="square"
         pixelSize={3}
@@ -38,7 +38,7 @@ export function HeroBackground() {
         drift={0.2}
         hoverEffect="reveal"
         enableRipples
-        edgeFade={0.35}
+        edgeFade={0.3}
         variation={7}
       />
     </div>

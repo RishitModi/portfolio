@@ -192,15 +192,20 @@ export function About() {
           background: transparent;
           color: inherit;
           font: inherit;
-          padding: 0;
+          padding: 2px 6px;
+          margin: -2px -6px;
           text-align: inherit;
+          border-radius: 4px;
+          transition: color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
         }
         .skill-button,
         .skill-projects a {
           cursor: pointer;
         }
         .skill-button.is-selected {
-          color: var(--accent);
+          color: var(--ink);
+          background-color: var(--card);
+          box-shadow: 0 0 0 1px var(--line);
         }
         .skill-button.is-selected .skill-name {
           text-decoration: underline;
@@ -224,10 +229,20 @@ export function About() {
           transition: color 200ms ease, text-decoration-color 200ms ease;
         }
         .skill-button:hover .skill-name {
-          color: var(--accent);
+          color: var(--ink);
+          background-color: var(--card);
           text-decoration: underline;
           text-decoration-thickness: 1px;
           text-underline-offset: 4px;
+        }
+        .skill-button:hover,
+        .skill-button:focus-visible {
+          background-color: var(--card);
+          box-shadow: 0 0 0 1px var(--line);
+        }
+        .skill-button:focus-visible {
+          outline: 2px solid var(--accent);
+          outline-offset: 3px;
         }
         .skill-items li.is-primary {
           color: var(--ink);

@@ -3,7 +3,6 @@ import { useLeetCodeStats } from '../../hooks/useLeetCodeStats';
 import { useCodechefStats, useCodeforcesStats } from '../../hooks/useCpStats';
 import { EXTRA_SOLVED, HERO_PEAKS, LINKS, PROFILE } from '../../lib/content';
 import { codeforcesPeakCategory, formatSolvedTotal, peakCodechefStars, peakLeetcodeCategory } from '../../lib/cp';
-import { HeroBackground } from './hero-background';
 
 export function Hero() {
   const lcStats = useLeetCodeStats();
@@ -53,11 +52,10 @@ export function Hero() {
   return (
     <section
       id="profile"
-      className="relative isolate flex min-h-[100vh] min-h-[100dvh] flex-col justify-center pt-[96px] pb-[96px] lg:pt-14 lg:pb-14 section-pad"
+      className="flex min-h-[100vh] min-h-[100dvh] flex-col justify-center pt-[96px] pb-[96px] lg:pt-14 lg:pb-14 section-pad"
       style={{ boxSizing: 'border-box' }}
     >
-      <HeroBackground />
-      <div className="relative z-10 flex w-full flex-col gap-6 md:gap-8 fade-up">
+      <div className="flex w-full flex-col gap-6 md:gap-8 fade-up">
         {/* 1. Location label */}
         <div
           style={{

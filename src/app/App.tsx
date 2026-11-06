@@ -4,6 +4,7 @@ import { GrainOverlay } from './components/grain-overlay';
 import { DesktopSidebar, MobileTopBar } from './components/sidebar';
 import { RightRail } from './components/right-rail';
 import { Hero } from './components/hero';
+import { HeroBackground } from './components/hero-background';
 import { About } from './components/about';
 import { Education } from './components/education';
 import { Experience } from './components/experience';
@@ -143,16 +144,20 @@ export default function App() {
             />
           </div>
 
+          <HeroBackground />
+
           {/* Main content feed: fills middle column track */}
-          <Hero />
-          <About />
-          <Education />
-          <Experience />
-          <Competitive />
-          <Projects />
-          <CertificationsSection />
-          <Contact />
-          <Footer />
+          <div className="relative z-10">
+            <Hero />
+            <About />
+            <Education />
+            <Experience />
+            <Competitive />
+            <Projects />
+            <CertificationsSection />
+            <Contact />
+            <Footer />
+          </div>
         </main>
 
         {/* ── Right rail ──

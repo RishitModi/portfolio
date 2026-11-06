@@ -12,7 +12,7 @@ Personal developer portfolio showcasing software engineering, AI/ML research pro
 - **Professional experience:** Industry roles featuring bulleted impact points, role tags, and a work sample image gallery with a native `<dialog>` lightbox modal.
 - **Competitive programming stats:** Deploy-time ratings and stats for LeetCode, Codeforces, and CodeChef, shipped as a static JSON file with SVG sparklines and visible generation timestamps. CodeChef uses a best-effort profile-page parse with hand-maintained fallbacks.
 - **Reduced-motion support:** Full accessibility support honoring `prefers-reduced-motion` across animations, transitions, and smooth scrolling.
-- **Animated hero background:** A themed WebGL pixel field that reacts to cursor movement and clicks, pauses offscreen, and respects reduced motion.
+- **Animated viewport background:** A themed WebGL pixel field fixed to the viewport that reacts to cursor movement and clicks, pauses offscreen, and respects reduced motion.
 
 ## Tech Stack
 
